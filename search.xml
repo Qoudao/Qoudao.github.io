@@ -50,6 +50,12 @@ ___粗斜体文本___</code></pre><h2 id="分割线"><a href="#分割线" class=
 2.parent2
     -p2-child1
     -p2-child2</code></pre><h1 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h1>]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
   </entry>
   <entry>
     <title>数论</title>
@@ -89,9 +95,15 @@ return (ans+M)%M; //正解
 <hr>
 <h1 id="二次剩余CipollaCipolla"><a href="#二次剩余CipollaCipolla" class="headerlink" title="二次剩余CipollaCipolla"></a>二次剩余CipollaCipolla</h1><p><a href="https://www.cnblogs.com/bztMinamoto/p/10664973.html" target="_blank" rel="noopener">学习资料1</a><br><a href="https://www.luogu.org/blog/oieremtkotori/2-0v0" target="_blank" rel="noopener">学习资料2</a></p>
 <blockquote>
-<p>————未学待补————  </p>
+<p>————未学待补————</p>
 </blockquote>
 ]]></content>
+      <categories>
+        <category>数论</category>
+      </categories>
+      <tags>
+        <tag>数论</tag>
+      </tags>
   </entry>
   <entry>
     <title>伟大尝试</title>
