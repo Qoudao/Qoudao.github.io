@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>图片管理</title>
+    <url>/2019/10/23/blog/%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%86/</url>
+    <content><![CDATA[<p><img src="/.com//%E5%A6%B9%E5%AD%90.png" alt="meizi"><br>真香！！</p>
+]]></content>
+      <categories>
+        <category>杂谈</category>
+      </categories>
+      <tags>
+        <tag>水</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MarkDown语法</title>
     <url>/2019/10/23/blog/MarkDown%E8%AF%AD%E6%B3%95/</url>
     <content><![CDATA[<h1 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h1><ul>
@@ -49,7 +61,42 @@ ___粗斜体文本___</code></pre><h2 id="分割线"><a href="#分割线" class=
     +p1-child2
 2.parent2
     -p2-child1
-    -p2-child2</code></pre><h1 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h1>]]></content>
+    -p2-child2</code></pre><h1 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h1><blockquote>
+<p>在段落开头使用 &gt; 符号 ，然后后面紧跟一个空格符号<br>区块是可以嵌套的</p>
+</blockquote>
+<pre><code>&gt; MarkDown
+
+&gt;&gt; MarkDown</code></pre><p>区块于列表结合</p>
+<blockquote>
+<p>1.区块中使用列表<br>2.列表中使用区块</p>
+</blockquote>
+<pre><code>&gt; 区块中使用列表
+&gt; 1. 有序
+&gt; + 无序
+&gt; 2. 有序
+&gt; - 无序
+
+1. 列表中使用区块
+    &gt; 区块内容
+    &gt;&gt; 区块内容
+2. 列表中使用区块</code></pre><h1 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h1><h2 id="简单使用"><a href="#简单使用" class="headerlink" title="简单使用"></a>简单使用</h2><pre><code>[链接名称](链接地址)
+或者
+&lt;链接地址&gt;
+
+// 例：
+[百度](www.baidu.com)
+&lt;www.baidu.com&gt;</code></pre><h2 id="高级链接"><a href="#高级链接" class="headerlink" title="高级链接"></a>高级链接</h2><blockquote>
+<p>链接也可以用变量来代替，文档末尾附带变量地址</p>
+</blockquote>
+<pre><code>百度[百度][1]
+教育宝[教育宝][jyb]
+
+[1]:www.baidu.con
+[jyb]:https://www.jiaoyubao.cn/</code></pre><p><a href="www.baidu.con">百度</a></p>
+<h1 id="引用本地图片"><a href="#引用本地图片" class="headerlink" title="引用本地图片"></a>引用本地图片</h1><blockquote>
+<p>在hexo中把图片放在与博客同名的文件夹中，然后只用 <code>![图片描述](图片文件名)</code>就可以引用了。</p>
+</blockquote>
+]]></content>
       <categories>
         <category>教程</category>
       </categories>
@@ -168,43 +215,6 @@ return (ans+M)%M; //正解
       </tags>
   </entry>
   <entry>
-    <title>three</title>
-    <url>/2019/10/22/three/</url>
-    <content><![CDATA[<p>#阿瓦达dadw<br>  asdadas ddasd<br>  <img src="/.com//6%E8%8A%B1.jpg" alt="haotu"><br>adwawdad<br>awdawd</p>
-]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
-      <tags>
-        <tag>日常</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>twofirst</title>
-    <url>/2019/10/22/twofirst/</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>生活</category>
-      </categories>
-      <tags>
-        <tag>日常</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>myfirst</title>
-    <url>/2019/10/22/myfirst/</url>
-    <content><![CDATA[<p>#awd </p>
-]]></content>
-      <tags>
-        <tag>生活</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hellopage</title>
-    <url>/2019/10/22/hellopage/</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>JDBC注意事项</title>
     <url>/2019/10/22/JDBC%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
     <content><![CDATA[<p>##JDBC<br>下载对应的数据库的jar<br>如mysql数据库 地址：D:\BaiduNetdiskDownload2\08.JDBC(共30集)\源码笔记\code&amp;资料\mysql-connector-java-5.1.7<br>提取里面的 <strong>mysql-connector-java-5.1.7-bin.jar</strong>文件即可  </p>
@@ -248,46 +258,6 @@ return (ans+M)%M; //正解
 <li><strong>在一段字符串中插入变量</strong>，如user,字符串：“我的user是XX”可以用单引中加双引在加两个加号变量放中间；“我的‘“+user+”’是XX”；</li>
 </ul>
 <p>##@test<br>一般你不能@test的功能的，需要右键目录点击Build Path中的add lib<br>然后选择JUnit 选择JUnit 4就可以了；    </p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2019/10/21/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>web注意事项</title>
-    <url>/2019/10/05/web%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/</url>
-    <content><![CDATA[<p>##驱动  </p>
-<ul>
-<li>把mysql的驱动包放在web工程下的WEB-INF下的lib目录下即可。  </li>
-</ul>
-<p>##resquset  </p>
-<ul>
-<li>request.getParameter(“id”);<br>获得请求过来的数据，如果是网页的话，在跳转的同时想带一些数据，比如在跳转的超连接里”inedx.html?id=12”。  </li>
-</ul>
-<p>##cookie  </p>
-<ul>
-<li>每个web工程最多20个cookie，服务器最多300个。cookie最大4kb。还并且有安全隐患。  </li>
-</ul>
-<p>##Session(会话)  </p>
-<ul>
-<li>基于Cookied的一种会话机制，不同于cookie，是存放在服务器上的  </li>
-<li></li>
-</ul>
 ]]></content>
   </entry>
 </search>
