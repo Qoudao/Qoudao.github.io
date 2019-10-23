@@ -1,6 +1,161 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>MarkDown语法</title>
+    <url>/2019/10/23/blog/MarkDown%E8%AF%AD%E6%B3%95/</url>
+    <content><![CDATA[<h1 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h1><ul>
+<li>使用#号进行标记标题级别<pre><code># 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题</code></pre></li>
+</ul>
+<h1 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h1><blockquote>
+<p>每行末尾空两格再回车</p>
+</blockquote>
+<h2 id="字体"><a href="#字体" class="headerlink" title="字体"></a>字体</h2><pre><code>*斜体文本*
+_斜体文本_
+**粗体文本**
+__粗体文本__
+***粗斜体文本***
+___粗斜体文本___</code></pre><h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><blockquote>
+<p>在一行中用三个以上的星号、减号、底线来建立一个分隔线。</p>
+</blockquote>
+<hr>
+<p>————如这样————</p>
+<hr>
+<h2 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h2><blockquote>
+<p>再文字的两端加上两个波浪线</p>
+</blockquote>
+<p><del>阿瓦达</del><br>​<code>~~啊瓦达~~</code></p>
+<h2 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h2><blockquote>
+<p>可以通过HTML的​<code>&lt;u&gt;​</code>标签来实现</p>
+</blockquote>
+<pre><code>&lt;u&gt;带下划线的内容&lt;/u&gt;</code></pre><h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><blockquote>
+<p>MarkDown 支持有序列表 和 无序列表</p>
+</blockquote>
+<h2 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h2><blockquote>
+<p>无序列表使用星号(*****)、加号(+)或是减号(-)作为列表标记</p>
+</blockquote>
+<h2 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h2><blockquote>
+<p>有序列表使用数字并加上 . 号空格来表示</p>
+</blockquote>
+<h2 id="列表嵌套"><a href="#列表嵌套" class="headerlink" title="列表嵌套"></a>列表嵌套</h2><blockquote>
+<p>列表嵌套只需在子列表中的选项添加四个空格即可</p>
+</blockquote>
+<pre><code>1.parent1
+    +p1-child1
+    +p1-child2
+2.parent2
+    -p2-child1
+    -p2-child2</code></pre><h1 id="区块"><a href="#区块" class="headerlink" title="区块"></a>区块</h1>]]></content>
+  </entry>
+  <entry>
+    <title>数论</title>
+    <url>/2019/10/23/blog/%E6%95%B0%E8%AE%BA/</url>
+    <content><![CDATA[<h1 id="中国剩余定理"><a href="#中国剩余定理" class="headerlink" title="中国剩余定理"></a>中国剩余定理</h1><p><a href="https://www.luogu.org/problem/P1495" target="_blank" rel="noopener">相关题面</a></p>
+<h2 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h2><pre><code>int intchina(int r)
+{
+int Mi,x,y,d,ans=0;M=1;
+for(int i=1;i&lt;=r;i++) M*=m[i];
+for(int i=1;i&lt;=r;i++){
+    M[i]=M/m[i];
+    exgcd(Mi,m[i],d,x,y);
+    ans=(ans+Mi*x*a[i])%M;
+}
+return (ans+M)%M; //正解
+}</code></pre><h1 id="扩展欧几里得"><a href="#扩展欧几里得" class="headerlink" title="扩展欧几里得"></a>扩展欧几里得</h1><p><a href="https://www.luogu.org/problem/P1516" target="_blank" rel="noopener">相关题面</a></p>
+<h2 id="标程-1"><a href="#标程-1" class="headerlink" title="标程"></a>标程</h2><pre><code>ll exgcd(ll a,ll b,ll &amp;x1, ll &amp;y1)
+{
+    if(!b)
+    {
+        x1=1;
+        y1=0;
+        return a;
+    }
+    ans=exgcd(b,a%b,x1,y1);
+    ll t=x1;  //交换逆向求解
+    x1=y1;
+    y1=t-a/b*y1;
+    return ans;
+}</code></pre><ol>
+<li>xa/d-yb/d=A/d这个方程就是扩展欧几里得exgcd(a,b,x,y)（忽略y前的负号），这样可以解出x，此时的x不是最优解，还要转换，即((x*(A/d))%(b/d)+(b/d))%(b/d)【求最小解的式子，不理解先背下来】。d是模。</li>
+<li>当x不是最小正数解时，写成 x = (x % b + b) % b;循环至为正；</li>
+</ol>
+<h1 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h1><blockquote>
+<p>————未学待补————</p>
+</blockquote>
+<hr>
+<h1 id="二次剩余CipollaCipolla"><a href="#二次剩余CipollaCipolla" class="headerlink" title="二次剩余CipollaCipolla"></a>二次剩余CipollaCipolla</h1><p><a href="https://www.cnblogs.com/bztMinamoto/p/10664973.html" target="_blank" rel="noopener">学习资料1</a><br><a href="https://www.luogu.org/blog/oieremtkotori/2-0v0" target="_blank" rel="noopener">学习资料2</a></p>
+<blockquote>
+<p>————未学待补————  </p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
+    <title>伟大尝试</title>
+    <url>/2019/10/23/%E4%BC%9F%E5%A4%A7%E5%B0%9D%E8%AF%95/</url>
+    <content><![CDATA[<blockquote>
+<p>开始新的篇章<br>欢迎来到我的世界</p>
+</blockquote>
+<h1 id="阿瓦达"><a href="#阿瓦达" class="headerlink" title="阿瓦达"></a>阿瓦达</h1><h2 id="瓦大的有读"><a href="#瓦大的有读" class="headerlink" title="瓦大的有读"></a><em>瓦大的有读</em></h2><hr>
+<h2 id="沃兹"><a href="#沃兹" class="headerlink" title="沃兹"></a><u>沃兹</u></h2><ol>
+<li>awdawd</li>
+<li>12321</li>
+</ol>
+<hr>
+<ul>
+<li>awdaw<blockquote>
+<p>adawd</p>
+<blockquote>
+<p>awdawdwad</p>
+<blockquote>
+<p>awdawd</p>
+<blockquote>
+<p>dawdwadaw</p>
+</blockquote>
+</blockquote>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+<blockquote>
+<p>区块中使用列表</p>
+<ol>
+<li>有序</li>
+</ol>
+<ul>
+<li>无序</li>
+</ul>
+<ol start="2">
+<li>有序</li>
+</ol>
+<ul>
+<li>无序</li>
+</ul>
+</blockquote>
+<ol>
+<li>列表中使用区块<blockquote>
+<p>区块内容</p>
+<blockquote>
+<p>区块内容</p>
+</blockquote>
+</blockquote>
+</li>
+<li>列表中使用区块</li>
+</ol>
+<p><a href="www.baidu.com">百度</a><br>| awdaw | 啊达瓦 |</p>
+<p><del>ad</del></p>
+]]></content>
+      <categories>
+        <category>废话</category>
+      </categories>
+      <tags>
+        <tag>废话</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>three</title>
     <url>/2019/10/22/three/</url>
     <content><![CDATA[<p>#阿瓦达dadw<br>  asdadas ddasd<br>  <img src="/.com//6%E8%8A%B1.jpg" alt="haotu"><br>adwawdad<br>awdawd</p>
