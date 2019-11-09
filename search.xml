@@ -1,19 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>32</title>
-    <url>/2019/11/09/32-1/</url>
-    <content><![CDATA[]]></content>
+    <title>Hexo的日常操作</title>
+    <url>/2019/11/09/engineer/HexoCode/</url>
+    <content><![CDATA[<h1 id="博文的写作"><a href="#博文的写作" class="headerlink" title="博文的写作"></a>博文的写作</h1><blockquote>
+<p>hexo new [Layout] <code>&lt;</code>title<code>&gt;</code></p>
+</blockquote>
+<p> <a href="https://hexo.io/zh-cn/docs/writing" target="_blank" rel="noopener">参考文档</a> <a href="http://theme-next.iissnan.com/getting-started.html" target="_blank" rel="noopener">参考文档2</a><br>  默认的布局(Layout)是post，可以通过改<code>_config.yml</code>中的<code>default_layout</code>参数来指定默认布局。</p>
+<h2 id="布局-Layout"><a href="#布局-Layout" class="headerlink" title="布局(Layout)"></a>布局(Layout)</h2><ul>
+<li>默认文章布局有<code>post</code>,<code>page</code>和<code>draft</code>。</li>
+<li>在创建不同类型的文件的时候会被保存在不同的路径上；</li>
+<li>而自定义的布局会和post相同，被保持在<code>source/_posts</code>文件夹中。</li>
+</ul>
+<h2 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h2><p>Hexo 的一种特殊布局：draft，这种布局在建立时会被保存到 source/_drafts 文件夹，您可通过 publish 命令将草稿移动到 source/_posts 文件夹，该命令的使用方式与 new 十分类似，您也可在命令中指定 layout 来指定布局。</p>
+<pre><code>$ hexo publish [layout] &lt;title&gt;</code></pre><p>草稿默认不会显示在页面中，您可在执行时加上 –draft 参数，或是把 render_drafts 参数设为 true 来预览草稿。</p>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p><img src="/.com//123.jpg" alt="没有描述"></p>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>当想强制定义自己创建文件的路径时可以在命令行中加上<code>--path</code>字段<br>比如：<code>$ hexo new --path engineer/Code &quot;Hexo&quot;</code></li>
+</ol>
+]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
   </entry>
   <entry>
-    <title>32</title>
-    <url>/2019/11/09/32/</url>
-    <content><![CDATA[]]></content>
+    <title>Atom编写MarkDown</title>
+    <url>/2019/11/09/engineer/AtomMD/</url>
+    <content><![CDATA[<h1 id="Atom简介"><a href="#Atom简介" class="headerlink" title="Atom简介"></a>Atom简介</h1><ul>
+<li>Atom是GitHub开发的一款跨平台（Windows、Mac、Linux）文本编辑器，2015年Atom正式发布1.0版，开源，至于收费目前还没有听说，传言成熟后商用会收费；</li>
+<li>Atom是基于web技术构建的，界面看起来比其他的IDE更美观、更现代化。</li>
+</ul>
+<h1 id="Atom常用快捷键"><a href="#Atom常用快捷键" class="headerlink" title="Atom常用快捷键"></a>Atom常用快捷键</h1><pre><code>Crtl+Shift+M    打开默认Markdown实时预览
+Crtl+Shift+p    打开搜索面板，可以查询安装包、Themes等各种选项
+Crtl+Shift+f    全局查找和替换(默认不区分大小写，Crtl+Shift+c可以切换是否区分)
+Crtl+f          文件内查找和替换(默认不区分大小写，Crtl+Shift+c可以切换是否区分)
+Crtl+\          显示或隐藏目录树
+Crtl+Alt+b      格式化代码（需要安装atom-beautify）</code></pre>]]></content>
+      <categories>
+        <category>教程</category>
+      </categories>
+      <tags>
+        <tag>教程</tag>
+      </tags>
   </entry>
   <entry>
-    <title>awdawd</title>
-    <url>/2019/11/09/awdawd/</url>
-    <content><![CDATA[]]></content>
+    <title>xml注意事项</title>
+    <url>/2019/11/09/engineer/xml/</url>
+    <content><![CDATA[<p>##XML格式</p>
+<blockquote>
+<p>最首先（绝对是第一行）的是文档申明<br>申明格式<?xml version="1.0" encoding="UTF-8" ?></p>
+</blockquote>
+<ol>
+<li>文档声明之后的第一个标签（根标签）之后,所有的标签都要在这个之中，一个xml文件只有<strong>一个根标签</strong>，起到规范性，单元性。</li>
+</ol>
+<p>##CDATA<br>定义：非法字符集<br>其替代品不会被xml的解析器所解析<br>###内容<br>      &lt;         &lt;<br>      &gt;         &gt;<br>      &apos;       ‘<br>      &amp;        &amp;<br>      &amp;quot        “</p>
+<p><strong>CDATA 部分由 “<!--[CDATA[" 开始，由 "]]-->“ 结束：</strong></p>
+<p>##解析方式<br>###DOM：<br>把整个xml全部读到内存当中，形成树状结构。把整个文档称之为document对象。<br>缺点：如果文件很大，会内存溢出。<br>优点：如果文档比较小就解析快。可以进行文档的增删操作。<br>###SAX<br>基于事件驱动。读一行，解析一行。<br>优点：不会造成内存溢出。<br>缺点：不可以进行文档的增删操作。只能进行查询。</p>
+<p>##如何实现<br>手段：dom4j<br>位置：D:\BaiduNetdiskDownload2\09.XML&amp;tomcat(共28集)\源码笔记\code&amp;资料\资料\xml 里面的jar<br>使用跟jdbc一样build path。<br>###流程</p>
+<ol>
+<li>创建sax读取对象<br>SAXReader reader=new SAXReader();</li>
+<li>指定解析的xml源<br>Document d=reader.read(new File(“src/Xml/Damo01.xml”));<br>格式；reader.read(new File(工程下的路径地址的字符串));</li>
+<li>得到根元素<br>Element root= d.<strong>getRootElement()</strong>;</li>
+<li>获取元素<blockquote>
+<p>element.element(“stu”) : 返回该元素下的第一个stu元素<br>element.elements(); 返回该元素下的所有子元素。</p>
+</blockquote>
+</li>
+</ol>
+<p>List<Element> elements = root.elements();<br>遍历所有的stu元素<br>for (Element element : elements) {<br>获取stu元素下面的name元素<br>String name = element.element   (“name”).getText();<br>String age = element.element  (“age”).getText();<br>String address = element.element   (“address”).getText();<br>System.out.println(“name=”+name+”==age+”+age+”==address=”+address);<br>}</Element></p>
+<p>###Dom4j 的 Xpath使用</p>
+<blockquote>
+<p> dom4j里面支持Xpath的写法。 xpath其实是xml的路径语言，支持我们在解析xml的时候，能够快速的定位到具体的某一个元素。<br> 说明文档位置：D:\BaiduNetdiskDownload2\09.XML&amp;tomcat(共28集)\源码笔记\code&amp;资料\资料\xml</p>
+</blockquote>
+<ol>
+<li><p>添加jar包依赖<br>jaxen-1.1-beta-6.jar<br>位置：D:\BaiduNetdiskDownload2\09.XML&amp;tomcat(共28集)\源码笔记\code&amp;资料\资料\xml\dom4j-1.6.1\lib</p>
+</li>
+<li><p>在查找指定节点的时候，根据XPath语法规则来查找</p>
+</li>
+<li><p>后续的代码与以前的解析代码一样。</p>
+</li>
+</ol>
+<pre><code>//要想使用Xpath， 还得添加支持的jar 获取的是第一个 只返回一个。
+Element nameElement = (Element) rootElement.selectSingleNode(&quot;//name&quot;);
+System.out.println(nameElement.getText());
+
+
+System.out.println(&quot;----------------&quot;);
+
+//获取文档里面的所有name元素
+List&lt;Element&gt; list = rootElement.selectNodes(&quot;//name&quot;);
+for (Element element : list) {
+    System.out.println(element.getText());
+}</code></pre><p>注意：“//AA”双斜杠AA是所有AA标签下的，“/”代表路径</p>
+<p>##xml文档约束（看笔记）</p>
+<blockquote>
+<p>DTD<br>Schema</p>
+</blockquote>
+<p>##服务器<br>###tomcat</p>
+<ul>
+<li>是个静态的，当你更新完的时候记得重启服务器</li>
+</ul>
+<p>###1.  拷贝这个文件到webapps/ROOT底下， 在浏览器里面访问：</p>
+<pre><code>http://localhost:8080/stu.xml</code></pre><ul>
+<li><p>在webaps下面新建一个文件夹xml  , 然后拷贝文件放置到这个文件夹中</p>
+<pre><code>http://localhost:8080/xml/stu.xml
+http://localhost:8080 ： 其实对应的是到webapps/root
+http://localhost:8080/xml/ : 对应是 webapps/xml
+
+使用IP地址访问：
+
+http://192.168.37.48:8080/xml/stu.xml</code></pre></li>
+</ul>
+<p>###2. 配置虚拟路径<br>好处：自定义路径名称</p>
+<p>##小细节</p>
+<ol>
+<li>当你文件写的时候是gbk，然而保存的时候编码选择是ANSI（本地默认的本地编码，一般就是GBK）时就会乱码应为游览器的编码是UTF-8，这个时候要改变编码模式，比如UTF-8.</li>
+<li>GBK与UTF-8。比如GBK是一次性读一个字节，而中文一般是两个字节的。所以乱码问题就是编码模式没有保持一致性。</li>
+<li>但工程<strong>带有感叹号</strong>的时候，多半就是你的 Build path 中多了双重的jar文件，导致某些jar被kill了。<br>解决方式：右键工程 build path 中的configure build path，在libar的框里面把一个jar删去（remove）。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>总结</category>
+      </categories>
+      <tags>
+        <tag>总结</tag>
+      </tags>
   </entry>
   <entry>
     <title>图片管理</title>

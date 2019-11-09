@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="总结," />
 
 
 
@@ -79,12 +79,15 @@
 
 
 
+<meta name="description" content="##XML格式  最首先（绝对是第一行）的是文档申明申明格式   文档声明之后的第一个标签（根标签）之后,所有的标签都要在这个之中，一个xml文件只有一个根标签，起到规范性，单元性。  ##CDATA定义：非法字符集其替代品不会被xml的解析器所解析###内容      &amp;lt;         &amp;lt;      &amp;gt;         &amp;gt;      &amp;apos;       ‘">
+<meta name="keywords" content="总结">
 <meta property="og:type" content="article">
-<meta property="og:title" content="32">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;09&#x2F;32-1&#x2F;index.html">
+<meta property="og:title" content="xml注意事项">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;09&#x2F;engineer&#x2F;xml&#x2F;index.html">
 <meta property="og:site_name" content="Qou的道场">
+<meta property="og:description" content="##XML格式  最首先（绝对是第一行）的是文档申明申明格式   文档声明之后的第一个标签（根标签）之后,所有的标签都要在这个之中，一个xml文件只有一个根标签，起到规范性，单元性。  ##CDATA定义：非法字符集其替代品不会被xml的解析器所解析###内容      &amp;lt;         &amp;lt;      &amp;gt;         &amp;gt;      &amp;apos;       ‘">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-09T05:54:18.007Z">
+<meta property="og:updated_time" content="2019-11-09T13:16:04.145Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -115,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/09/32-1/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/11/09/engineer/xml/"/>
 
 
 
 
 
-  <title>32 | Qou的道场</title>
+  <title>xml注意事项 | Qou的道场</title>
   
 
 
@@ -258,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/09/32-1/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/09/engineer/xml/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="QOudao">
@@ -275,7 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">32</h1>
+          <h1 class="post-title" itemprop="name headline">xml注意事项</h1>
         
 
         <div class="post-meta">
@@ -287,7 +290,7 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-09T13:54:17+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-09T21:10:29+08:00">
                 2019-11-09
               </time>
             
@@ -297,6 +300,28 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%80%BB%E7%BB%93/" itemprop="url" rel="index">
+                    <span itemprop="name">总结</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -330,7 +355,78 @@
       
 
       
-        
+        <p>##XML格式</p>
+<blockquote>
+<p>最首先（绝对是第一行）的是文档申明<br>申明格式<?xml version="1.0" encoding="UTF-8" ?></p>
+</blockquote>
+<ol>
+<li>文档声明之后的第一个标签（根标签）之后,所有的标签都要在这个之中，一个xml文件只有<strong>一个根标签</strong>，起到规范性，单元性。</li>
+</ol>
+<p>##CDATA<br>定义：非法字符集<br>其替代品不会被xml的解析器所解析<br>###内容<br>      &lt;         &lt;<br>      &gt;         &gt;<br>      &apos;       ‘<br>      &amp;        &amp;<br>      &amp;quot        “</p>
+<p><strong>CDATA 部分由 “<!--[CDATA[" 开始，由 "]]-->“ 结束：</strong></p>
+<p>##解析方式<br>###DOM：<br>把整个xml全部读到内存当中，形成树状结构。把整个文档称之为document对象。<br>缺点：如果文件很大，会内存溢出。<br>优点：如果文档比较小就解析快。可以进行文档的增删操作。<br>###SAX<br>基于事件驱动。读一行，解析一行。<br>优点：不会造成内存溢出。<br>缺点：不可以进行文档的增删操作。只能进行查询。</p>
+<p>##如何实现<br>手段：dom4j<br>位置：D:\BaiduNetdiskDownload2\09.XML&amp;tomcat(共28集)\源码笔记\code&amp;资料\资料\xml 里面的jar<br>使用跟jdbc一样build path。<br>###流程</p>
+<ol>
+<li>创建sax读取对象<br>SAXReader reader=new SAXReader();</li>
+<li>指定解析的xml源<br>Document d=reader.read(new File(“src/Xml/Damo01.xml”));<br>格式；reader.read(new File(工程下的路径地址的字符串));</li>
+<li>得到根元素<br>Element root= d.<strong>getRootElement()</strong>;</li>
+<li>获取元素<blockquote>
+<p>element.element(“stu”) : 返回该元素下的第一个stu元素<br>element.elements(); 返回该元素下的所有子元素。</p>
+</blockquote>
+</li>
+</ol>
+<p>List<Element> elements = root.elements();<br>遍历所有的stu元素<br>for (Element element : elements) {<br>获取stu元素下面的name元素<br>String name = element.element   (“name”).getText();<br>String age = element.element  (“age”).getText();<br>String address = element.element   (“address”).getText();<br>System.out.println(“name=”+name+”==age+”+age+”==address=”+address);<br>}</Element></p>
+<p>###Dom4j 的 Xpath使用</p>
+<blockquote>
+<p> dom4j里面支持Xpath的写法。 xpath其实是xml的路径语言，支持我们在解析xml的时候，能够快速的定位到具体的某一个元素。<br> 说明文档位置：D:\BaiduNetdiskDownload2\09.XML&amp;tomcat(共28集)\源码笔记\code&amp;资料\资料\xml</p>
+</blockquote>
+<ol>
+<li><p>添加jar包依赖<br>jaxen-1.1-beta-6.jar<br>位置：D:\BaiduNetdiskDownload2\09.XML&amp;tomcat(共28集)\源码笔记\code&amp;资料\资料\xml\dom4j-1.6.1\lib</p>
+</li>
+<li><p>在查找指定节点的时候，根据XPath语法规则来查找</p>
+</li>
+<li><p>后续的代码与以前的解析代码一样。</p>
+</li>
+</ol>
+<pre><code>//要想使用Xpath， 还得添加支持的jar 获取的是第一个 只返回一个。
+Element nameElement = (Element) rootElement.selectSingleNode(&quot;//name&quot;);
+System.out.println(nameElement.getText());
+
+
+System.out.println(&quot;----------------&quot;);
+
+//获取文档里面的所有name元素
+List&lt;Element&gt; list = rootElement.selectNodes(&quot;//name&quot;);
+for (Element element : list) {
+    System.out.println(element.getText());
+}</code></pre><p>注意：“//AA”双斜杠AA是所有AA标签下的，“/”代表路径</p>
+<p>##xml文档约束（看笔记）</p>
+<blockquote>
+<p>DTD<br>Schema</p>
+</blockquote>
+<p>##服务器<br>###tomcat</p>
+<ul>
+<li>是个静态的，当你更新完的时候记得重启服务器</li>
+</ul>
+<p>###1.  拷贝这个文件到webapps/ROOT底下， 在浏览器里面访问：</p>
+<pre><code>http://localhost:8080/stu.xml</code></pre><ul>
+<li><p>在webaps下面新建一个文件夹xml  , 然后拷贝文件放置到这个文件夹中</p>
+<pre><code>http://localhost:8080/xml/stu.xml
+http://localhost:8080 ： 其实对应的是到webapps/root
+http://localhost:8080/xml/ : 对应是 webapps/xml
+
+使用IP地址访问：
+
+http://192.168.37.48:8080/xml/stu.xml</code></pre></li>
+</ul>
+<p>###2. 配置虚拟路径<br>好处：自定义路径名称</p>
+<p>##小细节</p>
+<ol>
+<li>当你文件写的时候是gbk，然而保存的时候编码选择是ANSI（本地默认的本地编码，一般就是GBK）时就会乱码应为游览器的编码是UTF-8，这个时候要改变编码模式，比如UTF-8.</li>
+<li>GBK与UTF-8。比如GBK是一次性读一个字节，而中文一般是两个字节的。所以乱码问题就是编码模式没有保持一致性。</li>
+<li>但工程<strong>带有感叹号</strong>的时候，多半就是你的 Build path 中多了双重的jar文件，导致某些jar被kill了。<br>解决方式：右键工程 build path 中的configure build path，在libar的框里面把一个jar删去（remove）。</li>
+</ol>
+
       
     </div>
     
@@ -356,6 +452,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%80%BB%E7%BB%93/" rel="tag"># 总结</a>
+          
+        </div>
+      
 
       
       
@@ -365,8 +467,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/09/32/" rel="next" title="32">
-                <i class="fa fa-chevron-left"></i> 32
+              <a href="/2019/10/23/blog/%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%86/" rel="next" title="图片管理">
+                <i class="fa fa-chevron-left"></i> 图片管理
               </a>
             
           </div>
@@ -374,6 +476,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/09/engineer/AtomMD/" rel="prev" title="Atom编写MarkDown">
+                Atom编写MarkDown <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -452,7 +558,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -463,7 +569,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
