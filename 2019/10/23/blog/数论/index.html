@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Qou的道场">
 <meta property="og:description" content="中国剩余定理相关题面 标程int intchina(int r) { int Mi,x,y,d,ans=0;M=1; for(int i=1;i&amp;lt;=r;i++) M*=m[i]; for(int i=1;i&amp;lt;=r;i++){     M[i]=M&#x2F;m[i];     exgcd(Mi,m[i],d,x,y);     ans=(ans+Mi*x*a[i])%M; } return (a">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-23T10:02:28.507Z">
+<meta property="og:updated_time" content="2019-11-09T14:50:18.402Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -392,7 +392,19 @@ return (ans+M)%M; //正解
 <blockquote>
 <p>————未学待补————</p>
 </blockquote>
-
+<hr>
+<h1 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h1><p>先上代码</p>
+<pre><code>public static long ask(long m){//查单个欧拉函数
+        long ans=m;
+        for (long i =2; i*i&lt;=m; i++) {
+            if(m%i==0){
+                ans=ans/i*(i-1);
+                while(m%i==0)m/=i;
+            }
+        }
+        if(m&gt;1)ans=ans/m*(m-1);
+        return ans;
+    }</code></pre>
       
     </div>
     
@@ -623,7 +635,7 @@ return (ans+M)%M; //正解
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#中国剩余定理"><span class="nav-number">1.</span> <span class="nav-text">中国剩余定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程"><span class="nav-number">1.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展欧几里得"><span class="nav-number">2.</span> <span class="nav-text">扩展欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程-1"><span class="nav-number">2.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#费马小定理"><span class="nav-number">3.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二次剩余CipollaCipolla"><span class="nav-number">4.</span> <span class="nav-text">二次剩余CipollaCipolla</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#中国剩余定理"><span class="nav-number">1.</span> <span class="nav-text">中国剩余定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程"><span class="nav-number">1.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展欧几里得"><span class="nav-number">2.</span> <span class="nav-text">扩展欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程-1"><span class="nav-number">2.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#费马小定理"><span class="nav-number">3.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二次剩余CipollaCipolla"><span class="nav-number">4.</span> <span class="nav-text">二次剩余CipollaCipolla</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉函数"><span class="nav-number">5.</span> <span class="nav-text">欧拉函数</span></a></li></ol></div>
             
 
           </div>
