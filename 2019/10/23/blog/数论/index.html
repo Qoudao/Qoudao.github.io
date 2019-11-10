@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Qou的道场">
 <meta property="og:description" content="中国剩余定理相关题面 标程int intchina(int r) { int Mi,x,y,d,ans=0;M=1; for(int i=1;i&amp;lt;=r;i++) M*=m[i]; for(int i=1;i&amp;lt;=r;i++){     M[i]=M&#x2F;m[i];     exgcd(Mi,m[i],d,x,y);     ans=(ans+Mi*x*a[i])%M; } return (a">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-09T14:50:18.402Z">
+<meta property="og:updated_time" content="2019-11-10T09:19:34.769Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -393,18 +393,48 @@ return (ans+M)%M; //正解
 <p>————未学待补————</p>
 </blockquote>
 <hr>
-<h1 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h1><p>先上代码</p>
-<pre><code>public static long ask(long m){//查单个欧拉函数
-        long ans=m;
-        for (long i =2; i*i&lt;=m; i++) {
-            if(m%i==0){
-                ans=ans/i*(i-1);
-                while(m%i==0)m/=i;
+<h1 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>欧拉函数是小于x的整数中与x互质的数的个数，一般用φ(x)表示。特殊的，φ(1)=1。</p>
+<h2 id="积性函数"><a href="#积性函数" class="headerlink" title="积性函数"></a>积性函数</h2><p>先介绍一下什么是积性函数，后面将会用到。若当m与n互质时，f(m∗n)=f(m)∗f(n)，那么f是积性函数。若对任意正整数，都有f(m<em>n)=f(m)</em>f(n)成立，则f是完全积性函数。</p>
+<p>##性质</p>
+<ol>
+<li>对于质数p,它的欧拉函数等于p-1.</li>
+<li>若p为质数，n=p的k次方，则欧拉函数等于p^k-p^(k-1).比如说n的k次方分解质数只有p，则(p^k)*(1-1/p);</li>
+<li>欧拉函数是积性函数，但不是完全积性函数。若m,n互质。则φ(m∗n)=φ(m)∗φ(n).特殊的，当m=2，n为奇数时，φ(2*n)=φ(n)。</li>
+<li>当n&gt;2时，φ(n)是偶数.</li>
+<li>小于n的数中,与n互质的数的总和为：φ(n)*n/2(n&gt;1);</li>
+<li>n的因数的欧拉函数（包括1和它自己）的欧拉函数之和等于n。</li>
+<li></li>
+</ol>
+<pre><code>  public static long ask(long m){//查单个欧拉函数
+          long ans=m;
+          for (long i =2; i*i&lt;=m; i++) {
+              if(m%i==0){
+                  ans=ans/i*(i-1);
+                  while(m%i==0)m/=i;
+              }
+          }
+          if(m&gt;1)ans=ans/m*(m-1);
+          return ans;
+      }
+
+  public static void euler(int n) {//求一堆
+    phi[1]=1;//特判
+    for (int i =2; i &lt;=n; i++) {
+        if(!flag[i]) {//判断是不是质数
+            prime[++cent]=i;
+            phi[i]=i-1;
+        }
+        for (int j =1; j&lt;=cent&amp;&amp;prime[j]*i&lt;=n; j++) {//欧拉筛
+            flag[i*prime[j]]=true;//标记非质数
+            if(i%prime[j]==0) {
+                phi[i*prime[j]]=phi[i]*prime[j];//若prime[j]是i的质因子，则根据计算公式，i已经包括i*prime[j]的所有质因子
+                break;//经典欧拉筛的核心语句，这样能保证每个数只会被自己最小的因子筛掉一次
+            }else {
+                phi[i*prime[j]]=phi[i]*phi[prime[j]];//积性函数
             }
         }
-        if(m&gt;1)ans=ans/m*(m-1);
-        return ans;
-    }</code></pre>
+    }
+}</code></pre>
       
     </div>
     
@@ -635,7 +665,7 @@ return (ans+M)%M; //正解
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#中国剩余定理"><span class="nav-number">1.</span> <span class="nav-text">中国剩余定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程"><span class="nav-number">1.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展欧几里得"><span class="nav-number">2.</span> <span class="nav-text">扩展欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程-1"><span class="nav-number">2.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#费马小定理"><span class="nav-number">3.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二次剩余CipollaCipolla"><span class="nav-number">4.</span> <span class="nav-text">二次剩余CipollaCipolla</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉函数"><span class="nav-number">5.</span> <span class="nav-text">欧拉函数</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#中国剩余定理"><span class="nav-number">1.</span> <span class="nav-text">中国剩余定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程"><span class="nav-number">1.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展欧几里得"><span class="nav-number">2.</span> <span class="nav-text">扩展欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程-1"><span class="nav-number">2.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#费马小定理"><span class="nav-number">3.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二次剩余CipollaCipolla"><span class="nav-number">4.</span> <span class="nav-text">二次剩余CipollaCipolla</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉函数"><span class="nav-number">5.</span> <span class="nav-text">欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">5.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#积性函数"><span class="nav-number">5.2.</span> <span class="nav-text">积性函数</span></a></li></ol></li></ol></div>
             
 
           </div>

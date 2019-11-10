@@ -15,7 +15,10 @@
 <h2 id="草稿"><a href="#草稿" class="headerlink" title="草稿"></a>草稿</h2><p>Hexo 的一种特殊布局：draft，这种布局在建立时会被保存到 source/_drafts 文件夹，您可通过 publish 命令将草稿移动到 source/_posts 文件夹，该命令的使用方式与 new 十分类似，您也可在命令中指定 layout 来指定布局。</p>
 <pre><code>$ hexo publish [layout] &lt;title&gt;</code></pre><p>草稿默认不会显示在页面中，您可在执行时加上 –draft 参数，或是把 render_drafts 参数设为 true 来预览草稿。</p>
 <h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p><img src="/.com//123.jpg" alt="没有描述"></p>
-<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><h1 id="发布博文"><a href="#发布博文" class="headerlink" title="发布博文"></a>发布博文</h1><pre><code>hexo -c 清除缓存
+hexo -g 生成静态文件
+hexo -d 布置网站
+hexo -s 调试</code></pre><h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
 <li>当想强制定义自己创建文件的路径时可以在命令行中加上<code>--path</code>字段<br>比如：<code>$ hexo new --path engineer/Code &quot;Hexo&quot;</code></li>
 </ol>
 ]]></content>
@@ -273,18 +276,48 @@ return (ans+M)%M; //正解
 <p>————未学待补————</p>
 </blockquote>
 <hr>
-<h1 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h1><p>先上代码</p>
-<pre><code>public static long ask(long m){//查单个欧拉函数
-        long ans=m;
-        for (long i =2; i*i&lt;=m; i++) {
-            if(m%i==0){
-                ans=ans/i*(i-1);
-                while(m%i==0)m/=i;
+<h1 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>欧拉函数是小于x的整数中与x互质的数的个数，一般用φ(x)表示。特殊的，φ(1)=1。</p>
+<h2 id="积性函数"><a href="#积性函数" class="headerlink" title="积性函数"></a>积性函数</h2><p>先介绍一下什么是积性函数，后面将会用到。若当m与n互质时，f(m∗n)=f(m)∗f(n)，那么f是积性函数。若对任意正整数，都有f(m<em>n)=f(m)</em>f(n)成立，则f是完全积性函数。</p>
+<p>##性质</p>
+<ol>
+<li>对于质数p,它的欧拉函数等于p-1.</li>
+<li>若p为质数，n=p的k次方，则欧拉函数等于p^k-p^(k-1).比如说n的k次方分解质数只有p，则(p^k)*(1-1/p);</li>
+<li>欧拉函数是积性函数，但不是完全积性函数。若m,n互质。则φ(m∗n)=φ(m)∗φ(n).特殊的，当m=2，n为奇数时，φ(2*n)=φ(n)。</li>
+<li>当n&gt;2时，φ(n)是偶数.</li>
+<li>小于n的数中,与n互质的数的总和为：φ(n)*n/2(n&gt;1);</li>
+<li>n的因数的欧拉函数（包括1和它自己）的欧拉函数之和等于n。</li>
+<li></li>
+</ol>
+<pre><code>  public static long ask(long m){//查单个欧拉函数
+          long ans=m;
+          for (long i =2; i*i&lt;=m; i++) {
+              if(m%i==0){
+                  ans=ans/i*(i-1);
+                  while(m%i==0)m/=i;
+              }
+          }
+          if(m&gt;1)ans=ans/m*(m-1);
+          return ans;
+      }
+
+  public static void euler(int n) {//求一堆
+    phi[1]=1;//特判
+    for (int i =2; i &lt;=n; i++) {
+        if(!flag[i]) {//判断是不是质数
+            prime[++cent]=i;
+            phi[i]=i-1;
+        }
+        for (int j =1; j&lt;=cent&amp;&amp;prime[j]*i&lt;=n; j++) {//欧拉筛
+            flag[i*prime[j]]=true;//标记非质数
+            if(i%prime[j]==0) {
+                phi[i*prime[j]]=phi[i]*prime[j];//若prime[j]是i的质因子，则根据计算公式，i已经包括i*prime[j]的所有质因子
+                break;//经典欧拉筛的核心语句，这样能保证每个数只会被自己最小的因子筛掉一次
+            }else {
+                phi[i*prime[j]]=phi[i]*phi[prime[j]];//积性函数
             }
         }
-        if(m&gt;1)ans=ans/m*(m-1);
-        return ans;
-    }</code></pre>]]></content>
+    }
+}</code></pre>]]></content>
       <categories>
         <category>数论</category>
       </categories>
