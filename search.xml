@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>图片管理2</title>
+    <url>/2019/11/18/blog/%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%862/</url>
+    <content><![CDATA[<h1 id="awd"><a href="#awd" class="headerlink" title="awd"></a>awd</h1><p><img src="/.com//123.jpg" alt="asd"></p>
+]]></content>
+      <categories>
+        <category>杂谈</category>
+      </categories>
+      <tags>
+        <tag>水</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo的日常操作</title>
     <url>/2019/11/09/engineer/HexoCode/</url>
     <content><![CDATA[<h1 id="博文的写作"><a href="#博文的写作" class="headerlink" title="博文的写作"></a>博文的写作</h1><blockquote>
@@ -134,7 +146,7 @@ http://192.168.37.48:8080/xml/stu.xml</code></pre></li>
   <entry>
     <title>图片管理</title>
     <url>/2019/10/23/blog/%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%86/</url>
-    <content><![CDATA[<p><img src="/.com//%E5%A6%B9%E5%AD%90.png" alt="meizi"><br>真香！！</p>
+    <content><![CDATA[<p><img src="/.com//123.jpg" alt="meizi"><br>真香！！</p>
 ]]></content>
       <categories>
         <category>杂谈</category>
