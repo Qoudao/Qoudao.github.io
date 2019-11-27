@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>HTTP学习笔记</title>
+    <url>/2019/11/27/blog/HTTP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="相关名词"><a href="#相关名词" class="headerlink" title="相关名词"></a>相关名词</h1><h3 id="游览器：web-browser-资源：resourse-客户端：client"><a href="#游览器：web-browser-资源：resourse-客户端：client" class="headerlink" title="游览器：web browser  资源：resourse  客户端：client"></a>游览器：web browser  资源：resourse  客户端：client</h3><h3 id="HTTP：HyperText-Transfer-Protocol-超文本传输协议。"><a href="#HTTP：HyperText-Transfer-Protocol-超文本传输协议。" class="headerlink" title="HTTP：HyperText Transfer Protocol , 超文本传输协议。"></a>HTTP：HyperText Transfer Protocol , 超文本传输协议。</h3><h3 id="协议-指规则的约定。（Protocol）"><a href="#协议-指规则的约定。（Protocol）" class="headerlink" title="协议: 指规则的约定。（Protocol）"></a>协议: 指规则的约定。（Protocol）</h3><h3 id="FTP-File-Transfer-Protocol-文本传输协议。"><a href="#FTP-File-Transfer-Protocol-文本传输协议。" class="headerlink" title="FTP : File Transfer Protocol, 文本传输协议。"></a>FTP : File Transfer Protocol, 文本传输协议。</h3><h3 id="DNS：Domain-Name-System-域名系统。"><a href="#DNS：Domain-Name-System-域名系统。" class="headerlink" title="DNS：Domain Name System.域名系统。"></a>DNS：Domain Name System.域名系统。</h3><h3 id="TCP-Transmission-Control-Protocol-传输协议控制。"><a href="#TCP-Transmission-Control-Protocol-传输协议控制。" class="headerlink" title="TCP: Transmission Control Protocol.传输协议控制。"></a>TCP: Transmission Control Protocol.传输协议控制。</h3><h3 id="UDP：User-Data-Protocol-用户数据报协议。"><a href="#UDP：User-Data-Protocol-用户数据报协议。" class="headerlink" title="UDP：User Data Protocol.用户数据报协议。"></a>UDP：User Data Protocol.用户数据报协议。</h3><h3 id="NIC：Network-Interface-Card-网络适配器。即网卡。"><a href="#NIC：Network-Interface-Card-网络适配器。即网卡。" class="headerlink" title="NIC：Network Interface Card.网络适配器。即网卡。"></a>NIC：Network Interface Card.网络适配器。即网卡。</h3><h3 id="MAC地址：网卡所属的固定的位置。-区域网：LAN"><a href="#MAC地址：网卡所属的固定的位置。-区域网：LAN" class="headerlink" title="MAC地址：网卡所属的固定的位置。  区域网：LAN"></a>MAC地址：网卡所属的固定的位置。  区域网：LAN</h3><h3 id="ARP：用于解析ip查出对应的MAC地址的协议"><a href="#ARP：用于解析ip查出对应的MAC地址的协议" class="headerlink" title="ARP：用于解析ip查出对应的MAC地址的协议"></a>ARP：用于解析ip查出对应的MAC地址的协议</h3><h3 id="URL-统一资源标识符。URI是URL的子集。"><a href="#URL-统一资源标识符。URI是URL的子集。" class="headerlink" title="URL: 统一资源标识符。URI是URL的子集。"></a>URL: 统一资源标识符。URI是URL的子集。</h3><h3 id="URI：统一资源定位符。"><a href="#URI：统一资源定位符。" class="headerlink" title="URI：统一资源定位符。"></a>URI：统一资源定位符。</h3>]]></content>
+      <categories>
+        <category>网络</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>如何让大脑专注</title>
     <url>/2019/11/21/life/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%A4%A7%E8%84%91%E4%B8%93%E6%B3%A8/</url>
     <content><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><blockquote>

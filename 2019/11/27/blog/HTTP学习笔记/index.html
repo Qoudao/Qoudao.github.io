@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="数论," />
+  <meta name="keywords" content="笔记," />
 
 
 
@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="中国剩余定理相关题面 标程int intchina(int r) { int Mi,x,y,d,ans=0;M=1; for(int i=1;i&amp;lt;=r;i++) M*=m[i]; for(int i=1;i&amp;lt;=r;i++){     M[i]=M&#x2F;m[i];     exgcd(Mi,m[i],d,x,y);     ans=(ans+Mi*x*a[i])%M; } return (a">
-<meta name="keywords" content="数论">
+<meta name="description" content="相关名词游览器：web browser  资源：resourse  客户端：clientHTTP：HyperText Transfer Protocol , 超文本传输协议。协议: 指规则的约定。（Protocol）FTP : File Transfer Protocol, 文本传输协议。DNS：Domain Name System.域名系统。TCP: Transmission Control P">
+<meta name="keywords" content="笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数论">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;10&#x2F;23&#x2F;blog&#x2F;%E6%95%B0%E8%AE%BA&#x2F;index.html">
+<meta property="og:title" content="HTTP学习笔记">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;27&#x2F;blog&#x2F;HTTP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0&#x2F;index.html">
 <meta property="og:site_name" content="Qou的道场">
-<meta property="og:description" content="中国剩余定理相关题面 标程int intchina(int r) { int Mi,x,y,d,ans=0;M=1; for(int i=1;i&amp;lt;=r;i++) M*=m[i]; for(int i=1;i&amp;lt;=r;i++){     M[i]=M&#x2F;m[i];     exgcd(Mi,m[i],d,x,y);     ans=(ans+Mi*x*a[i])%M; } return (a">
+<meta property="og:description" content="相关名词游览器：web browser  资源：resourse  客户端：clientHTTP：HyperText Transfer Protocol , 超文本传输协议。协议: 指规则的约定。（Protocol）FTP : File Transfer Protocol, 文本传输协议。DNS：Domain Name System.域名系统。TCP: Transmission Control P">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-10T09:19:34.769Z">
+<meta property="og:updated_time" content="2019-11-27T15:15:38.960Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -118,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/10/23/blog/数论/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/11/27/blog/HTTP学习笔记/"/>
 
 
 
 
 
-  <title>数论 | Qou的道场</title>
+  <title>HTTP学习笔记 | Qou的道场</title>
   
 
 
@@ -261,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/23/blog/%E6%95%B0%E8%AE%BA/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/27/blog/HTTP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="QOudao">
@@ -278,7 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">数论</h1>
+          <h1 class="post-title" itemprop="name headline">HTTP学习笔记</h1>
         
 
         <div class="post-meta">
@@ -290,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-10-23T17:21:41+08:00">
-                2019-10-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-27T16:23:10+08:00">
+                2019-11-27
               </time>
             
 
@@ -313,8 +313,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%95%B0%E8%AE%BA/" itemprop="url" rel="index">
-                    <span itemprop="name">数论</span>
+                  <a href="/categories/%E7%BD%91%E7%BB%9C/" itemprop="url" rel="index">
+                    <span itemprop="name">网络</span>
                   </a>
                 </span>
 
@@ -355,86 +355,7 @@
       
 
       
-        <h1 id="中国剩余定理"><a href="#中国剩余定理" class="headerlink" title="中国剩余定理"></a>中国剩余定理</h1><p><a href="https://www.luogu.org/problem/P1495" target="_blank" rel="noopener">相关题面</a></p>
-<h2 id="标程"><a href="#标程" class="headerlink" title="标程"></a>标程</h2><pre><code>int intchina(int r)
-{
-int Mi,x,y,d,ans=0;M=1;
-for(int i=1;i&lt;=r;i++) M*=m[i];
-for(int i=1;i&lt;=r;i++){
-    M[i]=M/m[i];
-    exgcd(Mi,m[i],d,x,y);
-    ans=(ans+Mi*x*a[i])%M;
-}
-return (ans+M)%M; //正解
-}</code></pre><h1 id="扩展欧几里得"><a href="#扩展欧几里得" class="headerlink" title="扩展欧几里得"></a>扩展欧几里得</h1><p><a href="https://www.luogu.org/problem/P1516" target="_blank" rel="noopener">相关题面</a></p>
-<h2 id="标程-1"><a href="#标程-1" class="headerlink" title="标程"></a>标程</h2><pre><code>ll exgcd(ll a,ll b,ll &amp;x1, ll &amp;y1)
-{
-    if(!b)
-    {
-        x1=1;
-        y1=0;
-        return a;
-    }
-    ans=exgcd(b,a%b,x1,y1);
-    ll t=x1;  //交换逆向求解
-    x1=y1;
-    y1=t-a/b*y1;
-    return ans;
-}</code></pre><ol>
-<li>xa/d-yb/d=A/d这个方程就是扩展欧几里得exgcd(a,b,x,y)（忽略y前的负号），这样可以解出x，此时的x不是最优解，还要转换，即((x*(A/d))%(b/d)+(b/d))%(b/d)【求最小解的式子，不理解先背下来】。d是模。</li>
-<li>当x不是最小正数解时，写成 x = (x % b + b) % b;循环至为正；</li>
-</ol>
-<h1 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h1><blockquote>
-<p>————未学待补————</p>
-</blockquote>
-<hr>
-<h1 id="二次剩余CipollaCipolla"><a href="#二次剩余CipollaCipolla" class="headerlink" title="二次剩余CipollaCipolla"></a>二次剩余CipollaCipolla</h1><p><a href="https://www.cnblogs.com/bztMinamoto/p/10664973.html" target="_blank" rel="noopener">学习资料1</a><br><a href="https://www.luogu.org/blog/oieremtkotori/2-0v0" target="_blank" rel="noopener">学习资料2</a></p>
-<blockquote>
-<p>————未学待补————</p>
-</blockquote>
-<hr>
-<h1 id="欧拉函数"><a href="#欧拉函数" class="headerlink" title="欧拉函数"></a>欧拉函数</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>欧拉函数是小于x的整数中与x互质的数的个数，一般用φ(x)表示。特殊的，φ(1)=1。</p>
-<h2 id="积性函数"><a href="#积性函数" class="headerlink" title="积性函数"></a>积性函数</h2><p>先介绍一下什么是积性函数，后面将会用到。若当m与n互质时，f(m∗n)=f(m)∗f(n)，那么f是积性函数。若对任意正整数，都有f(m<em>n)=f(m)</em>f(n)成立，则f是完全积性函数。</p>
-<p>##性质</p>
-<ol>
-<li>对于质数p,它的欧拉函数等于p-1.</li>
-<li>若p为质数，n=p的k次方，则欧拉函数等于p^k-p^(k-1).比如说n的k次方分解质数只有p，则(p^k)*(1-1/p);</li>
-<li>欧拉函数是积性函数，但不是完全积性函数。若m,n互质。则φ(m∗n)=φ(m)∗φ(n).特殊的，当m=2，n为奇数时，φ(2*n)=φ(n)。</li>
-<li>当n&gt;2时，φ(n)是偶数.</li>
-<li>小于n的数中,与n互质的数的总和为：φ(n)*n/2(n&gt;1);</li>
-<li>n的因数的欧拉函数（包括1和它自己）的欧拉函数之和等于n。</li>
-<li></li>
-</ol>
-<pre><code>  public static long ask(long m){//查单个欧拉函数
-          long ans=m;
-          for (long i =2; i*i&lt;=m; i++) {
-              if(m%i==0){
-                  ans=ans/i*(i-1);
-                  while(m%i==0)m/=i;
-              }
-          }
-          if(m&gt;1)ans=ans/m*(m-1);
-          return ans;
-      }
-
-  public static void euler(int n) {//求一堆
-    phi[1]=1;//特判
-    for (int i =2; i &lt;=n; i++) {
-        if(!flag[i]) {//判断是不是质数
-            prime[++cent]=i;
-            phi[i]=i-1;
-        }
-        for (int j =1; j&lt;=cent&amp;&amp;prime[j]*i&lt;=n; j++) {//欧拉筛
-            flag[i*prime[j]]=true;//标记非质数
-            if(i%prime[j]==0) {
-                phi[i*prime[j]]=phi[i]*prime[j];//若prime[j]是i的质因子，则根据计算公式，i已经包括i*prime[j]的所有质因子
-                break;//经典欧拉筛的核心语句，这样能保证每个数只会被自己最小的因子筛掉一次
-            }else {
-                phi[i*prime[j]]=phi[i]*phi[prime[j]];//积性函数
-            }
-        }
-    }
-}</code></pre>
+        <h1 id="相关名词"><a href="#相关名词" class="headerlink" title="相关名词"></a>相关名词</h1><h3 id="游览器：web-browser-资源：resourse-客户端：client"><a href="#游览器：web-browser-资源：resourse-客户端：client" class="headerlink" title="游览器：web browser  资源：resourse  客户端：client"></a>游览器：web browser  资源：resourse  客户端：client</h3><h3 id="HTTP：HyperText-Transfer-Protocol-超文本传输协议。"><a href="#HTTP：HyperText-Transfer-Protocol-超文本传输协议。" class="headerlink" title="HTTP：HyperText Transfer Protocol , 超文本传输协议。"></a>HTTP：HyperText Transfer Protocol , 超文本传输协议。</h3><h3 id="协议-指规则的约定。（Protocol）"><a href="#协议-指规则的约定。（Protocol）" class="headerlink" title="协议: 指规则的约定。（Protocol）"></a>协议: 指规则的约定。（Protocol）</h3><h3 id="FTP-File-Transfer-Protocol-文本传输协议。"><a href="#FTP-File-Transfer-Protocol-文本传输协议。" class="headerlink" title="FTP : File Transfer Protocol, 文本传输协议。"></a>FTP : File Transfer Protocol, 文本传输协议。</h3><h3 id="DNS：Domain-Name-System-域名系统。"><a href="#DNS：Domain-Name-System-域名系统。" class="headerlink" title="DNS：Domain Name System.域名系统。"></a>DNS：Domain Name System.域名系统。</h3><h3 id="TCP-Transmission-Control-Protocol-传输协议控制。"><a href="#TCP-Transmission-Control-Protocol-传输协议控制。" class="headerlink" title="TCP: Transmission Control Protocol.传输协议控制。"></a>TCP: Transmission Control Protocol.传输协议控制。</h3><h3 id="UDP：User-Data-Protocol-用户数据报协议。"><a href="#UDP：User-Data-Protocol-用户数据报协议。" class="headerlink" title="UDP：User Data Protocol.用户数据报协议。"></a>UDP：User Data Protocol.用户数据报协议。</h3><h3 id="NIC：Network-Interface-Card-网络适配器。即网卡。"><a href="#NIC：Network-Interface-Card-网络适配器。即网卡。" class="headerlink" title="NIC：Network Interface Card.网络适配器。即网卡。"></a>NIC：Network Interface Card.网络适配器。即网卡。</h3><h3 id="MAC地址：网卡所属的固定的位置。-区域网：LAN"><a href="#MAC地址：网卡所属的固定的位置。-区域网：LAN" class="headerlink" title="MAC地址：网卡所属的固定的位置。  区域网：LAN"></a>MAC地址：网卡所属的固定的位置。  区域网：LAN</h3><h3 id="ARP：用于解析ip查出对应的MAC地址的协议"><a href="#ARP：用于解析ip查出对应的MAC地址的协议" class="headerlink" title="ARP：用于解析ip查出对应的MAC地址的协议"></a>ARP：用于解析ip查出对应的MAC地址的协议</h3><h3 id="URL-统一资源标识符。URI是URL的子集。"><a href="#URL-统一资源标识符。URI是URL的子集。" class="headerlink" title="URL: 统一资源标识符。URI是URL的子集。"></a>URL: 统一资源标识符。URI是URL的子集。</h3><h3 id="URI：统一资源定位符。"><a href="#URI：统一资源定位符。" class="headerlink" title="URI：统一资源定位符。"></a>URI：统一资源定位符。</h3>
       
     </div>
     
@@ -462,7 +383,7 @@ return (ans+M)%M; //正解
       
         <div class="post-tags">
           
-            <a href="/tags/%E6%95%B0%E8%AE%BA/" rel="tag"># 数论</a>
+            <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
           
         </div>
       
@@ -475,8 +396,8 @@ return (ans+M)%M; //正解
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/10/23/%E4%BC%9F%E5%A4%A7%E5%B0%9D%E8%AF%95/" rel="next" title="伟大尝试">
-                <i class="fa fa-chevron-left"></i> 伟大尝试
+              <a href="/2019/11/21/life/%E5%A6%82%E4%BD%95%E8%AE%A9%E5%A4%A7%E8%84%91%E4%B8%93%E6%B3%A8/" rel="next" title="如何让大脑专注">
+                <i class="fa fa-chevron-left"></i> 如何让大脑专注
               </a>
             
           </div>
@@ -484,10 +405,6 @@ return (ans+M)%M; //正解
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/10/23/blog/MarkDown%E8%AF%AD%E6%B3%95/" rel="prev" title="MarkDown语法">
-                MarkDown语法 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -665,7 +582,7 @@ return (ans+M)%M; //正解
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#中国剩余定理"><span class="nav-number">1.</span> <span class="nav-text">中国剩余定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程"><span class="nav-number">1.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展欧几里得"><span class="nav-number">2.</span> <span class="nav-text">扩展欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程-1"><span class="nav-number">2.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#费马小定理"><span class="nav-number">3.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二次剩余CipollaCipolla"><span class="nav-number">4.</span> <span class="nav-text">二次剩余CipollaCipolla</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉函数"><span class="nav-number">5.</span> <span class="nav-text">欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">5.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#积性函数"><span class="nav-number">5.2.</span> <span class="nav-text">积性函数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#相关名词"><span class="nav-number">1.</span> <span class="nav-text">相关名词</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#游览器：web-browser-资源：resourse-客户端：client"><span class="nav-number">1.0.1.</span> <span class="nav-text">游览器：web browser  资源：resourse  客户端：client</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTP：HyperText-Transfer-Protocol-超文本传输协议。"><span class="nav-number">1.0.2.</span> <span class="nav-text">HTTP：HyperText Transfer Protocol , 超文本传输协议。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协议-指规则的约定。（Protocol）"><span class="nav-number">1.0.3.</span> <span class="nav-text">协议: 指规则的约定。（Protocol）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FTP-File-Transfer-Protocol-文本传输协议。"><span class="nav-number">1.0.4.</span> <span class="nav-text">FTP : File Transfer Protocol, 文本传输协议。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DNS：Domain-Name-System-域名系统。"><span class="nav-number">1.0.5.</span> <span class="nav-text">DNS：Domain Name System.域名系统。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TCP-Transmission-Control-Protocol-传输协议控制。"><span class="nav-number">1.0.6.</span> <span class="nav-text">TCP: Transmission Control Protocol.传输协议控制。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UDP：User-Data-Protocol-用户数据报协议。"><span class="nav-number">1.0.7.</span> <span class="nav-text">UDP：User Data Protocol.用户数据报协议。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NIC：Network-Interface-Card-网络适配器。即网卡。"><span class="nav-number">1.0.8.</span> <span class="nav-text">NIC：Network Interface Card.网络适配器。即网卡。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MAC地址：网卡所属的固定的位置。-区域网：LAN"><span class="nav-number">1.0.9.</span> <span class="nav-text">MAC地址：网卡所属的固定的位置。  区域网：LAN</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ARP：用于解析ip查出对应的MAC地址的协议"><span class="nav-number">1.0.10.</span> <span class="nav-text">ARP：用于解析ip查出对应的MAC地址的协议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URL-统一资源标识符。URI是URL的子集。"><span class="nav-number">1.0.11.</span> <span class="nav-text">URL: 统一资源标识符。URI是URL的子集。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#URI：统一资源定位符。"><span class="nav-number">1.0.12.</span> <span class="nav-text">URI：统一资源定位符。</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
