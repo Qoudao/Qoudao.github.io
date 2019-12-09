@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="水," />
+  <meta name="keywords" content="整体二分," />
 
 
 
@@ -79,18 +79,16 @@
 
 
 
-<meta name="description" content="awd">
-<meta name="keywords" content="水">
+<meta name="description" content="概述 基于值域的整体二分。类似于一些决策单调性的分治，可以解决诸多区间第 kk 小或区间第 kk 大的问题。  &amp;nbsp;&amp;nbsp;&amp;emsp;&amp;nbsp;把复杂的问题拆分成许多可以简单求的解子问题。但是这两种算法必须离线处理，不能解决一些强制在线的题目。不过如果题目允许离线的话，这两种算法能把在线解法吊起来打（如树套树）。 时间复杂度：O（(N+M)log^2 N） &amp;emsp;&amp;emsp;">
+<meta name="keywords" content="整体二分">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图片管理2">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;18&#x2F;blog&#x2F;%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%862&#x2F;index.html">
+<meta property="og:title" content="整体二分">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;09&#x2F;blog&#x2F;%E6%95%B4%E4%BD%93%E4%BA%8C%E5%88%86&#x2F;index.html">
 <meta property="og:site_name" content="Qou的道场">
-<meta property="og:description" content="awd">
+<meta property="og:description" content="概述 基于值域的整体二分。类似于一些决策单调性的分治，可以解决诸多区间第 kk 小或区间第 kk 大的问题。  &amp;nbsp;&amp;nbsp;&amp;emsp;&amp;nbsp;把复杂的问题拆分成许多可以简单求的解子问题。但是这两种算法必须离线处理，不能解决一些强制在线的题目。不过如果题目允许离线的话，这两种算法能把在线解法吊起来打（如树套树）。 时间复杂度：O（(N+M)log^2 N） &amp;emsp;&amp;emsp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;.com&#x2F;&#x2F;123.jpg">
-<meta property="og:updated_time" content="2019-11-18T15:19:33.794Z">
+<meta property="og:updated_time" content="2019-12-09T11:47:49.078Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;.com&#x2F;&#x2F;123.jpg">
 
 
 
@@ -120,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/18/blog/图片管理2/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/12/09/blog/整体二分/"/>
 
 
 
 
 
-  <title>图片管理2 | Qou的道场</title>
+  <title>整体二分 | Qou的道场</title>
   
 
 
@@ -263,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/18/blog/%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%862/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/09/blog/%E6%95%B4%E4%BD%93%E4%BA%8C%E5%88%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="QOudao">
@@ -280,7 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">图片管理2</h1>
+          <h1 class="post-title" itemprop="name headline">整体二分</h1>
         
 
         <div class="post-meta">
@@ -292,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-18T23:16:46+08:00">
-                2019-11-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-09T19:16:36+08:00">
+                2019-12-09
               </time>
             
 
@@ -315,8 +313,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -357,7 +355,114 @@
       
 
       
-        <h1 id="awd"><a href="#awd" class="headerlink" title="awd"></a>awd</h1><p><img src="/.com//123.jpg" alt="asd"></p>
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><blockquote>
+<p>基于值域的整体二分。类似于一些决策单调性的分治，可以解决诸多区间第 kk 小或区间第 kk 大的问题。</p>
+</blockquote>
+<p>&nbsp;&nbsp;&emsp;&nbsp;把复杂的问题拆分成许多可以简单求的解子问题。但是这两种算法必须离线处理，不能解决一些强制在线的题目。不过如果题目允许离线的话，这两种算法能把在线解法吊起来打（如树套树）。</p>
+<p>时间复杂度：O（(N+M)log^2 N） &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://www.luogu.com.cn/blog/Owencodeisking/post-xue-xi-bi-ji-cdq-fen-zhi-hu-zheng-ti-er-fen" target="_blank" rel="noopener">参考资料</a></p>
+<h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><p>import java.util.Arrays;<br>import java.util.Scanner;</p>
+<p>public class Main{</p>
+<pre><code>public static class off{//每个原子化操作元素
+    private int op,x,y,z;
+    public off(){ }
+    public off(int op,int x,int y,int z){
+        this.op=op;this.x=x;
+        this.y=y;this.z=z;
+    }
+}
+public static class node{//树状数组工具
+    private int tre[],kk;
+    public int lwbt(int x) {return x&amp;(-x);};
+    public int ask(int u) {//求和
+        int ans=0;
+        for (;u&gt;0;u-=lwbt(u)) {
+            ans+=tre[u];
+        }
+        return ans;
+    }
+    public void add(int i,int k) {//单点修改
+        for (;i&lt;=kk;i+=lwbt(i)) {
+            tre[i]+=k;
+        }
+    }
+    public int query(int l,int r) {//区间求和
+        l--;
+        int sum=0;
+        while(r&gt;l) {sum+=tre[r];r-=lwbt(r);}
+        while(l&gt;r) {sum-=tre[l];l-=lwbt(l);}
+        return sum;
+    }
+}
+static off d[],sl[],sr[];
+static node T;
+static int n,m;
+static int t=0;
+static int ans[];
+public static void main(String[] args) {
+    Scanner sc=new Scanner(System.in);
+    n=sc.nextInt();m=sc.nextInt();
+    d=new off[n+2*m+1];int a[]=new int[n+1];
+    int op,x,y,z;T=new node();ans=new int[n+1];
+    T.kk=n;T.tre=new int[n+1];
+    for (int i =1;i&lt;=n; i++) {
+    a[i]=sc.nextInt();
+    d[++t]=new off(0,i,a[i],1);//赋值
+    }
+    for (int i =1; i&lt;=m; i++) {
+        op=sc.nextInt();
+        x=sc.nextInt();y=sc.nextInt();
+        if(op==1){//查询
+            d[++t]=new off(i,x,y,sc.nextInt());
+        }else{//修改
+            d[++t]=new off(0,i,a[x],-1);a[x]=y;
+            d[++t]=new off(0,i,a[x],1);
+        }
+    }
+    sl=new off[t+1];sr=new off[t+1];//备份数组
+    solve(Integer.MIN_VALUE,Integer.MAX_VALUE,1,t);
+    for (int i =1;i&lt;=m; i++) {
+        if(ans[i]==0)continue;
+        System.out.println(ans[i]);
+    }
+}
+public static void solve(int L,int R,int st,int ed){//值域二分
+    if(st&gt;ed)return;//操作序列为空
+    if(L==R){//值域达到边界
+        for (int i =st;i&lt;=ed; i++) {
+            if(d[i].op&gt;0)ans[d[i].op]=L;
+        }
+        return;
+    }
+    int mid=(L+R)&gt;&gt;1;
+    int l=0,r=0;
+    for (int i =st;i&lt;=ed; i++) {
+        if(d[i].op==0){//赋值操作
+            if(d[i].y&lt;=mid){
+                T.add(d[i].x,d[i].z);sl[++l]=d[i];
+            }else{
+             sr[++r]=d[i];
+            }
+        }else{//查询操作
+            int cnt=T.query(d[i].x,d[i].y);
+            if(cnt&gt;=d[i].z){
+                sl[++l]=d[i];
+            }else{
+                d[i].z-=cnt;sr[++r]=d[i];
+            }
+        }
+    }
+    for (int i=ed; i&gt;=st;i--) {//清空树状数组
+        if(d[i].op==0&amp;&amp;d[i].y&lt;=mid)T.add(d[i].x,-1*d[i].z);
+    }
+    for (int i =1; i&lt;=l; i++) {//拷贝
+        d[st+i-1]=sl[i];
+    }
+    for (int i =1;i&lt;=r; i++) {
+        d[st+i-1+l]=sr[i];
+    }
+    solve(L,mid,st,st+l-1);
+    solve(mid+1,R,st+l,ed);
+}</code></pre><p>}</p>
 
       
     </div>
@@ -386,7 +491,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E6%B0%B4/" rel="tag"># 水</a>
+            <a href="/tags/%E6%95%B4%E4%BD%93%E4%BA%8C%E5%88%86/" rel="tag"># 整体二分</a>
           
         </div>
       
@@ -399,8 +504,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/09/engineer/HexoCode/" rel="next" title="Hexo的日常操作">
-                <i class="fa fa-chevron-left"></i> Hexo的日常操作
+              <a href="/2019/12/07/blog/%E6%B5%85%E8%B0%88cdq%E4%B8%8E%E6%95%B4%E4%BD%93%E4%BA%8C%E5%88%86/" rel="next" title="cdq与整体二分">
+                <i class="fa fa-chevron-left"></i> cdq与整体二分
               </a>
             
           </div>
@@ -408,10 +513,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/11/19/blog/%E6%99%AF%E7%89%A9%E6%8B%8D%E6%94%9D/" rel="prev" title="景物拍攝">
-                景物拍攝 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -589,7 +690,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#awd"><span class="nav-number">1.</span> <span class="nav-text">awd</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模板"><span class="nav-number">2.</span> <span class="nav-text">模板</span></a></li></ol></div>
             
 
           </div>

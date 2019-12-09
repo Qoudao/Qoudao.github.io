@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="水," />
+  <meta name="keywords" content="笔记," />
 
 
 
@@ -79,18 +79,16 @@
 
 
 
-<meta name="description" content="awd">
-<meta name="keywords" content="水">
+<meta name="description" content="CDQ分治 用于解决离线或不强制在线问题中简化一层树结构的实用性分治算法  思想主要思想还是分治的思想，即递归处理小范围信息，之后将处理的信息合并上传。一般来说，都是先处理左区间，之后用左区间更新右区间，顺便更新答案，然后处理右区间，之后再将两个区间的信息合并。这一类分治有一个重要的思想——用一个子问题来计算对另一个子问题的贡献。 做法(1)在分治之前先按照某一关键字排序，之后在分治过程中，将信息">
+<meta name="keywords" content="笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图片管理2">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;18&#x2F;blog&#x2F;%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%862&#x2F;index.html">
+<meta property="og:title" content="cdq与整体二分">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;07&#x2F;blog&#x2F;%E6%B5%85%E8%B0%88cdq%E4%B8%8E%E6%95%B4%E4%BD%93%E4%BA%8C%E5%88%86&#x2F;index.html">
 <meta property="og:site_name" content="Qou的道场">
-<meta property="og:description" content="awd">
+<meta property="og:description" content="CDQ分治 用于解决离线或不强制在线问题中简化一层树结构的实用性分治算法  思想主要思想还是分治的思想，即递归处理小范围信息，之后将处理的信息合并上传。一般来说，都是先处理左区间，之后用左区间更新右区间，顺便更新答案，然后处理右区间，之后再将两个区间的信息合并。这一类分治有一个重要的思想——用一个子问题来计算对另一个子问题的贡献。 做法(1)在分治之前先按照某一关键字排序，之后在分治过程中，将信息">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;.com&#x2F;&#x2F;123.jpg">
-<meta property="og:updated_time" content="2019-11-18T15:19:33.794Z">
+<meta property="og:updated_time" content="2019-12-07T12:05:24.321Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;.com&#x2F;&#x2F;123.jpg">
 
 
 
@@ -120,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/18/blog/图片管理2/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/12/07/blog/浅谈cdq与整体二分/"/>
 
 
 
 
 
-  <title>图片管理2 | Qou的道场</title>
+  <title>cdq与整体二分 | Qou的道场</title>
   
 
 
@@ -263,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/18/blog/%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%862/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/07/blog/%E6%B5%85%E8%B0%88cdq%E4%B8%8E%E6%95%B4%E4%BD%93%E4%BA%8C%E5%88%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="QOudao">
@@ -280,7 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">图片管理2</h1>
+          <h1 class="post-title" itemprop="name headline">cdq与整体二分</h1>
         
 
         <div class="post-meta">
@@ -292,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-18T23:16:46+08:00">
-                2019-11-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-07T18:34:00+08:00">
+                2019-12-07
               </time>
             
 
@@ -315,8 +313,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
+                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
+                    <span itemprop="name">算法</span>
                   </a>
                 </span>
 
@@ -357,7 +355,34 @@
       
 
       
-        <h1 id="awd"><a href="#awd" class="headerlink" title="awd"></a>awd</h1><p><img src="/.com//123.jpg" alt="asd"></p>
+        <h1 id="CDQ分治"><a href="#CDQ分治" class="headerlink" title="CDQ分治"></a>CDQ分治</h1><blockquote>
+<p>用于解决离线或不强制在线问题中简化一层树结构的实用性分治算法</p>
+</blockquote>
+<h2 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h2><p>主要思想还是分治的思想，即递归处理小范围信息，之后将处理的信息合并上传。一般来说，都是先处理左区间，之后用左区间更新右区间，顺便更新答案，然后处理右区间，之后再将两个区间的信息合并。<br>这一类分治有一个重要的思想——用一个子问题来计算对另一个子问题的贡献。</p>
+<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>(1)在分治之前先按照某一关键字排序，之后在分治过程中，将信息按照时间分成前后两部分，这样避免了多次排序。</p>
+<p>(2)在分治过程中，利用归并排序的方式将两个有序序列合并，将O(nlog)的排序变为O(n)的归并。</p>
+<p>(3)在分治过程中，利用树状数组解决问题，除非必须用到别的东西。</p>
+<p>(4)在分治过程中，利用有序的性质可以发现，逆序也是有序的，并且满足一些正好与正序相反，这样可以避免重复排序。</p>
+<p>(5)在分治之前尽可能的简化不必要的信息，这样能减少整个代码的常数。</p>
+<p>(6)另外，在更新右区间或者合并的时候，尽量选择常数与时间复杂度较小的算法，比如说能用单调队列就不要用斜率优化，能用斜率优化就不要用决策单调性。</p>
+<h3 id="CDQ套CDQ"><a href="#CDQ套CDQ" class="headerlink" title="CDQ套CDQ"></a>CDQ套CDQ</h3><p><strong><a href="https://blog.csdn.net/weixin_33890499/article/details/94674020" target="_blank" rel="noopener">以下为借鉴内容</a></strong></p>
+<h4 id="四维偏序问题"><a href="#四维偏序问题" class="headerlink" title="四维偏序问题"></a>四维偏序问题</h4><p><strong>给定N(N&lt;=20000)个有序四元组(a,b,c,d)，求对于每一个四元组(a,b,c,d)，有多少个四元组(a2,b2,c2,d2)满足a2&lt;a &amp;&amp; b2&lt;b &amp;&amp; c2&lt;c &amp;&amp; d2&lt;d。</strong></p>
+<p>这个问题很容易用树套树解决，但是树套树巨大的常数和空间消耗往往是性能的瓶颈。记得我们之前说过，CDQ分<br>治能代替复杂的数据结构，并将问题“降维”。这里，我们就用双重嵌套的CDQ分治，把这个问题继续降维，避免使用树套树。</p>
+<p>回忆二维偏序问题，我们对第一维分治之后，所有的二元组被我们划分为了左右两部分，左边和右边各自的内部问题已经通过递归解决，剩下要考虑的就是左边的修改对右边的查询的影响。我们不妨把分治后的二元组重新标记一下，左边的为(L,b)，右边的为(R,b)。这时候，(a1,b1)对(a2,b2)有影响，当且仅当a1 == L &amp;&amp; a2 == R &amp;&amp; b1 &lt; b2。然后我们按照b的顺序合并，解决了这一问题。</p>
+<p>对于三维偏序问题也是一样的，对第一维分治并且重新标记之后，只有(L,b1,c1)可能对(R,b2,c2)有影响。我们用“按顺序归并”保证b元素的顺序，用树状数组保证c元素的顺序。</p>
+<p>对于四维偏序问题，我们也按照这样的思路进行下去。对第一维分治，并把所有元素重新标记为(L,b,c,d)和(R,b,c,d)，然后按照b的顺序合并。注意，我们在这里只是做<strong>合并</strong>，并不用任何数据结构对c和d加以维护。</p>
+<p>合并完之后，我们得到了一个按照b值升序排列的序列，现在，我们把这个序列复制一份，用CDQ分治统计刚刚我们没有统计的信息——<strong>左边的修改对右边的查询的影响。</strong></p>
+<p>这时候这个序列仅仅是b值有序，但是a值是杂乱无章的，不过我们之前已经对a值进行了<strong>重新标记</strong>，现在a值只可能是L或者R。<br>我们对b值进行分治，递归处理左右两边的子问题（别忘了我们现在要处理的问题是“在第一维分治之后，左边的修改对右边的查询的影响”）。然后，把所有b值也重新标号为L和R，于是我们得到了这样一个序列(L/R,L/R,c,d)。注意，现在只有(L,L,c,d)可能对(R,R,c,d)产生影响！请读者仔细考虑这个条件，这是理解多重CDQ分治的关键！</p>
+<p>然后我们按照c值从小到大进行合并，这保证了统计时c值的顺序，同时用树状数组维护d值的信息，保证考虑到d值的顺序。只有一个元素为(L,L,c,d)的时候，它才可能影响到后面的查询；只有一个元素为(R,R,c,d)的时候，它才可能收到前面的修改的影响。即，我们在归并的时候，把一个d值加入树状数组，当且仅当这个四元组的a == L &amp;&amp; b == L；我们向树状数组查询d值的信息并应用到这个查询上面，当且仅当这个四元组的a == R &amp;&amp; b == R。</p>
+<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><ol>
+<li>对第一维进行排序。</li>
+<li>对第一维重新标号，然后对第一维分治，递归解决子问题，按照第二维的顺序合并。此时只是单纯的合并，并不进行统计。</li>
+<li><strong>把合并后的序列复制一份</strong>，并对第二维重新标号，在复制的那一份中进行CDQ分治。即对第二维分治，递归解决子问题，按照第三维的顺序合并。合并过程中用树状数组维护第四维的信息。</li>
+</ol>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li>清空树状数组的时候，最好不要用函数清空,比如<strong>Arrays.fill(t.tre,0);</strong></li>
+<li>赋值函数：<strong>System.arraycopy(s,1,a,L,v);</strong></li>
+</ol>
 
       
     </div>
@@ -386,7 +411,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E6%B0%B4/" rel="tag"># 水</a>
+            <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
           
         </div>
       
@@ -399,8 +424,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/09/engineer/HexoCode/" rel="next" title="Hexo的日常操作">
-                <i class="fa fa-chevron-left"></i> Hexo的日常操作
+              <a href="/2019/12/07/blog/%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93%E6%9D%BF%E5%AD%90/" rel="next" title="简单实用的板子">
+                <i class="fa fa-chevron-left"></i> 简单实用的板子
               </a>
             
           </div>
@@ -409,8 +434,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/11/19/blog/%E6%99%AF%E7%89%A9%E6%8B%8D%E6%94%9D/" rel="prev" title="景物拍攝">
-                景物拍攝 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/12/09/blog/%E6%95%B4%E4%BD%93%E4%BA%8C%E5%88%86/" rel="prev" title="整体二分">
+                整体二分 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -589,7 +614,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#awd"><span class="nav-number">1.</span> <span class="nav-text">awd</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#CDQ分治"><span class="nav-number">1.</span> <span class="nav-text">CDQ分治</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#思想"><span class="nav-number">1.1.</span> <span class="nav-text">思想</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#做法"><span class="nav-number">1.2.</span> <span class="nav-text">做法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#CDQ套CDQ"><span class="nav-number">1.2.1.</span> <span class="nav-text">CDQ套CDQ</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#四维偏序问题"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">四维偏序问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#过程"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">1.2.2.</span> <span class="nav-text">注意事项</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

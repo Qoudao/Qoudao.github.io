@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="水," />
+  <meta name="keywords" content="板子," />
 
 
 
@@ -79,18 +79,16 @@
 
 
 
-<meta name="description" content="awd">
-<meta name="keywords" content="水">
+<meta name="description" content="快读快输板子public class 快读快输 {     public static void main(String[] args) throws IOException {         Input in = new Input();&#x2F;&#x2F;输入         StringBuilder sb = new StringBuilder();&#x2F;&#x2F;输出         int n=in.nextI">
+<meta name="keywords" content="板子">
 <meta property="og:type" content="article">
-<meta property="og:title" content="图片管理2">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;18&#x2F;blog&#x2F;%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%862&#x2F;index.html">
+<meta property="og:title" content="简单实用的板子">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;07&#x2F;blog&#x2F;%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93%E6%9D%BF%E5%AD%90&#x2F;index.html">
 <meta property="og:site_name" content="Qou的道场">
-<meta property="og:description" content="awd">
+<meta property="og:description" content="快读快输板子public class 快读快输 {     public static void main(String[] args) throws IOException {         Input in = new Input();&#x2F;&#x2F;输入         StringBuilder sb = new StringBuilder();&#x2F;&#x2F;输出         int n=in.nextI">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;.com&#x2F;&#x2F;123.jpg">
-<meta property="og:updated_time" content="2019-11-18T15:19:33.794Z">
+<meta property="og:updated_time" content="2019-12-08T04:12:47.197Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http:&#x2F;&#x2F;yoursite.com&#x2F;.com&#x2F;&#x2F;123.jpg">
 
 
 
@@ -120,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/11/18/blog/图片管理2/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/12/07/blog/快读快输板子/"/>
 
 
 
 
 
-  <title>图片管理2 | Qou的道场</title>
+  <title>简单实用的板子 | Qou的道场</title>
   
 
 
@@ -263,7 +261,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/18/blog/%E5%9B%BE%E7%89%87%E7%AE%A1%E7%90%862/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/07/blog/%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93%E6%9D%BF%E5%AD%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="QOudao">
@@ -280,7 +278,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">图片管理2</h1>
+          <h1 class="post-title" itemprop="name headline">简单实用的板子</h1>
         
 
         <div class="post-meta">
@@ -292,8 +290,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-11-18T23:16:46+08:00">
-                2019-11-18
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-07T18:23:51+08:00">
+                2019-12-07
               </time>
             
 
@@ -315,8 +313,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index">
-                    <span itemprop="name">杂谈</span>
+                  <a href="/categories/%E6%9D%BF%E5%AD%90/" itemprop="url" rel="index">
+                    <span itemprop="name">板子</span>
                   </a>
                 </span>
 
@@ -357,8 +355,48 @@
       
 
       
-        <h1 id="awd"><a href="#awd" class="headerlink" title="awd"></a>awd</h1><p><img src="/.com//123.jpg" alt="asd"></p>
-
+        <h1 id="快读快输板子"><a href="#快读快输板子" class="headerlink" title="快读快输板子"></a>快读快输板子</h1><pre><code>public class 快读快输 {
+    public static void main(String[] args) throws IOException {
+        Input in = new Input();//输入
+        StringBuilder sb = new StringBuilder();//输出
+        int n=in.nextInt();
+        sb.append(n+&quot;\n&quot;);
+        System.out.println(sb);
+    }
+    public static class Input {
+        StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+        public int nextInt() throws IOException {
+            in.nextToken();
+            return (int)in.nval;
+        }
+        public long nextLong() throws IOException {
+            in.nextToken();
+            return (long)in.nval;
+        }
+ }
+}</code></pre><h1 id="树状数组简单工具板子"><a href="#树状数组简单工具板子" class="headerlink" title="树状数组简单工具板子"></a>树状数组简单工具板子</h1><pre><code>public static class node{
+        private int tre[],kk;
+        public int lwbt(int x) {return x&amp;(-x);};
+        public int ask(int u) {
+            int ans=0;
+            for (;u&gt;0;u-=lwbt(u)) {
+                ans+=tre[u];
+            }
+            return ans;
+        }
+        public void add(int i,int k) {
+            for (;i&lt;=kk;i+=lwbt(i)) {
+                tre[i]+=k;
+            }
+        }
+    public int query(int l,int r) {
+            l--;
+            int sum=0;
+            while(r&gt;l) {sum+=tre[r];r-=lwbt(r);}
+            while(l&gt;r) {sum+=tre[l];l-=lwbt(l);}
+            return sum;
+        }
+    }</code></pre>
       
     </div>
     
@@ -386,7 +424,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/%E6%B0%B4/" rel="tag"># 水</a>
+            <a href="/tags/%E6%9D%BF%E5%AD%90/" rel="tag"># 板子</a>
           
         </div>
       
@@ -399,8 +437,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/11/09/engineer/HexoCode/" rel="next" title="Hexo的日常操作">
-                <i class="fa fa-chevron-left"></i> Hexo的日常操作
+              <a href="/2019/11/27/blog/HTTP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next" title="HTTP学习笔记">
+                <i class="fa fa-chevron-left"></i> HTTP学习笔记
               </a>
             
           </div>
@@ -409,8 +447,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/11/19/blog/%E6%99%AF%E7%89%A9%E6%8B%8D%E6%94%9D/" rel="prev" title="景物拍攝">
-                景物拍攝 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/12/07/blog/%E6%B5%85%E8%B0%88cdq%E4%B8%8E%E6%95%B4%E4%BD%93%E4%BA%8C%E5%88%86/" rel="prev" title="cdq与整体二分">
+                cdq与整体二分 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -589,7 +627,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#awd"><span class="nav-number">1.</span> <span class="nav-text">awd</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快读快输板子"><span class="nav-number">1.</span> <span class="nav-text">快读快输板子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#树状数组简单工具板子"><span class="nav-number">2.</span> <span class="nav-text">树状数组简单工具板子</span></a></li></ol></div>
             
 
           </div>

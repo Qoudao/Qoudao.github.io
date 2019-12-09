@@ -1,6 +1,216 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>整体二分</title>
+    <url>/2019/12/09/blog/%E6%95%B4%E4%BD%93%E4%BA%8C%E5%88%86/</url>
+    <content><![CDATA[<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><blockquote>
+<p>基于值域的整体二分。类似于一些决策单调性的分治，可以解决诸多区间第 kk 小或区间第 kk 大的问题。</p>
+</blockquote>
+<p>&nbsp;&nbsp;&emsp;&nbsp;把复杂的问题拆分成许多可以简单求的解子问题。但是这两种算法必须离线处理，不能解决一些强制在线的题目。不过如果题目允许离线的话，这两种算法能把在线解法吊起来打（如树套树）。</p>
+<p>时间复杂度：O（(N+M)log^2 N） &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://www.luogu.com.cn/blog/Owencodeisking/post-xue-xi-bi-ji-cdq-fen-zhi-hu-zheng-ti-er-fen" target="_blank" rel="noopener">参考资料</a></p>
+<h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><p>import java.util.Arrays;<br>import java.util.Scanner;</p>
+<p>public class Main{</p>
+<pre><code>public static class off{//每个原子化操作元素
+    private int op,x,y,z;
+    public off(){ }
+    public off(int op,int x,int y,int z){
+        this.op=op;this.x=x;
+        this.y=y;this.z=z;
+    }
+}
+public static class node{//树状数组工具
+    private int tre[],kk;
+    public int lwbt(int x) {return x&amp;(-x);};
+    public int ask(int u) {//求和
+        int ans=0;
+        for (;u&gt;0;u-=lwbt(u)) {
+            ans+=tre[u];
+        }
+        return ans;
+    }
+    public void add(int i,int k) {//单点修改
+        for (;i&lt;=kk;i+=lwbt(i)) {
+            tre[i]+=k;
+        }
+    }
+    public int query(int l,int r) {//区间求和
+        l--;
+        int sum=0;
+        while(r&gt;l) {sum+=tre[r];r-=lwbt(r);}
+        while(l&gt;r) {sum-=tre[l];l-=lwbt(l);}
+        return sum;
+    }
+}
+static off d[],sl[],sr[];
+static node T;
+static int n,m;
+static int t=0;
+static int ans[];
+public static void main(String[] args) {
+    Scanner sc=new Scanner(System.in);
+    n=sc.nextInt();m=sc.nextInt();
+    d=new off[n+2*m+1];int a[]=new int[n+1];
+    int op,x,y,z;T=new node();ans=new int[n+1];
+    T.kk=n;T.tre=new int[n+1];
+    for (int i =1;i&lt;=n; i++) {
+    a[i]=sc.nextInt();
+    d[++t]=new off(0,i,a[i],1);//赋值
+    }
+    for (int i =1; i&lt;=m; i++) {
+        op=sc.nextInt();
+        x=sc.nextInt();y=sc.nextInt();
+        if(op==1){//查询
+            d[++t]=new off(i,x,y,sc.nextInt());
+        }else{//修改
+            d[++t]=new off(0,i,a[x],-1);a[x]=y;
+            d[++t]=new off(0,i,a[x],1);
+        }
+    }
+    sl=new off[t+1];sr=new off[t+1];//备份数组
+    solve(Integer.MIN_VALUE,Integer.MAX_VALUE,1,t);
+    for (int i =1;i&lt;=m; i++) {
+        if(ans[i]==0)continue;
+        System.out.println(ans[i]);
+    }
+}
+public static void solve(int L,int R,int st,int ed){//值域二分
+    if(st&gt;ed)return;//操作序列为空
+    if(L==R){//值域达到边界
+        for (int i =st;i&lt;=ed; i++) {
+            if(d[i].op&gt;0)ans[d[i].op]=L;
+        }
+        return;
+    }
+    int mid=(L+R)&gt;&gt;1;
+    int l=0,r=0;
+    for (int i =st;i&lt;=ed; i++) {
+        if(d[i].op==0){//赋值操作
+            if(d[i].y&lt;=mid){
+                T.add(d[i].x,d[i].z);sl[++l]=d[i];
+            }else{
+             sr[++r]=d[i];
+            }
+        }else{//查询操作
+            int cnt=T.query(d[i].x,d[i].y);
+            if(cnt&gt;=d[i].z){
+                sl[++l]=d[i];
+            }else{
+                d[i].z-=cnt;sr[++r]=d[i];
+            }
+        }
+    }
+    for (int i=ed; i&gt;=st;i--) {//清空树状数组
+        if(d[i].op==0&amp;&amp;d[i].y&lt;=mid)T.add(d[i].x,-1*d[i].z);
+    }
+    for (int i =1; i&lt;=l; i++) {//拷贝
+        d[st+i-1]=sl[i];
+    }
+    for (int i =1;i&lt;=r; i++) {
+        d[st+i-1+l]=sr[i];
+    }
+    solve(L,mid,st,st+l-1);
+    solve(mid+1,R,st+l,ed);
+}</code></pre><p>}</p>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>整体二分</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>cdq与整体二分</title>
+    <url>/2019/12/07/blog/%E6%B5%85%E8%B0%88cdq%E4%B8%8E%E6%95%B4%E4%BD%93%E4%BA%8C%E5%88%86/</url>
+    <content><![CDATA[<h1 id="CDQ分治"><a href="#CDQ分治" class="headerlink" title="CDQ分治"></a>CDQ分治</h1><blockquote>
+<p>用于解决离线或不强制在线问题中简化一层树结构的实用性分治算法</p>
+</blockquote>
+<h2 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h2><p>主要思想还是分治的思想，即递归处理小范围信息，之后将处理的信息合并上传。一般来说，都是先处理左区间，之后用左区间更新右区间，顺便更新答案，然后处理右区间，之后再将两个区间的信息合并。<br>这一类分治有一个重要的思想——用一个子问题来计算对另一个子问题的贡献。</p>
+<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>(1)在分治之前先按照某一关键字排序，之后在分治过程中，将信息按照时间分成前后两部分，这样避免了多次排序。</p>
+<p>(2)在分治过程中，利用归并排序的方式将两个有序序列合并，将O(nlog)的排序变为O(n)的归并。</p>
+<p>(3)在分治过程中，利用树状数组解决问题，除非必须用到别的东西。</p>
+<p>(4)在分治过程中，利用有序的性质可以发现，逆序也是有序的，并且满足一些正好与正序相反，这样可以避免重复排序。</p>
+<p>(5)在分治之前尽可能的简化不必要的信息，这样能减少整个代码的常数。</p>
+<p>(6)另外，在更新右区间或者合并的时候，尽量选择常数与时间复杂度较小的算法，比如说能用单调队列就不要用斜率优化，能用斜率优化就不要用决策单调性。</p>
+<h3 id="CDQ套CDQ"><a href="#CDQ套CDQ" class="headerlink" title="CDQ套CDQ"></a>CDQ套CDQ</h3><p><strong><a href="https://blog.csdn.net/weixin_33890499/article/details/94674020" target="_blank" rel="noopener">以下为借鉴内容</a></strong></p>
+<h4 id="四维偏序问题"><a href="#四维偏序问题" class="headerlink" title="四维偏序问题"></a>四维偏序问题</h4><p><strong>给定N(N&lt;=20000)个有序四元组(a,b,c,d)，求对于每一个四元组(a,b,c,d)，有多少个四元组(a2,b2,c2,d2)满足a2&lt;a &amp;&amp; b2&lt;b &amp;&amp; c2&lt;c &amp;&amp; d2&lt;d。</strong></p>
+<p>这个问题很容易用树套树解决，但是树套树巨大的常数和空间消耗往往是性能的瓶颈。记得我们之前说过，CDQ分<br>治能代替复杂的数据结构，并将问题“降维”。这里，我们就用双重嵌套的CDQ分治，把这个问题继续降维，避免使用树套树。</p>
+<p>回忆二维偏序问题，我们对第一维分治之后，所有的二元组被我们划分为了左右两部分，左边和右边各自的内部问题已经通过递归解决，剩下要考虑的就是左边的修改对右边的查询的影响。我们不妨把分治后的二元组重新标记一下，左边的为(L,b)，右边的为(R,b)。这时候，(a1,b1)对(a2,b2)有影响，当且仅当a1 == L &amp;&amp; a2 == R &amp;&amp; b1 &lt; b2。然后我们按照b的顺序合并，解决了这一问题。</p>
+<p>对于三维偏序问题也是一样的，对第一维分治并且重新标记之后，只有(L,b1,c1)可能对(R,b2,c2)有影响。我们用“按顺序归并”保证b元素的顺序，用树状数组保证c元素的顺序。</p>
+<p>对于四维偏序问题，我们也按照这样的思路进行下去。对第一维分治，并把所有元素重新标记为(L,b,c,d)和(R,b,c,d)，然后按照b的顺序合并。注意，我们在这里只是做<strong>合并</strong>，并不用任何数据结构对c和d加以维护。</p>
+<p>合并完之后，我们得到了一个按照b值升序排列的序列，现在，我们把这个序列复制一份，用CDQ分治统计刚刚我们没有统计的信息——<strong>左边的修改对右边的查询的影响。</strong></p>
+<p>这时候这个序列仅仅是b值有序，但是a值是杂乱无章的，不过我们之前已经对a值进行了<strong>重新标记</strong>，现在a值只可能是L或者R。<br>我们对b值进行分治，递归处理左右两边的子问题（别忘了我们现在要处理的问题是“在第一维分治之后，左边的修改对右边的查询的影响”）。然后，把所有b值也重新标号为L和R，于是我们得到了这样一个序列(L/R,L/R,c,d)。注意，现在只有(L,L,c,d)可能对(R,R,c,d)产生影响！请读者仔细考虑这个条件，这是理解多重CDQ分治的关键！</p>
+<p>然后我们按照c值从小到大进行合并，这保证了统计时c值的顺序，同时用树状数组维护d值的信息，保证考虑到d值的顺序。只有一个元素为(L,L,c,d)的时候，它才可能影响到后面的查询；只有一个元素为(R,R,c,d)的时候，它才可能收到前面的修改的影响。即，我们在归并的时候，把一个d值加入树状数组，当且仅当这个四元组的a == L &amp;&amp; b == L；我们向树状数组查询d值的信息并应用到这个查询上面，当且仅当这个四元组的a == R &amp;&amp; b == R。</p>
+<h4 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h4><ol>
+<li>对第一维进行排序。</li>
+<li>对第一维重新标号，然后对第一维分治，递归解决子问题，按照第二维的顺序合并。此时只是单纯的合并，并不进行统计。</li>
+<li><strong>把合并后的序列复制一份</strong>，并对第二维重新标号，在复制的那一份中进行CDQ分治。即对第二维分治，递归解决子问题，按照第三维的顺序合并。合并过程中用树状数组维护第四维的信息。</li>
+</ol>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ol>
+<li>清空树状数组的时候，最好不要用函数清空,比如<strong>Arrays.fill(t.tre,0);</strong></li>
+<li>赋值函数：<strong>System.arraycopy(s,1,a,L,v);</strong></li>
+</ol>
+]]></content>
+      <categories>
+        <category>算法</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简单实用的板子</title>
+    <url>/2019/12/07/blog/%E5%BF%AB%E8%AF%BB%E5%BF%AB%E8%BE%93%E6%9D%BF%E5%AD%90/</url>
+    <content><![CDATA[<h1 id="快读快输板子"><a href="#快读快输板子" class="headerlink" title="快读快输板子"></a>快读快输板子</h1><pre><code>public class 快读快输 {
+    public static void main(String[] args) throws IOException {
+        Input in = new Input();//输入
+        StringBuilder sb = new StringBuilder();//输出
+        int n=in.nextInt();
+        sb.append(n+&quot;\n&quot;);
+        System.out.println(sb);
+    }
+    public static class Input {
+        StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+        public int nextInt() throws IOException {
+            in.nextToken();
+            return (int)in.nval;
+        }
+        public long nextLong() throws IOException {
+            in.nextToken();
+            return (long)in.nval;
+        }
+ }
+}</code></pre><h1 id="树状数组简单工具板子"><a href="#树状数组简单工具板子" class="headerlink" title="树状数组简单工具板子"></a>树状数组简单工具板子</h1><pre><code>public static class node{
+        private int tre[],kk;
+        public int lwbt(int x) {return x&amp;(-x);};
+        public int ask(int u) {
+            int ans=0;
+            for (;u&gt;0;u-=lwbt(u)) {
+                ans+=tre[u];
+            }
+            return ans;
+        }
+        public void add(int i,int k) {
+            for (;i&lt;=kk;i+=lwbt(i)) {
+                tre[i]+=k;
+            }
+        }
+    public int query(int l,int r) {
+            l--;
+            int sum=0;
+            while(r&gt;l) {sum+=tre[r];r-=lwbt(r);}
+            while(l&gt;r) {sum+=tre[l];l-=lwbt(l);}
+            return sum;
+        }
+    }</code></pre>]]></content>
+      <categories>
+        <category>板子</category>
+      </categories>
+      <tags>
+        <tag>板子</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>HTTP学习笔记</title>
     <url>/2019/11/27/blog/HTTP%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="相关名词"><a href="#相关名词" class="headerlink" title="相关名词"></a>相关名词</h1><h3 id="游览器：web-browser-资源：resourse-客户端：client"><a href="#游览器：web-browser-资源：resourse-客户端：client" class="headerlink" title="游览器：web browser  资源：resourse  客户端：client"></a>游览器：web browser  资源：resourse  客户端：client</h3><h3 id="HTTP：HyperText-Transfer-Protocol-超文本传输协议。"><a href="#HTTP：HyperText-Transfer-Protocol-超文本传输协议。" class="headerlink" title="HTTP：HyperText Transfer Protocol , 超文本传输协议。"></a>HTTP：HyperText Transfer Protocol , 超文本传输协议。</h3><h3 id="协议-指规则的约定。（Protocol）"><a href="#协议-指规则的约定。（Protocol）" class="headerlink" title="协议: 指规则的约定。（Protocol）"></a>协议: 指规则的约定。（Protocol）</h3><h3 id="FTP-File-Transfer-Protocol-文本传输协议。"><a href="#FTP-File-Transfer-Protocol-文本传输协议。" class="headerlink" title="FTP : File Transfer Protocol, 文本传输协议。"></a>FTP : File Transfer Protocol, 文本传输协议。</h3><h3 id="DNS：Domain-Name-System-域名系统。"><a href="#DNS：Domain-Name-System-域名系统。" class="headerlink" title="DNS：Domain Name System.域名系统。"></a>DNS：Domain Name System.域名系统。</h3><h3 id="TCP-Transmission-Control-Protocol-传输协议控制。"><a href="#TCP-Transmission-Control-Protocol-传输协议控制。" class="headerlink" title="TCP: Transmission Control Protocol.传输协议控制。"></a>TCP: Transmission Control Protocol.传输协议控制。</h3><h3 id="UDP：User-Data-Protocol-用户数据报协议。"><a href="#UDP：User-Data-Protocol-用户数据报协议。" class="headerlink" title="UDP：User Data Protocol.用户数据报协议。"></a>UDP：User Data Protocol.用户数据报协议。</h3><h3 id="NIC：Network-Interface-Card-网络适配器。即网卡。"><a href="#NIC：Network-Interface-Card-网络适配器。即网卡。" class="headerlink" title="NIC：Network Interface Card.网络适配器。即网卡。"></a>NIC：Network Interface Card.网络适配器。即网卡。</h3><h3 id="MAC地址：网卡所属的固定的位置。-区域网：LAN"><a href="#MAC地址：网卡所属的固定的位置。-区域网：LAN" class="headerlink" title="MAC地址：网卡所属的固定的位置。  区域网：LAN"></a>MAC地址：网卡所属的固定的位置。  区域网：LAN</h3><h3 id="ARP：用于解析ip查出对应的MAC地址的协议"><a href="#ARP：用于解析ip查出对应的MAC地址的协议" class="headerlink" title="ARP：用于解析ip查出对应的MAC地址的协议"></a>ARP：用于解析ip查出对应的MAC地址的协议</h3><h3 id="URL-统一资源标识符。URI是URL的子集。"><a href="#URL-统一资源标识符。URI是URL的子集。" class="headerlink" title="URL: 统一资源标识符。URI是URL的子集。"></a>URL: 统一资源标识符。URI是URL的子集。</h3><h3 id="URI：统一资源定位符。"><a href="#URI：统一资源定位符。" class="headerlink" title="URI：统一资源定位符。"></a>URI：统一资源定位符。</h3>]]></content>
@@ -287,7 +497,8 @@ ___粗斜体文本___</code></pre><h2 id="分割线"><a href="#分割线" class=
 <h2 id="下划线"><a href="#下划线" class="headerlink" title="下划线"></a>下划线</h2><blockquote>
 <p>可以通过HTML的​<code>&lt;u&gt;​</code>标签来实现</p>
 </blockquote>
-<pre><code>&lt;u&gt;带下划线的内容&lt;/u&gt;</code></pre><h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><blockquote>
+<pre><code>&lt;u&gt;带下划线的内容&lt;/u&gt;</code></pre><h2 id="首行缩进空格"><a href="#首行缩进空格" class="headerlink" title="首行缩进空格"></a>首行缩进空格</h2><p>（1） 一个空格大小的表示：<code>&amp;ensp;</code>或者<code>&amp;#8194;</code><br>（2） 两个空格大小的表示：<code>&amp;emsp;</code>或者<code>&amp;#8195;</code></p>
+<h1 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h1><blockquote>
 <p>MarkDown 支持有序列表 和 无序列表</p>
 </blockquote>
 <h2 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h2><blockquote>
@@ -338,6 +549,13 @@ ___粗斜体文本___</code></pre><h2 id="分割线"><a href="#分割线" class=
 [jyb]:https://www.jiaoyubao.cn/</code></pre><p><a href="www.baidu.con">百度</a></p>
 <h1 id="引用本地图片"><a href="#引用本地图片" class="headerlink" title="引用本地图片"></a>引用本地图片</h1><blockquote>
 <p>在hexo中把图片放在与博客同名的文件夹中，然后只用 <code>![图片描述](图片文件名)</code>就可以引用了。</p>
+</blockquote>
+<h1 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h1><h2 id="一小代码"><a href="#一小代码" class="headerlink" title="一小代码"></a>一小代码</h2><blockquote>
+<p>可以用字符 ` 括起来。</p>
+</blockquote>
+<p>比如说<code>代码</code>。</p>
+<pre><code>比如说`代码`。</code></pre><h2 id="一大代码"><a href="#一大代码" class="headerlink" title="一大代码"></a>一大代码</h2><blockquote>
+<p>整体缩进两次就行</p>
 </blockquote>
 ]]></content>
       <categories>
