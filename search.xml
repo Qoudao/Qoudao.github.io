@@ -1,6 +1,260 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Splay学习笔记</title>
+    <url>/2019/12/11/blog/Splay%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote>
+<p>伸展树（Splay）是一种平衡二叉树，即优化后的二叉查找树。伸展树可以自我调整，这就要依靠伸展操作Splay(x,S)，使得提升效率。</p>
+</blockquote>
+<p>&emsp;&emsp;假设想要对一个二叉查找树执行一系列的查找操作。为了使整个查找时间更小，被查频率高的那些条目就应当经常处于靠近树根的位置。于是想到设计一个简单方法， 在每次查找之后对树进行重构，把被查找的条目搬移到离树根近一些的地方。splay tree应运而生。splay tree是一种自调整形式的二叉查找树，它会沿着从某个节点到树根之间的路径，通过一系列的旋转把这个节点搬移到树根去。</p>
+<h1 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h1><pre><code>size[]:自身和子树大小
+num[]:该节点的数量(重复的值的个数)
+val[]:权值
+fa[]:父亲节点
+son[][2]:左右子节点
+root=0:总节点
+cent=0:记录节点编号</code></pre><h1 id="各种操作"><a href="#各种操作" class="headerlink" title="各种操作"></a>各种操作</h1><h2 id="chk操作"><a href="#chk操作" class="headerlink" title="chk操作"></a>chk操作</h2><blockquote>
+<p>辅助操作，查询节点是它父节点的左或右儿子。</p>
+</blockquote>
+<pre><code>return son[fa[x]][1]==x?1:0;</code></pre><h2 id="pushup操作"><a href="#pushup操作" class="headerlink" title="pushup操作"></a>pushup操作</h2><blockquote>
+<p>辅助操作，更新size数组的值。</p>
+</blockquote>
+<pre><code>size[x]=num[x]+size[son[x][1]]+size[son[x][0]];</code></pre><h2 id="rotate-旋转"><a href="#rotate-旋转" class="headerlink" title="rotate(旋转)"></a>rotate(旋转)</h2><blockquote>
+<p>自然语言是多么的无力,请见代码</p>
+</blockquote>
+<pre><code>if(x==root)return;
+int y=fa[x],z=fa[y],k=chk(x),w=son[x][k^1];//父亲和祖父节点，以及x相反的儿子
+son[z][chk(y)]=x;fa[x]=z;
+son[y][k]=w;fa[w]=y;
+son[x][k^1]=y;fa[y]=x;
+pushup(y);pushup(x);</code></pre><h2 id="splay伸展（核心）"><a href="#splay伸展（核心）" class="headerlink" title="splay伸展（核心）"></a>splay伸展（核心）</h2><blockquote>
+<p><strong>将一个节点一路rotate到指定节点的儿子。</strong>如果该节点、该父节点和该爷爷节点「三点一线」，那么应该先旋转父节点。</p>
+</blockquote>
+<pre><code>public static void splay(int x,int goal) {
+         if(x==0)return;
+         while(fa[x]!=goal) {//不是指定节点
+            int y=fa[x],z=fa[y];
+             if(z!=goal) {
+                 if(chk(x)==chk(y)) {//如果三点一线
+                     rotate(y);
+                 }else {
+                     rotate(x);
+                 }
+             }
+             rotate(x);
+         }
+         if(goal==0)root=x;//如果移动到根节点（fa[root]=0）
+     }</code></pre><h2 id="find操作"><a href="#find操作" class="headerlink" title="find操作"></a>find操作</h2><blockquote>
+<p>辅助操作，将<strong>最大的小于等于的数</strong>所在的节点splay到根。</p>
+</blockquote>
+<pre><code>if(root==0)return;
+int cur=root;int d=val[cur]&lt;x?1:0;
+while(son[cur][d]!=0&amp;&amp;val[cur]!=x) {
+    cur=son[cur][d];d=val[cur]&lt;x?1:0;
+}
+splay(cur,0);</code></pre><h2 id="插入（insert）操作"><a href="#插入（insert）操作" class="headerlink" title="插入（insert）操作"></a>插入（insert）操作</h2><blockquote>
+<p>从根节点开始，一路搜索下去。如果节点存在则直接自增cnt的值。否则新建节点并与父节点连边。</p>
+</blockquote>
+<p>因为新建节点时可能会拉出一条链，所以新建节点后需要将该节点splay到根节点。沿途的rotate操作可以使平衡树恢复平衡。</p>
+<pre><code>public static void insert(int x) {//插入
+        int cur=root,d=0;
+        while(cur!=0&amp;&amp;val[cur]!=x) {//往下寻找这个数的位置
+            d=cur;cur=son[cur][x&gt;val[cur]?1:0];
+        }
+        if(cur!=0) {//如果不是新数
+            num[cur]++;
+        }else {//如果是的话就新建一个节点。
+            cur=++cent;
+            if(d!=0)son[d][x&gt;val[d]?1:0]=cur;//父亲节点是真实节点
+            fa[cur]=d;size[cur]=1;num[cur]=1;
+            val[cur]=x;
+        }
+        splay(cur,0);
+    }</code></pre><h2 id="查询-kth"><a href="#查询-kth" class="headerlink" title="查询(kth)"></a>查询(kth)</h2><blockquote>
+<p>查询排名为k的数（从小到大）。从根节点开始，一路搜索下去。每次判断要走向哪个子树。注意考虑重复权值。</p>
+</blockquote>
+<pre><code>public static int kth(int k) {
+  int cur=root;
+  while(true) {
+    if(son[cur][0]!=0&amp;&amp;k&lt;=size[son[cur][0]]) {//在左边
+      cur=son[cur][0];
+    }else if(son[cur][1]!=0&amp;&amp;k&gt;size[son[cur][0]]+num[cur] ){//在右边
+      k-=size[son[cur][0]]+num[cur];
+      cur=son[cur][1];
+    }else { return cur;     }
+  }
+}</code></pre><h2 id="前驱-pre-与后继-succ"><a href="#前驱-pre-与后继-succ" class="headerlink" title="前驱(pre)与后继(succ)"></a>前驱(pre)与后继(succ)</h2><blockquote>
+<p>定义: 在序列中，比某数小但最大的数和比某数大但却最小的数。将该节点（x）find到根后，根据性质就能找到。</p>
+</blockquote>
+<p><strong>注意</strong>，为防止没有前驱或者后继的情况下，事先在树中insert一个<strong>极大</strong>节点和一个<strong>极小</strong>节点。但在操作的时候要注意这两个节点的存在。</p>
+<pre><code>public static int pre(int x) {//前驱
+        find(x);
+        if(val[root]&lt;x)return root;
+        int cur=son[root][0];
+        while(son[cur][1]!=0) cur=son[cur][1];
+        return  cur;
+    }
+  public static int succ(int x) {//后续
+          find(x);
+          if(val[root]&gt;x) return root;
+          int cur=son[root][1];
+          while(son[cur][0]!=0) cur=son[cur][0];
+          return cur;
+      }</code></pre><h2 id="查询rank-rank"><a href="#查询rank-rank" class="headerlink" title="查询rank(rank)"></a>查询rank(rank)</h2><blockquote>
+<p>查询某数的排名（从小到大）。并不需要专门写操作。将该节点find到根后返回左子树的权值数即可。(极小点也考虑进去了)</p>
+</blockquote>
+<pre><code>find(x);
+sb.append((size[son[root][0]])+&quot;\n&quot;);</code></pre><h2 id="区间反转"><a href="#区间反转" class="headerlink" title="区间反转"></a>区间反转</h2><blockquote>
+<p>向线段树打标记一样。打标记时，将和分别旋转到根节点和根节点右儿子处，那么的左子树即是区间。在其根处打上标记然后在查询大和输出中序遍历时下传标记即可。</p>
+</blockquote>
+<p><strong>注意</strong>，splay维持的性质左小右大是插入时认为的值。区间反转之后不影响。</p>
+<h2 id="总代码"><a href="#总代码" class="headerlink" title="总代码"></a>总代码</h2><pre><code>import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StreamTokenizer;
+import java.util.Scanner;
+
+public class 模板 {
+    static int size[]; //包括自身子树大小
+    static int num[];//该节点的数量
+    static int val[];//权值
+    static int fa[];//父亲节点
+    static int son[][];
+    static int root=0,cent=0;//
+    static StringBuilder sb;
+    public static void main(String[] args) throws IOException {
+        Input in = new Input();sb = new StringBuilder();
+        int n=in.nextInt();
+        size=new int[n+2];num=new int[n+2];
+        val=new int[n+2];fa=new int[n+2];
+        son=new int[n+2][2];
+        insert(Integer.MIN_VALUE);
+        insert(Integer.MAX_VALUE);
+        for (int i = 0; i &lt;n; i++) {
+            int d=in.nextInt(),x=in.nextInt();
+            switch(d) {
+            case 1: insert(x);break;
+            case 2:remove(x);break;
+            case 3:rank(x);break;//排名
+            case 4:sb.append(val[kth(x+1)]+&quot;\n&quot;);break;//排名为x的数
+            case 5:sb.append(val[pre(x)]+&quot;\n&quot;);break;//前驱
+            case 6:sb.append(val[succ(x)]+&quot;\n&quot;);break;//后续
+            }
+        }
+       System.out.println(sb);
+    }
+    public static void insert(int x) {//插入
+        int cur=root,d=0;
+        while(cur!=0&amp;&amp;val[cur]!=x) {//往下寻找这个数的位置
+            d=cur;cur=son[cur][x&gt;val[cur]?1:0];
+        }
+        if(cur!=0) {//如果不是新数
+            num[cur]++;
+        }else {//如果是的话就新建一个节点。
+            cur=++cent;
+            if(d!=0)son[d][x&gt;val[d]?1:0]=cur;//父亲节点是真实节点
+            fa[cur]=d;size[cur]=1;num[cur]=1;
+            val[cur]=x;
+        }
+        splay(cur,0);
+    }
+    public static int kth(int k) {
+        int cur=root;
+        while(true) {
+            if(son[cur][0]!=0&amp;&amp;k&lt;=size[son[cur][0]]) {
+                cur=son[cur][0];
+            }else if(son[cur][1]!=0&amp;&amp;k&gt;size[son[cur][0]]+num[cur] ){
+                k-=size[son[cur][0]]+num[cur];
+                cur=son[cur][1];
+            }else { return cur;     }
+        }
+    }
+    public static int pre(int x) {//前驱
+        find(x);
+        if(val[root]&lt;x)return root;
+        int cur=son[root][0];
+        while(son[cur][1]!=0) cur=son[cur][1];
+        return  cur;
+    }
+    public static int succ(int x) {//后续
+        find(x);
+        if(val[root]&gt;x) return root;
+        int cur=son[root][1];
+        while(son[cur][0]!=0) cur=son[cur][0];
+        return cur;
+    }
+    public static void remove(int x) {//删除
+        int last=pre(x);int next=succ(x);
+        splay(last,0);splay(next,last);
+        int del=son[next][0];
+        if(num[del]&gt;1) {
+            num[del]--;
+            splay(del,0);
+        }else {
+            son[next][0]=0;
+        }
+    }
+    public static void rank(int x) {//查询
+        find(x);
+        sb.append((size[son[root][0]])+&quot;\n&quot;);
+    }
+    public static void find(int x) {
+        if(root==0)return;
+        int cur=root;int d=val[cur]&lt;x?1:0;
+        while(son[cur][d]!=0&amp;&amp;val[cur]!=x) {
+            cur=son[cur][d];d=val[cur]&lt;x?1:0;
+        }
+        splay(cur,0);
+    }
+     public static void splay(int x,int goal) {
+         if(x==0)return;
+         while(fa[x]!=goal) {
+            int y=fa[x],z=fa[y];
+             if(z!=goal) {
+                 if(chk(x)==chk(y)) {
+                     rotate(y);
+                 }else {
+                     rotate(x);
+                 }
+             }
+             rotate(x);
+         }
+         if(goal==0)root=x;
+     }
+    public static void rotate(int x) {//旋转
+        if(x==root)return;
+        int y=fa[x],z=fa[y],k=chk(x),w=son[x][k^1];//父亲和祖父节点，以及x相反的儿子
+        son[z][chk(y)]=x;fa[x]=z;
+        son[y][k]=w;fa[w]=y;
+        son[x][k^1]=y;fa[y]=x;
+        pushup(y);pushup(x);
+    }
+    public static void pushup(int x) {
+        size[x]=num[x]+size[son[x][1]]+size[son[x][0]];
+    }
+    public static int chk(int x) {
+        return son[fa[x]][1]==x?1:0;
+    }
+    public static class Input {
+        StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+        public int nextInt() throws IOException {
+            in.nextToken();
+            return (int)in.nval;
+        }
+        public long nextLong() throws IOException {
+            in.nextToken();
+            return (long)in.nval;
+        }
+ }
+}</code></pre>]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>Splay</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>三维偏序</title>
     <url>/2019/12/09/blog/%E4%B8%89%E7%BB%B4%E5%81%8F%E5%BA%8F%E9%A2%98%E8%A7%A3/</url>
     <content><![CDATA[<h1 id="题面"><a href="#题面" class="headerlink" title="题面"></a>题面</h1><p><a href="https://www.luogu.com.cn/problem/P3810" target="_blank" rel="noopener">传送门</a></p>
