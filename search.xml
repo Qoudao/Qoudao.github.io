@@ -1,6 +1,208 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>书架</title>
+    <url>/2020/01/01/life/%E4%B9%A6%E6%9E%B6/</url>
+    <content><![CDATA[<h1 id="2018年"><a href="#2018年" class="headerlink" title="2018年"></a>2018年</h1><h2 id="凯文·凯利三部曲"><a href="#凯文·凯利三部曲" class="headerlink" title="凯文·凯利三部曲"></a>凯文·凯利三部曲</h2><blockquote>
+<p>刚开始步入大学生活的我，读的第一本关于时代发展的书《失控》。</p>
+</blockquote>
+<h3 id="书评"><a href="#书评" class="headerlink" title="书评"></a>书评</h3><h4 id="《失控》"><a href="#《失控》" class="headerlink" title="《失控》"></a>《失控》</h4><h2 id="《香农传》"><a href="#《香农传》" class="headerlink" title="《香农传》"></a>《香农传》</h2><h2 id="《信息简史》"><a href="#《信息简史》" class="headerlink" title="《信息简史》"></a>《信息简史》</h2><h2 id="《复利效应》"><a href="#《复利效应》" class="headerlink" title="《复利效应》"></a>《复利效应》</h2>]]></content>
+      <categories>
+        <category>历史记录</category>
+      </categories>
+      <tags>
+        <tag>书架</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>替罪羊树学习笔记</title>
+    <url>/2019/12/12/blog/%E6%9B%BF%E7%BD%AA%E7%BE%8A%E6%A0%91%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote>
+<p>一种基于部分重建的自平衡二叉搜索树。替罪羊树的主要思想就是将不平衡的树压成一个序列,然后暴力重构成一颗平衡的树。</p>
+</blockquote>
+<p>&emsp;&emsp;这里的平衡指的是：对于某个 <code>0.5&lt;=alpha&lt;=1</code>满足 <code>size( Lson(x) )&lt;=alpha*size(x) 并且 size( Rson(x) )&lt;=alpha*size(x)</code>,即这个节点的两棵子树的 size 都不超过以该节点为根的子树的 size，那么就称这个子树(或节点)是平衡的, alpha 最好不要选 0.5 ，容易T飞，一般选 0.75 就挺好的。而我就选择了0.8。<br>&emsp;&emsp;相较于splay这样选择维护平衡的操作，替罪羊树的维护就简单粗暴多了。</p>
+<h1 id="细节"><a href="#细节" class="headerlink" title="细节"></a>细节</h1><ol>
+<li>一个数一个值，相同的数也往左儿子那边放，至于为什么存在一个节点里，是因为暴力构树不好操作（二分）.</li>
+</ol>
+<h1 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h1><pre><code>static int m;//操作次数
+static double alp=0.8;//常量
+static int mem[],pool=0;//垃圾回收数组和配套指针
+static int val[];//节点数值
+static int size[],tot[];
+static int son[][];
+static boolean real[];
+static int root=0,cnt=0;
+static int poi=0,cur[];
+static int tob=0;</code></pre><h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>&emsp;&emsp;通过重建树的方式让其他操作更加简单实现,常规操作跟splay差不多，核心在于重建树的代码，如把那些不存在的点更新去掉等。</p>
+<h1 id="基操"><a href="#基操" class="headerlink" title="基操"></a>基操</h1><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code>import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.StreamTokenizer;
+
+public class 替罪羊模板 {
+    static int m;
+    static double alp=0.8;
+    static int mem[],pool=0;
+    static int val[];
+    static int size[],tot[];
+    static int son[][];
+    static boolean real[];
+    static int root=0,cnt=0;
+    static int poi=0,cur[];
+    static int tob=0;
+    public static void main(String[] args) throws IOException {
+        Input in = new Input();StringBuilder sb = new StringBuilder();
+        mem=new int[100001];
+        for (int i =100000; i&gt;0; i--) mem[++pool]=i;
+        m=in.nextInt();
+        size=new int[m+2];tot=new int[m+2];
+        son=new int[m+2][2];val=new int[m+2];
+        cur=new int[m+2];real=new boolean[m+2];
+        int pot,x;
+        while(m--&gt;0) {
+            pot=in.nextInt();x=in.nextInt();
+            switch(pot){
+            case 1:insert(0,1,root,x);if(isbad(root))rebuild(0,0,root);break;//删除
+            case 2:del_val(x);break;//删除
+            case 3:sb.append(get_rk(x)+&quot;\n&quot;);break;//某数的排名
+            case 4:sb.append(get_kth(x)+&quot;\n&quot;);break;//排名第几位的数值
+            case 5:sb.append(get_kth(get_rk(x)-1)+&quot;\n&quot;);break;//前驱
+            case 6:sb.append(get_kth(get_rk(x+1))+&quot;\n&quot;);break;//后续
+            }
+        }
+        System.out.println(sb);
+    }
+    public static int get_kth(int x) {//某个排名对应的值；
+        int now=root;
+        while(now&gt;0) {
+            if(!real[now]&amp;&amp;(size[son[now][0]]+1==x)) {
+                return val[now];
+            }else if(size[son[now][0]]&gt;=x) {
+                now=son[now][0];
+            }else {
+                x-=size[son[now][0]]+(real[now]?0:1);
+                now=son[now][1];
+            }
+        }
+        return 0;
+    }
+    public static void del_pos(int u,int y) {//删除标记某个数
+        if(!real[u]&amp;&amp;(size[son[u][0]]+1==y)) {
+            real[u]=true;size[u]--;return;
+        }
+        size[u]--;
+        if(size[son[u][0]]+(real[u]?0:1)&gt;=y) {
+            del_pos(son[u][0],y);
+        }else {
+            del_pos(son[u][1],y-(size[son[u][0]]+(real[u]?0:1)));
+        }
+    }
+    public static int get_rk(int x) {//某个数的排名
+        int now=root,ret=1;
+        while(now!=0) {
+            if(val[now]&gt;=x) {
+                now=son[now][0];
+            }else {
+                ret+=size[son[now][0]]+(real[now]?0:1);
+                now=son[now][1];
+            }
+        }
+        return ret;
+    }
+    public static void del_val(int x) {//删除某个值
+        del_pos(root,get_rk(x));
+        if(1.0*tot[root]*alp&gt;size[root]) {
+            rebuild(0,0,root);
+        }
+    }
+    public static void insert(int fa,int d,int u,int x) {//插入节点
+        if(u==0) {
+            u=mem[pool--];val[u]=x;real[u]=false;
+            tot[u]=1;size[u]=1;son[u][1]=0;son[u][0]=0;
+            if(fa==0) {
+                root=u;
+            }else {
+                son[fa][d]=u;
+            }
+            return;
+        }
+        tot[u]++;size[u]++;
+        if(val[u]&gt;=x) {
+            insert(u,0,son[u][0],x);
+        }else { insert(u,1,son[u][1],x);}
+        boolean flag=isbad(u);
+        if(!flag&amp;&amp;tob&gt;0) { //通过有层次的递归判断是否需要重建树，减少运算
+            if(son[u][0]==tob) {
+                rebuild(u,0,son[u][0]);
+            }else {
+                rebuild(u,1,son[u][1]);
+            }
+            tob=0;
+        }else if(flag) {
+            tob=u;
+        }
+    }
+    public static void rebuild(int fa,int d,int x) {//重建树
+        poi=0;dfs(x);
+        int mid=(1+poi)&gt;&gt;1;x=cur[mid];
+        if(poi&gt;0)build(fa,d,x,1,poi);
+        if(fa==0) {
+            root=x;
+        }else {
+            son[fa][d]=x;
+        }
+    }
+    public static boolean isbad(int x) {//是不是不平衡
+        if(1.0*size[x]*alp&lt;=(double)Math.max(size[son[x][1]],size[son[x][0]]))return true;
+        return false;
+    }
+    public static void dfs(int x) {//中序遍历存节点
+        if(x==0)return;
+        dfs(son[x][0]);
+        if(!real[x]) {
+            cur[++poi]=x;
+        }else {
+            mem[++pool]=x;
+        }
+        dfs(son[x][1]);
+    }
+    public static void build(int fa,int d,int x,int L,int R) {//二分建树
+        int mid=(L+R)&gt;&gt;1;x=cur[mid];
+        if(L==R) {
+            son[x][0]=0;son[x][1]=0;
+            size[x]=1;tot[x]=1;return;
+        }
+        if(L&lt;mid){
+            son[x][0]=cur[(L+mid-1)&gt;&gt;1];
+            build(x,0,son[x][0],L,mid-1);
+        }else {
+            son[x][0]=0;
+        }
+        build(x,1,son[x][1],mid+1,R);son[x][1]=cur[(mid+R+1)&gt;&gt;1];
+        tot[x]=tot[son[x][1]]+tot[son[x][0]]+1;
+        size[x]=size[son[x][1]]+size[son[x][0]]+1;
+    }
+    public static class Input {
+        StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+        public int nextInt() throws IOException {
+            in.nextToken();
+            return (int)in.nval;
+        }
+        public long nextLong() throws IOException {
+            in.nextToken();
+            return (long)in.nval;
+        }
+ }
+}</code></pre>]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>替罪羊树</tag>
+        <tag>平衡树</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Splay学习笔记</title>
     <url>/2019/12/11/blog/Splay%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
     <content><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><blockquote>
@@ -251,6 +453,7 @@ public class 模板 {
         <category>数据结构</category>
       </categories>
       <tags>
+        <tag>平衡树</tag>
         <tag>Splay</tag>
       </tags>
   </entry>
@@ -520,9 +723,12 @@ public class P2184贪婪大陆 {
 </blockquote>
 <p>&nbsp;&nbsp;&emsp;&nbsp;把复杂的问题拆分成许多可以简单求的解子问题。但是这两种算法必须离线处理，不能解决一些强制在线的题目。不过如果题目允许离线的话，这两种算法能把在线解法吊起来打（如树套树）。</p>
 <p>时间复杂度：O（(N+M)log^2 N） &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://www.luogu.com.cn/blog/Owencodeisking/post-xue-xi-bi-ji-cdq-fen-zhi-hu-zheng-ti-er-fen" target="_blank" rel="noopener">参考资料</a></p>
-<h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><p>import java.util.Arrays;<br>import java.util.Scanner;</p>
-<p>public class Main{</p>
-<pre><code>public static class off{//每个原子化操作元素
+<h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><pre><code>import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main{
+
+public static class off{//每个原子化操作元素
     private int op,x,y,z;
     public off(){ }
     public off(int op,int x,int y,int z){
@@ -713,6 +919,25 @@ public static void solve(int L,int R,int st,int ed){//值域二分
             while(r&gt;l) {sum+=tre[r];r-=lwbt(r);}
             while(l&gt;r) {sum+=tre[l];l-=lwbt(l);}
             return sum;
+        }
+    }</code></pre><h1 id="LCA简单板子"><a href="#LCA简单板子" class="headerlink" title="LCA简单板子"></a>LCA简单板子</h1><pre><code>static int mo[][],deep[]; //LCA
+mo=new int[n+2][21];fa=new int[n+2];deep=new int[n+2];
+//LCA AND 预处理
+    public static int LCA(int x,int y) {//公共祖先
+        if(deep[x]&lt;deep[y]) {int c=x;x=y;y=c;}
+        for (int i =19;i&gt;=0;i--) if(deep[mo[x][i]]&gt;=deep[y])x=mo[x][i];
+        for (int i =19;i&gt;=0;i--) if(mo[x][i]!=mo[y][i]) {x=mo[x][i];y=mo[y][i];}
+        return x==y?x:mo[x][0];
+    }
+    public static void dfs(int u,int fat) {//搜索
+        mo[u][0]=fat;
+        deep[u]=deep[fat]+1;
+        for (int i =1; i&lt;=19; i++) {
+            mo[u][i]=mo[mo[u][i-1]][i-1];
+        }
+        for (int i =head[u]; i!=-1;i=a[i].next) {
+            int v=a[i].to;if(v==fat)continue;
+            dfs(v,u);
         }
     }</code></pre>]]></content>
       <categories>

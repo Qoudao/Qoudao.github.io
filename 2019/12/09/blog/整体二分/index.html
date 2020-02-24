@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Qou的道场">
 <meta property="og:description" content="概述 基于值域的整体二分。类似于一些决策单调性的分治，可以解决诸多区间第 kk 小或区间第 kk 大的问题。  &amp;nbsp;&amp;nbsp;&amp;emsp;&amp;nbsp;把复杂的问题拆分成许多可以简单求的解子问题。但是这两种算法必须离线处理，不能解决一些强制在线的题目。不过如果题目允许离线的话，这两种算法能把在线解法吊起来打（如树套树）。 时间复杂度：O（(N+M)log^2 N） &amp;emsp;&amp;emsp;">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-09T11:47:49.078Z">
+<meta property="og:updated_time" content="2020-02-24T05:40:30.255Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -360,9 +360,12 @@
 </blockquote>
 <p>&nbsp;&nbsp;&emsp;&nbsp;把复杂的问题拆分成许多可以简单求的解子问题。但是这两种算法必须离线处理，不能解决一些强制在线的题目。不过如果题目允许离线的话，这两种算法能把在线解法吊起来打（如树套树）。</p>
 <p>时间复杂度：O（(N+M)log^2 N） &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<a href="https://www.luogu.com.cn/blog/Owencodeisking/post-xue-xi-bi-ji-cdq-fen-zhi-hu-zheng-ti-er-fen" target="_blank" rel="noopener">参考资料</a></p>
-<h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><p>import java.util.Arrays;<br>import java.util.Scanner;</p>
-<p>public class Main{</p>
-<pre><code>public static class off{//每个原子化操作元素
+<h1 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h1><pre><code>import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main{
+
+public static class off{//每个原子化操作元素
     private int op,x,y,z;
     public off(){ }
     public off(int op,int x,int y,int z){
@@ -593,7 +596,7 @@ public static void solve(int L,int R,int st,int ed){//值域二分
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -604,7 +607,7 @@ public static void solve(int L,int R,int st,int ed){//值域二分
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -615,7 +618,7 @@ public static void solve(int L,int R,int st,int ed){//值域二分
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -675,6 +678,10 @@ public static void solve(int L,int R,int st,int ed){//值域二分
                     <a href="https://space.bilibili.com/8048347/" title="Kirame" target="_blank">Kirame</a>
                   </li>
                 
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pintia.cn/problem-sets?tab=0/" title="PTA" target="_blank">PTA</a>
+                  </li>
+                
               </ul>
             </div>
           
@@ -721,7 +728,7 @@ public static void solve(int L,int R,int st,int ed){//值域二分
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
