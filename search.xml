@@ -1,6 +1,219 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>状压DP</title>
+    <url>/2020/03/08/blog/dp/</url>
+    <content><![CDATA[<h1 id="状态1的个数"><a href="#状态1的个数" class="headerlink" title="状态1的个数"></a>状态1的个数</h1><pre><code>int Count(int x) { //含义见上
+    int ans = 0;
+    while(x) x &amp;= (x - 1), ++ans;
+    return ans;
+}   </code></pre>]]></content>
+      <categories>
+        <category>DP</category>
+      </categories>
+      <tags>
+        <tag>状压DP</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LCT学习笔记</title>
+    <url>/2020/02/26/blog/%E6%B5%85%E8%B0%88LCT/</url>
+    <content><![CDATA[<h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><blockquote>
+<p>链剖分，是指一类对树的边进行轻重划分的操作，这样做的目的是为了减少某些链上的修改、查询等操作的复杂度。目前总共有三类：重链剖分，实链剖分和并不常见的长链剖分.</p>
+</blockquote>
+<h1 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h1><ol>
+<li>每一个Splay维护的是一条从上到下按在原树中深度严格递增的路径，且中序遍历Splay得到的每个点的深度序列严格递增。</li>
+<li>每个节点包含且仅包含于一个Splay中。</li>
+<li>边分为实边和虚边，实边包含在Splay中，而虚边总是由一棵Splay指向另一个节点（指向该Splay中中序遍历最靠前的点在原树中的父亲）。<br>因为性质2，当某点在原树中有多个儿子时，只能向其中一个儿子拉一条实链（只认一个儿子），而其它儿子是不能在这个Splay中的。<br>那么为了保持树的形状，我们要让到其它儿子的边变为虚边，由对应儿子所属的Splay的根节点的父亲指向该点，而从该点并不能直接访问该儿子（认父不认子）。</li>
+</ol>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a><a href="https://www.luogu.com.cn/problem/P3690" target="_blank" rel="noopener">模板</a></h2><h2 id="学习资料-总结应用-相关题目"><a href="#学习资料-总结应用-相关题目" class="headerlink" title="学习资料 总结应用  相关题目"></a>学习资料 <a href="https://www.cnblogs.com/flashhu/p/9498517.html" target="_blank" rel="noopener">总结应用</a>  <a href="https://www.zybuluo.com/xzyxzy/note/1027479" target="_blank" rel="noopener">相关题目</a></h2><h1 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h1><pre><code>static int v[],s[];//权值和所在点的异或值
+static int fa[],r[];//父亲节点和是否需要旋转
+static int ch[][];//子节点
+static int hep[];//用于垃圾回收
+static int cent=0;//记录下标</code></pre><h1 id="各种操作"><a href="#各种操作" class="headerlink" title="各种操作"></a>各种操作</h1><h2 id="辅助操作"><a href="#辅助操作" class="headerlink" title="辅助操作"></a>辅助操作</h2><h3 id="filp-int-x"><a href="#filp-int-x" class="headerlink" title="filp(int x)"></a>filp(int x)</h3><blockquote>
+<p>反转操作</p>
+</blockquote>
+<pre><code>public static void filp(int x){
+  r[x]^=1;
+  int k=ch[x][0];ch[x][0]=ch[x][1];
+  ch[x][1]=k;
+}</code></pre><h3 id="pushup-int-x"><a href="#pushup-int-x" class="headerlink" title="pushup(int x)"></a>pushup(int x)</h3><blockquote>
+<p>更新操作</p>
+</blockquote>
+<pre><code>public static void pushup(int x){
+  s[x]=s[ch[x][1]]^s[ch[x][0]]^v[x];
+}</code></pre><h3 id="get-int-x"><a href="#get-int-x" class="headerlink" title="get(int x)"></a>get(int x)</h3><blockquote>
+<p>判断是否有父亲节点</p>
+</blockquote>
+<pre><code>public static boolean get(int x){
+  if(ch[fa[x]][0]==x||ch[fa[x]][1]==x){
+    return true;
+  }else{
+    return false;
+  }
+}</code></pre><h3 id="rotate-int-x"><a href="#rotate-int-x" class="headerlink" title="rotate(int x)"></a>rotate(int x)</h3><blockquote>
+<p>基操</p>
+</blockquote>
+<pre><code>public static void rotate(int x){
+  int y=fa[x],z=fa[y],k=ch[y][1]==x?1:0;
+  int w=ch[x][k^1];
+  if(get(y))ch[z][ch[z][1]==y?1:0]=x;
+  ch[x][k^1]=y;ch[y][k]=w;
+  if(w!=0)fa[w]=y;
+  fa[x]=z;fa[y]=x;
+  pushup(y);pushup(x);
+}</code></pre><h2 id="access-x"><a href="#access-x" class="headerlink" title="access(x)"></a>access(x)</h2><blockquote>
+<p>access即定义为打通根节点到指定节点的实链，使得一条中序遍历以根开始、以指定点结束的Splay出现. (注意根节点为所连接的深度最小的点)</p>
+</blockquote>
+<pre><code>public static void Access(int x){
+  for (int y = 0;x!=0;y=x,x=fa[x]) {
+    splay(x);ch[x][1]=y;pushup(x);
+  }
+}</code></pre><h2 id="makeroot-x"><a href="#makeroot-x" class="headerlink" title="makeroot(x)"></a>makeroot(x)</h2><blockquote>
+<p>利用到access(x)和Splay的翻转操作。</p>
+</blockquote>
+<pre><code>public static void makeRoot(int x){
+        Access(x);splay(x);filp(x);
+    }</code></pre><h2 id="findroot-x"><a href="#findroot-x" class="headerlink" title="findroot(x)"></a>findroot(x)</h2><blockquote>
+<p>找x所在原树的树根，主要用来判断两点之间的连通性（findroot(x)==findroot(y)表明x,y在同一棵树中）</p>
+</blockquote>
+<pre><code>public static int findRoot(int x){
+  Access(x);splay(x);
+  while(ch[x][0]!=0){pushdown(x);x=ch[x][0];}
+  //splay(x)保持复杂度，诡。
+  return x;
+}</code></pre><h2 id="split-x-y"><a href="#split-x-y" class="headerlink" title="split(x,y)"></a>split(x,y)</h2><blockquote>
+<p>定义为拉出x−y的路径成为一个Splay（本蒟蒻以y作为该Splay的根）</p>
+</blockquote>
+<pre><code>public static void split(int x,int y){
+  makeRoot(x);Access(y);splay(y);
+}</code></pre><h2 id="link-x-y"><a href="#link-x-y" class="headerlink" title="link(x,y)"></a>link(x,y)</h2><blockquote>
+<p>连一条x−y的边（本蒟蒻使x的父亲指向y，连一条轻边）</p>
+</blockquote>
+<pre><code>public static void link(int x,int y){
+  makeRoot(x);if(findRoot(y)!=x)fa[x]=y;
+}</code></pre><h2 id="cut-x-y"><a href="#cut-x-y" class="headerlink" title="cut(x,y)"></a>cut(x,y)</h2><blockquote>
+<p>将x−y的边断开。注意合法性。</p>
+</blockquote>
+<pre><code>public static void cut(int x,int y){
+  split(x,y);
+  if(findRoot(y)==x&amp;&amp;fa[x]==y&amp;&amp;ch[x][1]==0){
+    fa[x]=0;ch[y][0]=0;
+    pushup(y);
+  }return ;
+}</code></pre><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code>public class 模板{
+    static int v[],s[];
+    static int fa[],r[];
+    static int ch[][];
+    static int hep[];
+    static int cent=0;
+    public static void main(String[] args) throws IOException {
+        StringBuilder sb = new StringBuilder();//输出
+        int n=nextInt();int m=nextInt();
+        v=new int[n+1];s=new int[n+1];
+        fa=new int[n+1];r=new int[n+1];
+        ch=new int[n+1][2];hep=new int[500000];
+        for (int i =1; i &lt;=n; i++) {
+            v[i]=nextInt();
+        }
+        for (int i = 0; i &lt;m; i++) {
+            int d=nextInt();
+            int x=nextInt(),y=nextInt();
+            if(d==0){
+                split(x,y);sb.append(s[y]+&quot;\n&quot;);
+            }else if(d==1){
+                link(x,y);
+            }else if(d==2){
+                cut(x,y);
+            }else{
+                splay(x);v[x]=y;
+            }
+        }
+        System.out.println(sb);
+    }
+    public static void cut(int x,int y){
+        split(x,y);
+        if(findRoot(y)==x&amp;&amp;fa[x]==y&amp;&amp;ch[x][1]==0){
+            fa[x]=0;ch[y][0]=0;
+            pushup(y);
+        }return ;
+    }
+    public static void link(int x,int y){
+        makeRoot(x);if(findRoot(y)!=x)fa[x]=y;
+    }
+    public static void split(int x,int y){
+        makeRoot(x);Access(y);splay(y);
+    }
+    public static int findRoot(int x){
+        Access(x);splay(x);
+        while(ch[x][0]!=0){pushdown(x);x=ch[x][0];}
+        return x;
+    }
+    public static void makeRoot(int x){
+        Access(x);splay(x);filp(x);
+    }
+    public static void Access(int x){
+        for (int y = 0;x!=0;y=x,x=fa[x]) {
+            splay(x);ch[x][1]=y;pushup(x);
+        }
+    }
+    public static void splay(int x){
+        int y=x;cent=0;hep[++cent]=y;
+        while(get(y)){hep[++cent]=fa[y];y=fa[y];}
+        while(cent!=0)pushdown(hep[cent--]);
+        while(get(x)){
+            y=fa[x];cent=fa[y];
+            if(get(y))rotate((ch[y][0]==x)==(ch[cent][0]==y)?y:x);
+                rotate(x);
+        }pushup(x);return ;
+    }
+    public static void rotate(int x){
+        int y=fa[x],z=fa[y],k=ch[y][1]==x?1:0;
+        int w=ch[x][k^1];
+        if(get(y))ch[z][ch[z][1]==y?1:0]=x;
+        ch[x][k^1]=y;ch[y][k]=w;
+        if(w!=0)fa[w]=y;
+        fa[x]=z;fa[y]=x;
+        pushup(y);pushup(x);
+    }
+    public static void pushdown(int x){
+        if(r[x]==0)return;
+        r[x]=0;
+        if(ch[x][1]!=0)filp(ch[x][1]);
+        if(ch[x][0]!=0)filp(ch[x][0]);
+    }
+    public static void filp(int x){
+        r[x]^=1;
+        int k=ch[x][0];ch[x][0]=ch[x][1];
+        ch[x][1]=k;
+    }
+    public static void pushup(int x){
+        s[x]=s[ch[x][1]]^s[ch[x][0]]^v[x];
+    }
+    public static boolean get(int x){
+        if(ch[fa[x]][0]==x||ch[fa[x]][1]==x){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public static StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in),32768));
+    public static PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+
+    public static double nextDouble() throws IOException{ in.nextToken(); return in.nval; }
+    public static float nextFloat() throws IOException{ in.nextToken(); return (float)in.nval; }
+    public static int nextInt() throws IOException{ in.nextToken(); return (int)in.nval; }
+    public static String next() throws IOException{ in.nextToken(); return in.sval;}
+
+}</code></pre>]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+      <tags>
+        <tag>LCT</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>书架</title>
     <url>/2020/01/01/life/%E4%B9%A6%E6%9E%B6/</url>
     <content><![CDATA[<h1 id="2018年"><a href="#2018年" class="headerlink" title="2018年"></a>2018年</h1><h2 id="凯文·凯利三部曲"><a href="#凯文·凯利三部曲" class="headerlink" title="凯文·凯利三部曲"></a>凯文·凯利三部曲</h2><blockquote>
@@ -198,8 +411,8 @@ public class 替罪羊模板 {
         <category>数据结构</category>
       </categories>
       <tags>
-        <tag>替罪羊树</tag>
         <tag>平衡树</tag>
+        <tag>替罪羊树</tag>
       </tags>
   </entry>
   <entry>
@@ -453,8 +666,8 @@ public class 模板 {
         <category>数据结构</category>
       </categories>
       <tags>
-        <tag>平衡树</tag>
         <tag>Splay</tag>
+        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -898,6 +1111,33 @@ public static void solve(int L,int R,int st,int ed){//值域二分
             return (long)in.nval;
         }
  }
+}</code></pre><h2 id="第二种"><a href="#第二种" class="headerlink" title="第二种"></a>第二种</h2><pre><code>public static StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in),32768));
+public static PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+public static double nextDouble() throws IOException{ in.nextToken(); return in.nval; }
+public static float nextFloat() throws IOException{ in.nextToken(); return (float)in.nval; }
+public static int nextInt() throws IOException{ in.nextToken(); return (int)in.nval; }
+public static String next() throws IOException{ in.nextToken(); return in.sval;}</code></pre><h2 id="第三种"><a href="#第三种" class="headerlink" title="第三种"></a>第三种</h2><pre><code>public class P1029 {
+    public static void main(String[] args) throws IOException {
+        // 这句是io流包装，记住就好
+        StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in)));
+        PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+        //StreamTokenizer.TT_EOF这个是个参数，就是EOF
+        while (in.nextToken() != StreamTokenizer.TT_EOF) {
+            int n = (int) in.nval;
+            int appears[] = new int[32768];// 记录出现次数
+            int max = 0;
+            for (int i = 0; i &lt; n; i++) {
+                in.nextToken();//指向下一个
+                int num = (int) in.nval;//scanner.nextInt();
+                appears[num]++;
+                if (appears[num] &gt;= (n + 1) / 2) {
+                    max = num;
+                }
+            }
+            out.println(max);
+            out.flush();//刷新，不然max会留在缓冲区
+        }
+    }
 }</code></pre><h1 id="树状数组简单工具板子"><a href="#树状数组简单工具板子" class="headerlink" title="树状数组简单工具板子"></a>树状数组简单工具板子</h1><pre><code>public static class node{
         private int tre[],kk;
         public int lwbt(int x) {return x&amp;(-x);};
@@ -939,7 +1179,70 @@ mo=new int[n+2][21];fa=new int[n+2];deep=new int[n+2];
             int v=a[i].to;if(v==fat)continue;
             dfs(v,u);
         }
-    }</code></pre>]]></content>
+    }</code></pre><h1 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h1><pre><code>import java.util.Scanner;
+
+public class Main {
+    static long c = 1000000007;
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+        for (int i = 0; i &lt; t; i++) {
+            long a = 2;
+            long b = sc.nextLong();
+            long value = divide((long) 2, b);
+            System.out.println(value % c);
+        }
+    }
+
+    private static long divide(long a, long b) {
+        if (b == 0)
+            return 1;
+        else if (b % 2 == 0) {
+            return divide((a % c) * (a % c), b / 2) % c;
+        } else
+            return a % c * divide((a % c) * (a % c), (b - 1) / 2) % c;
+    }
+}</code></pre><h1 id="字符串字典序排序"><a href="#字符串字典序排序" class="headerlink" title="字符串字典序排序"></a>字符串字典序排序</h1><pre><code>char[] chars1=a.toCharArray();
+     char[] chars2=b.toCharArray();
+     int i=0;
+     while(i&lt;chars1.length &amp;&amp; i&lt;chars2.length){
+         if(chars1[i]&gt;chars2[i]){
+             return false;
+         }else if(chars1[i]&lt;chars2[i]){
+             return true;
+         }else{
+             i++;
+         }
+     }
+     if(i==chars1.length){  //o1到头
+         return true;
+     }
+     if(i== chars2.length){ //o2到头
+         return false;
+     }
+     return true;</code></pre><h1 id="欧拉筛"><a href="#欧拉筛" class="headerlink" title="欧拉筛"></a><a href="https://blog.csdn.net/tinydolphin/article/details/75208771" target="_blank" rel="noopener">欧拉筛</a></h1><pre><code>private static void Euler(int num) {
+       int count = 0;
+       for (int indexI = 2; indexI &lt;= num; indexI++) {
+           if (!check[indexI]) {
+               primeList[count++] = indexI;
+           }
+           // 每一个数都去乘以当前素数表里面已有的数，如果 indexI 是合数，且 indexI % primeList[indexJ] == 0，那么它只能乘以第一个素数 2
+           // 如：2×2、3×(2、3)、4×(2)、5×(2、3、5)、6×(2)、7×(2、3、5、7)、8×(2)、9×(2、3)、10×(2)
+           for (int indexJ = 0; indexJ &lt; count; indexJ++) {
+               // 过大的时候跳出
+               if (indexI * primeList[indexJ] &gt; num) {
+                   break;
+               }
+               check[indexI * primeList[indexJ]] = true;
+               // 如果 indexI 是一个合数，而且 indexI % primeList[indexJ] == 0
+               // 保证了每个合数只会被它的最小素因子筛掉
+               if (indexI % primeList[indexJ] == 0) {
+                   break;
+               }
+           }
+       }
+   }</code></pre>]]></content>
       <categories>
         <category>板子</category>
       </categories>

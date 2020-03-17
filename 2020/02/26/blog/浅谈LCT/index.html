@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/213123.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/213123.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="LCT," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="概念 链剖分，是指一类对树的边进行轻重划分的操作，这样做的目的是为了减少某些链上的修改、查询等操作的复杂度。目前总共有三类：重链剖分，实链剖分和并不常见的长链剖分.  性质 每一个Splay维护的是一条从上到下按在原树中深度严格递增的路径，且中序遍历Splay得到的每个点的深度序列严格递增。 每个节点包含且仅包含于一个Splay中。 边分为实边和虚边，实边包含在Splay中，而虚边总是由一棵Spl">
+<meta name="keywords" content="LCT">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LCT学习笔记">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;02&#x2F;26&#x2F;blog&#x2F;%E6%B5%85%E8%B0%88LCT&#x2F;index.html">
+<meta property="og:site_name" content="Qou的道场">
+<meta property="og:description" content="概念 链剖分，是指一类对树的边进行轻重划分的操作，这样做的目的是为了减少某些链上的修改、查询等操作的复杂度。目前总共有三类：重链剖分，实链剖分和并不常见的长链剖分.  性质 每一个Splay维护的是一条从上到下按在原树中深度严格递增的路径，且中序遍历Splay得到的每个点的深度序列严格递增。 每个节点包含且仅包含于一个Splay中。 边分为实边和虚边，实边包含在Splay中，而虚边总是由一棵Spl">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-04T08:04:09.508Z">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/02/26/blog/浅谈LCT/"/>
+
+
+
+
+
+  <title>LCT学习笔记 | Qou的道场</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qou的道场</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">打起精神，勇往直前，爱～永不凋零！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/26/blog/%E6%B5%85%E8%B0%88LCT/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="QOudao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qou的道场">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">LCT学习笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-26T13:56:16+08:00">
+                2020-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" itemprop="url" rel="index">
+                    <span itemprop="name">数据结构</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h1><blockquote>
+<p>链剖分，是指一类对树的边进行轻重划分的操作，这样做的目的是为了减少某些链上的修改、查询等操作的复杂度。目前总共有三类：重链剖分，实链剖分和并不常见的长链剖分.</p>
+</blockquote>
+<h1 id="性质"><a href="#性质" class="headerlink" title="性质"></a>性质</h1><ol>
+<li>每一个Splay维护的是一条从上到下按在原树中深度严格递增的路径，且中序遍历Splay得到的每个点的深度序列严格递增。</li>
+<li>每个节点包含且仅包含于一个Splay中。</li>
+<li>边分为实边和虚边，实边包含在Splay中，而虚边总是由一棵Splay指向另一个节点（指向该Splay中中序遍历最靠前的点在原树中的父亲）。<br>因为性质2，当某点在原树中有多个儿子时，只能向其中一个儿子拉一条实链（只认一个儿子），而其它儿子是不能在这个Splay中的。<br>那么为了保持树的形状，我们要让到其它儿子的边变为虚边，由对应儿子所属的Splay的根节点的父亲指向该点，而从该点并不能直接访问该儿子（认父不认子）。</li>
+</ol>
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a><a href="https://www.luogu.com.cn/problem/P3690" target="_blank" rel="noopener">模板</a></h2><h2 id="学习资料-总结应用-相关题目"><a href="#学习资料-总结应用-相关题目" class="headerlink" title="学习资料 总结应用  相关题目"></a>学习资料 <a href="https://www.cnblogs.com/flashhu/p/9498517.html" target="_blank" rel="noopener">总结应用</a>  <a href="https://www.zybuluo.com/xzyxzy/note/1027479" target="_blank" rel="noopener">相关题目</a></h2><h1 id="变量定义"><a href="#变量定义" class="headerlink" title="变量定义"></a>变量定义</h1><pre><code>static int v[],s[];//权值和所在点的异或值
+static int fa[],r[];//父亲节点和是否需要旋转
+static int ch[][];//子节点
+static int hep[];//用于垃圾回收
+static int cent=0;//记录下标</code></pre><h1 id="各种操作"><a href="#各种操作" class="headerlink" title="各种操作"></a>各种操作</h1><h2 id="辅助操作"><a href="#辅助操作" class="headerlink" title="辅助操作"></a>辅助操作</h2><h3 id="filp-int-x"><a href="#filp-int-x" class="headerlink" title="filp(int x)"></a>filp(int x)</h3><blockquote>
+<p>反转操作</p>
+</blockquote>
+<pre><code>public static void filp(int x){
+  r[x]^=1;
+  int k=ch[x][0];ch[x][0]=ch[x][1];
+  ch[x][1]=k;
+}</code></pre><h3 id="pushup-int-x"><a href="#pushup-int-x" class="headerlink" title="pushup(int x)"></a>pushup(int x)</h3><blockquote>
+<p>更新操作</p>
+</blockquote>
+<pre><code>public static void pushup(int x){
+  s[x]=s[ch[x][1]]^s[ch[x][0]]^v[x];
+}</code></pre><h3 id="get-int-x"><a href="#get-int-x" class="headerlink" title="get(int x)"></a>get(int x)</h3><blockquote>
+<p>判断是否有父亲节点</p>
+</blockquote>
+<pre><code>public static boolean get(int x){
+  if(ch[fa[x]][0]==x||ch[fa[x]][1]==x){
+    return true;
+  }else{
+    return false;
+  }
+}</code></pre><h3 id="rotate-int-x"><a href="#rotate-int-x" class="headerlink" title="rotate(int x)"></a>rotate(int x)</h3><blockquote>
+<p>基操</p>
+</blockquote>
+<pre><code>public static void rotate(int x){
+  int y=fa[x],z=fa[y],k=ch[y][1]==x?1:0;
+  int w=ch[x][k^1];
+  if(get(y))ch[z][ch[z][1]==y?1:0]=x;
+  ch[x][k^1]=y;ch[y][k]=w;
+  if(w!=0)fa[w]=y;
+  fa[x]=z;fa[y]=x;
+  pushup(y);pushup(x);
+}</code></pre><h2 id="access-x"><a href="#access-x" class="headerlink" title="access(x)"></a>access(x)</h2><blockquote>
+<p>access即定义为打通根节点到指定节点的实链，使得一条中序遍历以根开始、以指定点结束的Splay出现. (注意根节点为所连接的深度最小的点)</p>
+</blockquote>
+<pre><code>public static void Access(int x){
+  for (int y = 0;x!=0;y=x,x=fa[x]) {
+    splay(x);ch[x][1]=y;pushup(x);
+  }
+}</code></pre><h2 id="makeroot-x"><a href="#makeroot-x" class="headerlink" title="makeroot(x)"></a>makeroot(x)</h2><blockquote>
+<p>利用到access(x)和Splay的翻转操作。</p>
+</blockquote>
+<pre><code>public static void makeRoot(int x){
+        Access(x);splay(x);filp(x);
+    }</code></pre><h2 id="findroot-x"><a href="#findroot-x" class="headerlink" title="findroot(x)"></a>findroot(x)</h2><blockquote>
+<p>找x所在原树的树根，主要用来判断两点之间的连通性（findroot(x)==findroot(y)表明x,y在同一棵树中）</p>
+</blockquote>
+<pre><code>public static int findRoot(int x){
+  Access(x);splay(x);
+  while(ch[x][0]!=0){pushdown(x);x=ch[x][0];}
+  //splay(x)保持复杂度，诡。
+  return x;
+}</code></pre><h2 id="split-x-y"><a href="#split-x-y" class="headerlink" title="split(x,y)"></a>split(x,y)</h2><blockquote>
+<p>定义为拉出x−y的路径成为一个Splay（本蒟蒻以y作为该Splay的根）</p>
+</blockquote>
+<pre><code>public static void split(int x,int y){
+  makeRoot(x);Access(y);splay(y);
+}</code></pre><h2 id="link-x-y"><a href="#link-x-y" class="headerlink" title="link(x,y)"></a>link(x,y)</h2><blockquote>
+<p>连一条x−y的边（本蒟蒻使x的父亲指向y，连一条轻边）</p>
+</blockquote>
+<pre><code>public static void link(int x,int y){
+  makeRoot(x);if(findRoot(y)!=x)fa[x]=y;
+}</code></pre><h2 id="cut-x-y"><a href="#cut-x-y" class="headerlink" title="cut(x,y)"></a>cut(x,y)</h2><blockquote>
+<p>将x−y的边断开。注意合法性。</p>
+</blockquote>
+<pre><code>public static void cut(int x,int y){
+  split(x,y);
+  if(findRoot(y)==x&amp;&amp;fa[x]==y&amp;&amp;ch[x][1]==0){
+    fa[x]=0;ch[y][0]=0;
+    pushup(y);
+  }return ;
+}</code></pre><h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code>public class 模板{
+    static int v[],s[];
+    static int fa[],r[];
+    static int ch[][];
+    static int hep[];
+    static int cent=0;
+    public static void main(String[] args) throws IOException {
+        StringBuilder sb = new StringBuilder();//输出
+        int n=nextInt();int m=nextInt();
+        v=new int[n+1];s=new int[n+1];
+        fa=new int[n+1];r=new int[n+1];
+        ch=new int[n+1][2];hep=new int[500000];
+        for (int i =1; i &lt;=n; i++) {
+            v[i]=nextInt();
+        }
+        for (int i = 0; i &lt;m; i++) {
+            int d=nextInt();
+            int x=nextInt(),y=nextInt();
+            if(d==0){
+                split(x,y);sb.append(s[y]+&quot;\n&quot;);
+            }else if(d==1){
+                link(x,y);
+            }else if(d==2){
+                cut(x,y);
+            }else{
+                splay(x);v[x]=y;
+            }
+        }
+        System.out.println(sb);
+    }
+    public static void cut(int x,int y){
+        split(x,y);
+        if(findRoot(y)==x&amp;&amp;fa[x]==y&amp;&amp;ch[x][1]==0){
+            fa[x]=0;ch[y][0]=0;
+            pushup(y);
+        }return ;
+    }
+    public static void link(int x,int y){
+        makeRoot(x);if(findRoot(y)!=x)fa[x]=y;
+    }
+    public static void split(int x,int y){
+        makeRoot(x);Access(y);splay(y);
+    }
+    public static int findRoot(int x){
+        Access(x);splay(x);
+        while(ch[x][0]!=0){pushdown(x);x=ch[x][0];}
+        return x;
+    }
+    public static void makeRoot(int x){
+        Access(x);splay(x);filp(x);
+    }
+    public static void Access(int x){
+        for (int y = 0;x!=0;y=x,x=fa[x]) {
+            splay(x);ch[x][1]=y;pushup(x);
+        }
+    }
+    public static void splay(int x){
+        int y=x;cent=0;hep[++cent]=y;
+        while(get(y)){hep[++cent]=fa[y];y=fa[y];}
+        while(cent!=0)pushdown(hep[cent--]);
+        while(get(x)){
+            y=fa[x];cent=fa[y];
+            if(get(y))rotate((ch[y][0]==x)==(ch[cent][0]==y)?y:x);
+                rotate(x);
+        }pushup(x);return ;
+    }
+    public static void rotate(int x){
+        int y=fa[x],z=fa[y],k=ch[y][1]==x?1:0;
+        int w=ch[x][k^1];
+        if(get(y))ch[z][ch[z][1]==y?1:0]=x;
+        ch[x][k^1]=y;ch[y][k]=w;
+        if(w!=0)fa[w]=y;
+        fa[x]=z;fa[y]=x;
+        pushup(y);pushup(x);
+    }
+    public static void pushdown(int x){
+        if(r[x]==0)return;
+        r[x]=0;
+        if(ch[x][1]!=0)filp(ch[x][1]);
+        if(ch[x][0]!=0)filp(ch[x][0]);
+    }
+    public static void filp(int x){
+        r[x]^=1;
+        int k=ch[x][0];ch[x][0]=ch[x][1];
+        ch[x][1]=k;
+    }
+    public static void pushup(int x){
+        s[x]=s[ch[x][1]]^s[ch[x][0]]^v[x];
+    }
+    public static boolean get(int x){
+        if(ch[fa[x]][0]==x||ch[fa[x]][1]==x){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    public static StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in),32768));
+    public static PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+
+    public static double nextDouble() throws IOException{ in.nextToken(); return in.nval; }
+    public static float nextFloat() throws IOException{ in.nextToken(); return (float)in.nval; }
+    public static int nextInt() throws IOException{ in.nextToken(); return (int)in.nval; }
+    public static String next() throws IOException{ in.nextToken(); return in.sval;}
+
+}</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+    
+	<div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+   
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/LCT/" rel="tag"># LCT</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/01/01/life/%E4%B9%A6%E6%9E%B6/" rel="next" title="书架">
+                <i class="fa fa-chevron-left"></i> 书架
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/08/blog/dp/" rel="prev" title="状压DP">
+                状压DP <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+   
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">QOudao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Qoudao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.luogu.org/space/show?uid=143654" target="_blank" title="洛谷">
+                      
+                        <i class="fa fa-fw fa-code"></i>洛谷</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://ac.nowcoder.com/acm/contest/profile/366564738" target="_blank" title="牛客">
+                      
+                        <i class="fa fa-fw fa-code"></i>牛客</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://space.bilibili.com/54206445" target="_blank" title="b站">
+                      
+                        <i class="fa fa-fw fa-tv"></i>b站</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-broadcast-tower"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://space.bilibili.com/8048347/" title="Kirame" target="_blank">Kirame</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pintia.cn/problem-sets?tab=0/" title="PTA" target="_blank">PTA</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概念"><span class="nav-number">1.</span> <span class="nav-text">概念</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性质"><span class="nav-number">2.</span> <span class="nav-text">性质</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#模板"><span class="nav-number">2.1.</span> <span class="nav-text">模板</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习资料-总结应用-相关题目"><span class="nav-number">2.2.</span> <span class="nav-text">学习资料 总结应用  相关题目</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#变量定义"><span class="nav-number">3.</span> <span class="nav-text">变量定义</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#各种操作"><span class="nav-number">4.</span> <span class="nav-text">各种操作</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#辅助操作"><span class="nav-number">4.1.</span> <span class="nav-text">辅助操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#filp-int-x"><span class="nav-number">4.1.1.</span> <span class="nav-text">filp(int x)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pushup-int-x"><span class="nav-number">4.1.2.</span> <span class="nav-text">pushup(int x)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#get-int-x"><span class="nav-number">4.1.3.</span> <span class="nav-text">get(int x)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rotate-int-x"><span class="nav-number">4.1.4.</span> <span class="nav-text">rotate(int x)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#access-x"><span class="nav-number">4.2.</span> <span class="nav-text">access(x)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#makeroot-x"><span class="nav-number">4.3.</span> <span class="nav-text">makeroot(x)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#findroot-x"><span class="nav-number">4.4.</span> <span class="nav-text">findroot(x)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#split-x-y"><span class="nav-number">4.5.</span> <span class="nav-text">split(x,y)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#link-x-y"><span class="nav-number">4.6.</span> <span class="nav-text">link(x,y)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#cut-x-y"><span class="nav-number">4.7.</span> <span class="nav-text">cut(x,y)</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码"><span class="nav-number">5.</span> <span class="nav-text">代码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">QOudao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+<script type="text/javascript">
+    $('.post-body').bind('copy', function() {
+        alert('本博客内容欢迎分享（将本博客的原文地址分享到其它网站），允许部分摘录并在醒目位置附上原文链接，未经许可禁止任何形式的全文转载。');
+    });
+</script>
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
