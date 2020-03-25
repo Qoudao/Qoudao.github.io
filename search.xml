@@ -1,6 +1,319 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>洛谷_p2671求和</title>
+    <url>/2020/03/25/Problem/%E6%B4%9B%E8%B0%B7P2671_%E6%B1%82%E5%92%8C/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a><a href="https://www.luogu.com.cn/problem/P2671" target="_blank" rel="noopener">题目</a></h1><h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><ol>
+<li>三元组，可以看出x与z的关系，同颜色，以及同奇或同偶数</li>
+<li>在每个颜色的基础上，再分奇数偶数组，分开计算</li>
+<li>通过计算过程可知，可以用前缀和的方式简化计算</li>
+</ol>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code>import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
+
+public class P2671求和 {
+
+    static int n,m;
+    static int s[][],sum[][];
+    static int c[],x[];
+    public static void main(String[] args) throws IOException {
+        n=nextInt();m=nextInt();
+        x=new int[n+1];c=new int[n+1];
+        s=new int[m+1][2];sum=new int[n+1][2];
+        for (int i =1; i &lt;=n; i++)x[i]=nextInt();
+        for (int i =1; i &lt;=n; i++) {
+            c[i]=nextInt();
+      s[c[i]][i%2]++;//每个颜色编号奇偶数量
+            sum[c[i]][i%2]=(sum[c[i]][i%2]+x[i])%10007;//累加
+        }
+        int ans=0;
+        for (int i =1; i &lt;=n; i++) {//计算取模
+            ans=(ans+i*((s[c[i]][i%2]-2)*x[i]%10007+sum[c[i]][i%2]))%10007;
+        }
+        System.out.println(ans);
+    }
+    public static StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in),32768));
+    public static PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+    public static double nextDouble() throws IOException{ in.nextToken(); return in.nval; }
+    public static float nextFloat() throws IOException{ in.nextToken(); return (float)in.nval; }
+    public static int nextInt() throws IOException{ in.nextToken(); return (int)in.nval; }
+    public static String next() throws IOException{ in.nextToken(); return in.sval;}
+
+}</code></pre>]]></content>
+      <categories>
+        <category>前缀和</category>
+      </categories>
+      <tags>
+        <tag>数学</tag>
+        <tag>前缀和</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>2019</title>
+    <url>/2020/03/25/Problem/2019/</url>
+    <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a><a href="https://ac.nowcoder.com/acm/contest/1099/I" target="_blank" rel="noopener">题目</a></h1><p>Bobo 有一颗 n 个点的树，点的编号是 1, 2, \dots, n1,2,…,n. 树有 (n - 1) 条边，第 i 条边的端点是 a_i和 b_i权值是 c_i. 求满足 u &lt; v ，并且点 u 到点 v 路径上的权值和是 2019 的倍数，的 (u, v) 数量。</p>
+<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><blockquote>
+<p>裸的点分治</p>
+</blockquote>
+<ol>
+<li>每次点分治时，先从该区域的中心开始（重心）//减少时间复杂度</li>
+<li>（u,v）的数量等于每个点的计算-重复计算的</li>
+<li>路径为0的数量单独计算</li>
+</ol>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><pre><code>import java.util.Arrays;
+import java.util.Scanner;
+
+public class Main{
+
+    public static class edg{ //邻接表
+        private int to;
+        private int next;
+        private int v;
+        public edg() {
+
+        }
+        public edg(int to,int next,int v) {
+            this.next=next;
+            this.to=to;
+            this.v=v;
+        }
+    }
+
+    static int n;
+    static int head[],cent=0;
+    static edg a[];
+    static int t[],d[],cnt;
+    static boolean vis[];
+    static int size[],f[];
+    static int Tsize,root=0;
+    static int ans=0;
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        head=new int[20001];a=new edg[40002];f=new int[20001];
+        size=new int[20001];d=new int[20001];
+        t=new int[2020];vis=new boolean[20001];
+        while(sc.hasNext()) {
+        n=sc.nextInt();Arrays.fill(vis,false);
+        Arrays.fill(head, -1);cent=0;
+        for (int i = 1; i &lt;n; i++) {
+            int x=sc.nextInt();
+            int y=sc.nextInt();
+            int z=sc.nextInt();
+            add(x,y,z);
+        }
+        root=0;ans=0;Arrays.fill(f,0);
+        Tsize=n;f[0]=Integer.MAX_VALUE ;
+        getroot(1,0);Dfs(root);
+        System.out.println(ans);
+     }
+    }
+    public static void Dfs(int u) {//点分治
+        ans+=calc(u,0);//一前一后
+        vis[u]=true;
+        for (int i =head[u]; i!=-1;i=a[i].next) {
+            int v=a[i].to;
+            if(vis[v])continue;
+            ans-=calc(v,a[i].v);
+            root=0;Tsize=size[v];
+            getroot(v,0);
+            Dfs(root);
+        }
+    }
+    public static int calc(int u,int D) {//计算分治结果
+     for(int i=0;i&lt;2019;i++)t[i]=0;
+        d[u]=D%2019;
+        dfs(u,0);int p=0;
+     for(int i=1;i&lt;=1009;i++)p+=t[i]*t[(2019-i)%2019];//有顺序
+      p+=t[0]*(t[0]-1)/2;
+        return p;
+    }
+    public static void dfs(int u,int fa) {//计算路径数量
+        t[d[u]]++;
+        for (int i =head[u]; i!=-1; i=a[i].next) {
+            int v=a[i].to;
+            if(vis[v]||v==fa)continue;
+            d[v]=(d[u]+a[i].v)%2019;
+            dfs(v,u);
+        }
+    }
+    public static void getroot(int u,int fa) {//寻找重心
+        size[u]=1;f[u]=0;
+        for (int i =head[u]; i!=-1;i=a[i].next) {
+             int v=a[i].to;
+             if(vis[v]||v==fa)continue;
+             getroot(v,u);
+             size[u]+=size[v];
+             f[u]=Math.max(f[u], size[v]);
+        }
+        f[u]=Math.max(f[u],Tsize-size[u]);
+        if(f[u]&lt;f[root])root=u;
+    }
+    public static void add(int x,int y,int z) {
+        a[cent]=new edg(y,head[x],z);
+        head[x]=cent++;
+        a[cent]=new edg(x,head[y],z);
+        head[y]=cent++;
+    }
+}</code></pre>]]></content>
+      <categories>
+        <category>点分治</category>
+      </categories>
+      <tags>
+        <tag>点分治</tag>
+        <tag>2019省赛</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>A*与IDA*学习笔记</title>
+    <url>/2020/03/24/blog/A_Star/</url>
+    <content><![CDATA[<h1 id="IDA"><a href="#IDA" class="headerlink" title="IDA*"></a>IDA*</h1><blockquote>
+<p>带有迭代加深和估价函数优化的dfs搜索</p>
+</blockquote>
+<h2 id="迭代加深"><a href="#迭代加深" class="headerlink" title="迭代加深"></a>迭代加深</h2><blockquote>
+<p>每次限定一个<strong>maxdepmaxdep</strong>最大深度，使搜索树的深度不超过<strong>maxdepmaxdep</strong></p>
+</blockquote>
+<pre><code>for(R int maxdep=1;maxdep&lt;=题目中给的最大步数;maxdep++){
+      dfs(0,maxdep);//0为出入函数中当前步数，maxdep为传入的最大深度。
+      if(success)break;//如果搜索成功则会在dfs函数中将success赋值为1。
+  }</code></pre><h2 id="估价函数"><a href="#估价函数" class="headerlink" title="估价函数"></a>估价函数</h2><h3 id="定义：-f-n-g-n-h-n"><a href="#定义：-f-n-g-n-h-n" class="headerlink" title="定义： f(n)=g(n)+h(n)"></a>定义： f(n)=g(n)+h(n)</h3><blockquote>
+<p>其中f(n)f(n)是节点的估价函数，g(n)g(n)是现在的实际步数，h(n)h(n)是对未来步数的最完美估价</p>
+</blockquote>
+<pre><code>void dfs(int dep,int maxdep){
+if(evaluate()+dep&gt;maxdep)return;------</code></pre><hr>
+<h1 id="A"><a href="#A" class="headerlink" title="A*"></a>A*</h1><blockquote>
+<p>这是一种搜索算法,属于启发式搜索中的一种.具体属于对bfs+优先队列的优化,可利用估价函数来优化</p>
+</blockquote>
+<h2 id="估价函数-1"><a href="#估价函数-1" class="headerlink" title="估价函数"></a>估价函数</h2><p>同上，一般都是反向跑一遍求出每个点的最佳的估价函数。  </p>
+<p>在优先队列中，以每个状态的F值为第一关键字。</p>
+<h1 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h1>]]></content>
+      <categories>
+        <category>搜索</category>
+      </categories>
+      <tags>
+        <tag>A*</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git学习笔记</title>
+    <url>/2020/03/19/blog/git%E5%9F%BA%E7%A1%80/</url>
+    <content><![CDATA[<h1 id="基础命令"><a href="#基础命令" class="headerlink" title="基础命令"></a>基础命令</h1><pre><code>mkdir &lt;文件夹名称&gt; # 创建文件夹
+cd &lt;文件夹名称&gt; # 进入文件夹
+cat &lt;文件名称&gt; # 查看文件内容
+rm &lt;文件名称&gt; # 删除文件</code></pre><h2 id="git命令"><a href="#git命令" class="headerlink" title="git命令"></a>git命令</h2><blockquote>
+<p>在Git中，用HEAD表示当前版本，也就是最新的提交1094adb…（注意我的提交ID和你的肯定不一样），上一个版本就是HEAD^，上上一个版本就是HEAD^^，当然往上100个版本写100个^比较容易数不过来，所以写成HEAD~100。</p>
+</blockquote>
+<pre><code>git add &lt;文件名称&gt; # 把文件的修改提交的暂存区，可反复多次使用，添加多个文件
+git commit -m &quot;此次提交的说明注释&quot; # 把暂存区的修改提交到版本库中
+git status # 可以让我们时刻掌握仓库当前的状态
+git diff # 可以查看工作区和暂存区修改的不同
+git diff HEAD -- &lt;文件名&gt; # 查看工作区和仓库的差异
+git log  --pretty=oneline  # 显示从最近到最远的提交日志，版本记录，按“Q”键退出
+git reset --hard HEAD^ # 版本回退
+git reflog # 用来记录你的每一次命令
+git rm &lt;文件名称&gt; # 删除文件的修改到暂存区，之后commit就行
+git checkout -- &lt;filename&gt; # 把文件在工作区或暂存区的修改全部撤销
+git checkout -b &lt;name&gt; # 表示创建并切换当前分支
+git branch # 会列出所有分支，当前分支前面会标一个*号
+git merge &lt;name&gt; # 用于合并指定分支到当前分支
+git branch -d &lt;name&gt; #删除指定分支
+git log --graph # 可以看到分支合并图
+git merge --no-ff -m &quot;merge with no-ff&quot; &lt;name&gt; #合并时禁用Fast forward模式加上-m参数，把commit描述写进去
+git stash # 可以把当前工作现场“储藏”起来，等以后恢复现场后继续工作
+git stash list # 可以看到被存的工作现场
+git stash apply &lt;name&gt; # 恢复工作现场，但是恢复后，stash内容并不删除
+git stash drop &lt;name&gt; # 删除list中的指定的工作现场记录
+git stash pop # 恢复的同时把stash内容也删了
+git cherry-pick &lt;commit&gt; # 让我们能复制一个特定的提交到当前分支
+git branch -D &lt;name&gt; # 强行删除某个分支
+git remote -v # 可以查看当前关联的远程库
+git push origin &lt;name&gt; # 推送指定分支
+git checkout -b &lt;name&gt; origin/&lt;name&gt; # 创建并切换关联远程库的指定分支
+git pull # 最新的提交从远程库抓下来，然后，在本地合并
+git branch --set-upstream-to=origin/&lt;name&gt; &lt;name&gt; #将远程库的分支与本地库关联</code></pre><h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="版本回退"><a href="#版本回退" class="headerlink" title="版本回退"></a>版本回退</h2><ol>
+<li>HEAD指向的版本就是当前版本，因此，Git允许我们在版本的历史之间穿梭，使用命令<code>git reset --hard commit_id</code>。</li>
+<li>穿梭前，用<code>git log</code>可以查看提交历史，以便确定要回退到哪个版本。</li>
+<li>要重返未来，用<code>git reflog</code>查看命令历史，以便确定要回到未来的哪个版本。</li>
+<li>版本号没必要写全，前几位就可以了，Git会自动去找</li>
+</ol>
+<h2 id="工作区和暂存区"><a href="#工作区和暂存区" class="headerlink" title="工作区和暂存区"></a>工作区和暂存区</h2><blockquote>
+<p>工作区&gt;&gt;&gt;&gt;暂存区&gt;&gt;&gt;&gt;仓库</p>
+</blockquote>
+<ol>
+<li>Git的版本库里存了很多东西，其中最重要的就是称为stage（或者叫index）的暂存区，还有Git为我们自动创建的第一个分支master，以及指向master的一个指针叫HEAD。</li>
+<li>每次修改，如果不用git add到暂存区，那就不会加入到commit中。</li>
+</ol>
+<h2 id="撤销修改"><a href="#撤销修改" class="headerlink" title="撤销修改"></a>撤销修改</h2><p>命令<code>git checkout -- readme.txt</code>意思就是，把<code>readme.txt</code>文件在工作区的修改全部撤销，这里有两种情况：<br>一种是<code>readme.txt</code>自修改后还没有被放到暂存区，现在，撤销修改就回到和版本库一模一样的状态；</p>
+<p>一种是<code>readme.txt</code>已经添加到暂存区后，又作了修改，现在，撤销修改就回到添加到暂存区后的状态。<br>总之，就是让这个文件回到最近一次<code>git commit</code>或<code>git add</code>时的状态。</p>
+<hr>
+<p>场景1：当你改乱了工作区某个文件的内容，想直接丢弃工作区的修改时，用命令<code>git checkout -- file</code>。</p>
+<p>场景2：当你不但改乱了工作区某个文件的内容，还添加到了暂存区时，想丢弃修改，分两步，第一步用命令<code>git reset HEAD &lt;file&gt;</code>，就回到了场景1，第二步按场景1操作。</p>
+<p>场景3：已经提交了不合适的修改到版本库时，想要撤销本次提交，参考版本回退。</p>
+<h2 id="删除文件"><a href="#删除文件" class="headerlink" title="删除文件"></a>删除文件</h2><p><strong>在工作区</strong>就<code>rm &lt;filename&gt;</code>.</p>
+<p>确实要<strong>从版本库中删除该文件</strong>，那就用命令<code>git rm</code>删掉，并且<code>git commit</code>。</p>
+<p><strong>删错了</strong>。<code>git checkout</code>其实是用版本库里的版本替换工作区的版本，无论工作区是修改还是删除，都可以“一键还原”。</p>
+<h2 id="添加远程库"><a href="#添加远程库" class="headerlink" title="添加远程库"></a>添加远程库</h2><blockquote>
+<p>分布式版本系统的最大好处之一是在本地工作完全不需要考虑远程库的存在，也就是有没有联网都可以正常工作，而SVN在没有联网的时候是拒绝干活的！当有网络的时候，再把本地提交推送一下就完成了同步，真是太方便了！</p>
+</blockquote>
+<ol>
+<li><p>要关联一个远程库，使用命令<code>git remote add origin git@server-name:path/repo-name.git</code></p>
+</li>
+<li><p>关联后，使用命令<code>git push -u origin master</code>第一次推送master分支的所有内容<br>3</p>
+</li>
+<li><p>此后，每次本地提交后，只要有必要，就可以使用命令<code>git push origin master</code>推送最新修改</p>
+</li>
+</ol>
+<h2 id="分支管理"><a href="#分支管理" class="headerlink" title="分支管理"></a>分支管理</h2><h3 id="创建与合并分支"><a href="#创建与合并分支" class="headerlink" title="创建与合并分支"></a>创建与合并分支</h3><blockquote>
+<p>Git鼓励大量使用分支</p>
+</blockquote>
+<p>查看分支：<code>git branch</code><br>创建分支：<code>git branch &lt;name&gt;</code><br>切换分支：<code>git checkout &lt;name&gt;</code>或者<code>git switch &lt;name&gt;</code><br>创建+切换分支：<code>git checkout -b &lt;name&gt;</code>或者<code>git switch -c &lt;name&gt;</code><br>合并某分支到当前分支：<code>git merge &lt;name&gt;</code><br>删除分支：<code>git branch -d &lt;name&gt;</code></p>
+<h3 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h3><p>当Git无法自动合并分支时，就必须首先解决冲突。解决冲突后，再提交，合并完成。</p>
+<p>解决冲突就是把Git合并失败的文件手动编辑为我们希望的内容，再提交。</p>
+<p>用<code>git log --graph</code>命令可以看到分支合并图。</p>
+<h3 id="分支管理策略"><a href="#分支管理策略" class="headerlink" title="分支管理策略"></a>分支管理策略</h3><blockquote>
+<p>通常，合并分支时，如果可能，Git会用<code>Fast forward模式</code>，但这种模式下，删除分支后，会丢掉分支信息。<br>如果要强制禁用<code>Fast forward模式</code>，<code>Git</code>就会在<code>merge</code>时生成一个新的<code>commit</code>，这样，从分支历史上就可以看出分支信息。</p>
+</blockquote>
+<p>在实际开发中，我们应该按照几个基本原则进行分支管理：</p>
+<p>首先，<code>master</code>分支应该是非常稳定的，也就是仅用来发布新版本，平时不能在上面干活；</p>
+<p>那在哪干活呢？干活都在<code>dev</code>分支上，也就是说，dev分支是不稳定的，到某个时候，比如1.0版本发布时，再把<code>dev</code>分支合并到<code>master</code>上，在<code>master</code>分支发布1.0版本；</p>
+<p>你和你的小伙伴们每个人都在<code>dev</code>分支上干活，每个人都有自己的分支，时不时地往<code>dev</code>分支上合并就可以了。</p>
+<p>合并分支时，加上<code>--no-ff</code>参数就可以用普通模式合并，合并后的历史有分支，能看出来曾经做过合并，而<code>fast forward</code>合并就看不出来曾经做过合并。</p>
+<h3 id="Bug分支"><a href="#Bug分支" class="headerlink" title="Bug分支"></a>Bug分支</h3><blockquote>
+<p>如果需要离开现在的工作现场（还没提交），先把工作现场<code>git stash</code>一下</p>
+</blockquote>
+<p>修复bug时，我们会通过创建新的<code>bug分支</code>进行修复，然后合并，最后删除；</p>
+<p>当手头工作没有完成时，先把工作现场<code>git stash</code>一下，然后去修复<strong>bug</strong>，修复后，再<code>git stash pop</code>，回到工作现场；</p>
+<p>在master分支上修复的bug，想要合并到当前dev分支，可以用<code>git cherry-pick &lt;commit&gt;</code>命令，把bug提交的修改“复制”到当前分支，避免重复劳动。</p>
+<h3 id="多人协作"><a href="#多人协作" class="headerlink" title="多人协作"></a>多人协作</h3><blockquote>
+<p>当你从远程仓库克隆时，实际上Git自动把本地的master分支和远程的master分支对应起来了，并且，远程仓库的默认名称是origin</p>
+</blockquote>
+<p><strong>多人协作的工作模式：</strong></p>
+<ol>
+<li>首先，可以试图用<code>git push origin &lt;branch-name&gt;</code>推送自己的修改；</li>
+<li>如果推送失败，则因为远程分支比你的本地更新，需要先用<code>git pull</code>试图合并；</li>
+<li>如果合并有冲突，则解决冲突，并在本地提交；</li>
+<li>没有冲突或者解决掉冲突后，再用<code>git push origin &lt;branch-name&gt;</code>推送就能成功！</li>
+</ol>
+<p>如果<code>git pull</code>提示<code>no tracking information</code>，则说明本地分支和远程分支的链接关系没有创建，用命令<code>git branch --set-upstream-to &lt;branch-name&gt; origin/&lt;branch-name&gt;</code>。这就是多人协作的工作模式，一旦熟悉了，就非常简单。</p>
+<hr>
+<p>查看远程库信息，使用<code>git remote -v</code>；</p>
+<p>本地新建的分支如果不推送到远程，对其他人就是不可见的；</p>
+<p>从本地推送分支，使用<code>git push origin branch-name</code>，如果推送失败，先用<code>git pull</code>抓取远程的新提交；</p>
+<p>在本地创建和远程分支对应的分支，使用<code>git checkout -b branch-name origin/branch-name</code>，本地和远程分支的名称最好一致；</p>
+<p>建立本地分支和远程分支的关联，使用<code>git branch --set-upstream branch-name origin/branch-name</code>；  </p>
+<p>从远程抓取分支，使用<code>git pull</code>，如果有冲突，要先处理冲突。</p>
+]]></content>
+      <categories>
+        <category>Git</category>
+      </categories>
+      <tags>
+        <tag>Git基础</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>状压DP</title>
     <url>/2020/03/08/blog/dp/</url>
     <content><![CDATA[<h1 id="状态1的个数"><a href="#状态1的个数" class="headerlink" title="状态1的个数"></a>状态1的个数</h1><pre><code>int Count(int x) { //含义见上
@@ -411,8 +724,8 @@ public class 替罪羊模板 {
         <category>数据结构</category>
       </categories>
       <tags>
-        <tag>平衡树</tag>
         <tag>替罪羊树</tag>
+        <tag>平衡树</tag>
       </tags>
   </entry>
   <entry>
@@ -666,8 +979,8 @@ public class 模板 {
         <category>数据结构</category>
       </categories>
       <tags>
-        <tag>Splay</tag>
         <tag>平衡树</tag>
+        <tag>Splay</tag>
       </tags>
   </entry>
   <entry>
@@ -1242,7 +1555,17 @@ public class Main {
                }
            }
        }
-   }</code></pre>]]></content>
+   }</code></pre><h1 id="预处理组合数"><a href="#预处理组合数" class="headerlink" title="预处理组合数"></a>预处理组合数</h1><blockquote>
+<p>显然具有相同1/0个数的状态，出现次数一样</p>
+</blockquote>
+<pre><code>for (int i = 0; i &lt;21; i++) {
+  c[i][0]=1;
+}
+for (int i =1; i &lt;=20; i++) {
+  for (int j =1; j &lt;=20; j++) {
+    c[i][j]=(c[i-1][j]+c[i-1][j-1])%mod;
+  }
+}</code></pre>]]></content>
       <categories>
         <category>板子</category>
       </categories>
