@@ -1,0 +1,968 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/213123.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/213123.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="树状数组,区间," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="题目解析 一个经典的区间问题  首先可以预处理出每一个数的配对数，最多两个。问题是求区间配对数，所以我们可以套路离线处理。从右到左，区间左端点为第一关键字，用树状数组实时更新配对数，来回答查询区间。每次加入L&amp;lt;=x的配对，查询所有满足y&amp;lt;=的配对.（x&amp;lt;y） 不定长数组实现 static ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; d;代码">
+<meta name="keywords" content="树状数组,区间">
+<meta property="og:type" content="article">
+<meta property="og:title" content="配对统计">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;03&#x2F;29&#x2F;Problem&#x2F;P5677_%E9%85%8D%E5%AF%B9%E7%BB%9F%E8%AE%A1&#x2F;index.html">
+<meta property="og:site_name" content="Qou的道场">
+<meta property="og:description" content="题目解析 一个经典的区间问题  首先可以预处理出每一个数的配对数，最多两个。问题是求区间配对数，所以我们可以套路离线处理。从右到左，区间左端点为第一关键字，用树状数组实时更新配对数，来回答查询区间。每次加入L&amp;lt;=x的配对，查询所有满足y&amp;lt;=的配对.（x&amp;lt;y） 不定长数组实现 static ArrayList&amp;lt;ArrayList&amp;lt;Integer&amp;gt;&amp;gt; d;代码">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2020-03-29T11:50:03.716Z">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2020/03/29/Problem/P5677_配对统计/"/>
+
+
+
+
+
+  <title>配对统计 | Qou的道场</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Qou的道场</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">打起精神，勇往直前，爱～永不凋零！</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/03/29/Problem/P5677_%E9%85%8D%E5%AF%B9%E7%BB%9F%E8%AE%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="QOudao">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Qou的道场">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">配对统计</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-03-29T19:16:00+08:00">
+                2020-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B4%9B%E8%B0%B7/" itemprop="url" rel="index">
+                    <span itemprop="name">洛谷</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a><a href="https://www.luogu.com.cn/problemnew/solution/P5677" target="_blank" rel="noopener">题目</a></h1><h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><blockquote>
+<p>一个经典的区间问题</p>
+</blockquote>
+<p>首先可以预处理出每一个数的配对数，最多两个。<br>问题是求区间配对数，所以我们可以套路<strong>离线处理</strong>。从右到左，区间左端点为第一关键字，用树状数组实时更新配对数，来回答查询区间。<br><strong>每次加入L&lt;=x的配对，查询所有满足y&lt;=的配对.（x&lt;y）</strong></p>
+<pre><code>不定长数组实现
+static ArrayList&lt;ArrayList&lt;Integer&gt;&gt; d;</code></pre><h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre><code>import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StreamTokenizer;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class P5677_配对统计 {
+
+    public static class node{
+        private int tre[],kk;
+        public node(int kk) {
+            tre=new int[kk+1];this.kk=kk;
+        }
+        public int lwbt(int x) {return x&amp;(-x);};
+        public int ask(int u) {
+            int ans=0;
+            for (;u&gt;0;u-=lwbt(u)) {
+                ans+=tre[u];
+            }
+            return ans;
+        }
+        public void add(int i,int k) {
+            for (;i&lt;=kk;i+=lwbt(i)) {
+                tre[i]+=k;
+            }
+        }
+    public int query(int l,int r) {
+            l--;
+            int sum=0;
+            while(r&gt;l) {sum+=tre[r];r-=lwbt(r);}
+            while(l&gt;r) {sum+=tre[l];l-=lwbt(l);}
+            return sum;
+        }
+    }
+    public static class off implements Comparable&lt;off&gt;{
+        private int va,id;
+        public off(int va,int id) {
+            this.id=id;this.va=va;
+        }
+        @Override
+        public int compareTo(off o) {
+            if(va&gt;o.va) {
+                return 1;
+            }
+            return -1;
+        }
+    }
+
+
+    static node h;
+    static int n,m;
+    static off a[];
+    static ArrayList&lt;Integer&gt; c;
+    static ArrayList&lt;ArrayList&lt;Integer&gt;&gt;  q1,q2,d;
+    static int ans[];
+    public static void main(String[] args) throws IOException {
+        n=nextInt();m=nextInt();a=new off[n+1];h=new node(n+1);ans=new int[m+1];
+        d=new ArrayList();q1=new ArrayList&lt;&gt;();q2=new ArrayList&lt;&gt;();c=new ArrayList&lt;&gt;();
+        int x,y,md;
+        for (int i =1; i &lt;=n; i++) {
+            a[i]=new off(nextInt(),i);d.add(new ArrayList&lt;&gt;());q1.add(new ArrayList&lt;&gt;());q2.add(new ArrayList&lt;&gt;());
+        }
+        Arrays.sort(a,1,a.length);
+        for (int i =1; i &lt;=n; i++) {
+            md=Integer.MAX_VALUE;
+            if(i!=1)md=min(a[i].va-a[i-1].va,md);
+            if(i!=n)md=min(a[i+1].va-a[i].va,md);
+            if(i!=1&amp;&amp;md==a[i].va-a[i-1].va)insert(a[i].id,a[i-1].id);
+            if(i!=n&amp;&amp;md==a[i+1].va-a[i].va)insert(a[i].id,a[i+1].id);
+        }
+        for (int i =1; i &lt;=m; i++) {
+            x=nextInt();q1.get(x-1).add(nextInt());q2.get(x-1).add(i);
+        }
+        for (int i =n; i&gt;0;i--) {
+            for (int j = 0; j &lt;d.get(i-1).size(); j++)h.add(d.get(i-1).get(j),1);
+            for (int j = 0; j &lt;q1.get(i-1).size(); j++)ans[q2.get(i-1).get(j)]=h.ask(q1.get(i-1).get(j));
+        }
+        long sum=0;
+        for (int i =1; i &lt;=m; i++) {
+            System.out.println(ans[i]);
+            sum+=(long)ans[i]*i;
+        }
+        System.out.println(sum);
+    }
+    public static void insert(int x,int y) {
+        d.get(Math.min(x,y)-1).add(max(x,y));
+    }
+    public static int max(int x,int y) {
+        return Math.max(x,y);
+    }
+    public static int min(int x,int y) {
+        return Math.min(x,y);
+    }
+    public static StreamTokenizer in = new StreamTokenizer(new BufferedReader(new InputStreamReader(System.in),32768));
+    public static PrintWriter out = new PrintWriter(new OutputStreamWriter(System.out));
+    public static double nextDouble() throws IOException{ in.nextToken(); return in.nval; }
+    public static float nextFloat() throws IOException{ in.nextToken(); return (float)in.nval; }
+    public static int nextInt() throws IOException{ in.nextToken(); return (int)in.nval; }
+    public static String next() throws IOException{ in.nextToken(); return in.sval;}
+
+}</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+    
+	<div>
+    
+    <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+   
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%A0%91%E7%8A%B6%E6%95%B0%E7%BB%84/" rel="tag"># 树状数组</a>
+          
+            <a href="/tags/%E5%8C%BA%E9%97%B4/" rel="tag"># 区间</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/03/29/Problem/P4925_Scarlet%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%8D%E5%8F%AF%E8%83%BD%E8%BF%99%E4%B9%88%E5%8F%AF%E7%88%B1/" rel="next" title="Scarlet的字符串不可能这么可爱">
+                <i class="fa fa-chevron-left"></i> Scarlet的字符串不可能这么可爱
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/03/30/Problem/P2822_%E7%BB%84%E5%90%88%E6%95%B0%E9%97%AE%E9%A2%98/" rel="prev" title="组合数问题">
+                组合数问题 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+   
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">QOudao</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/Qoudao" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://www.luogu.org/space/show?uid=143654" target="_blank" title="洛谷">
+                      
+                        <i class="fa fa-fw fa-code"></i>洛谷</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://ac.nowcoder.com/acm/contest/profile/366564738" target="_blank" title="牛客">
+                      
+                        <i class="fa fa-fw fa-code"></i>牛客</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://space.bilibili.com/54206445" target="_blank" title="b站">
+                      
+                        <i class="fa fa-fw fa-tv"></i>b站</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-broadcast-tower"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.baidu.com/" title="百度" target="_blank">百度</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://space.bilibili.com/8048347/" title="Kirame" target="_blank">Kirame</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://pintia.cn/problem-sets?tab=0/" title="PTA" target="_blank">PTA</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目"><span class="nav-number">1.</span> <span class="nav-text">题目</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#解析"><span class="nav-number">1.1.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码"><span class="nav-number">1.2.</span> <span class="nav-text">代码</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">QOudao</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+<script type="text/javascript">
+    $('.post-body').bind('copy', function() {
+        alert('本博客内容欢迎分享（将本博客的原文地址分享到其它网站），允许部分摘录并在醒目位置附上原文链接，未经许可禁止任何形式的全文转载。');
+    });
+</script>
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
