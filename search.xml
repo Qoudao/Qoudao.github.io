@@ -1692,7 +1692,10 @@ public static String next() throws IOException{ in.nextToken(); return in.sval;}
             while(l&gt;r) {sum+=tre[l];l-=lwbt(l);}
             return sum;
         }
-    }</code></pre><h1 id="LCA简单板子"><a href="#LCA简单板子" class="headerlink" title="LCA简单板子"></a>LCA简单板子</h1><pre><code>static int mo[][],deep[]; //LCA
+    }</code></pre><h1 id="LCA简单板子"><a href="#LCA简单板子" class="headerlink" title="LCA简单板子"></a>LCA简单板子</h1><blockquote>
+<p>以1为根</p>
+</blockquote>
+<h2 id="dfs版"><a href="#dfs版" class="headerlink" title="dfs版"></a>dfs版</h2><pre><code>static int mo[][],deep[]; //LCA
 mo=new int[n+2][21];fa=new int[n+2];deep=new int[n+2];
 //LCA AND 预处理
     public static int LCA(int x,int y) {//公共祖先
@@ -1711,7 +1714,23 @@ mo=new int[n+2][21];fa=new int[n+2];deep=new int[n+2];
             int v=a[i].to;if(v==fat)continue;
             dfs(v,u);
         }
-    }</code></pre><h1 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h1><pre><code>import java.util.Scanner;
+    }</code></pre><h2 id="BFS版"><a href="#BFS版" class="headerlink" title="BFS版"></a>BFS版</h2><pre><code>static int mo[][],deep[]; //LCA
+mo=new int[n+2][21];fa=new int[n+2];deep=new int[n+2];
+public static void bfs() {
+  Queue&lt;Integer&gt; d=new LinkedList&lt;Integer&gt;();
+  dep[1]=1;d.add(1);int u,v,val;
+  while(!d.isEmpty()) {
+    u=d.poll();
+    for (int i =head[u]; i!=-1;i=a[i].next) {
+      v=a[i].to;if(dep[v]&gt;0)continue;val=a[i].val;
+      dep[v]=dep[u]+1;d.add(v);mo[v][0]=u;dst[v][0]=val;
+      for (int j =1; j&lt;=19; j++) {
+      mo[v][j]=mo[mo[v][j-1]][j-1];
+      dst[v][j]=dst[v][j-1]+dst[mo[v][j-1]][j-1];
+    }
+    }
+  }
+}</code></pre><h1 id="快速幂"><a href="#快速幂" class="headerlink" title="快速幂"></a>快速幂</h1><pre><code>import java.util.Scanner;
 
 public class Main {
     static long c = 1000000007;
@@ -1784,7 +1803,7 @@ for (int i =1; i &lt;=20; i++) {
   for (int j =1; j &lt;=20; j++) {
     c[i][j]=(c[i-1][j]+c[i-1][j-1])%mod;
   }
-}</code></pre>]]></content>
+}</code></pre><h1 id="乘法逆元"><a href="#乘法逆元" class="headerlink" title="乘法逆元"></a><a href="https://www.cnblogs.com/zjp-shadow/p/7773566.html" target="_blank" rel="noopener">乘法逆元</a></h1>]]></content>
       <categories>
         <category>板子</category>
       </categories>
