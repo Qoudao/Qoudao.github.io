@@ -1,6 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>博弈论</title>
+    <url>/2020/10/01/blog/%E5%8D%9A%E5%BC%88%E8%AE%BA/</url>
+    <content><![CDATA[<h1 id="巴什博弈"><a href="#巴什博弈" class="headerlink" title="巴什博弈"></a>巴什博弈</h1><blockquote>
+<p>只有一堆n个物品，两个人轮流从这堆物品中取物， 规定每次至少取一个，最多取m个。最后取光者得胜。  </p>
+</blockquote>
+<p>先手胜利 输的人最后必定只抓走一个，如果&gt;1个，则必定会留一个给对手。  </p>
+<h1 id="威佐夫博弈"><a href="#威佐夫博弈" class="headerlink" title="威佐夫博弈"></a>威佐夫博弈</h1><blockquote>
+<p>有两堆各若干个物品，两个人轮流从某一堆取至少一个或同时从两堆中取同样多的物品，规定每次至少取一个，多者不限，最后取光者得胜。  </p>
+</blockquote>
+<h2 id="解题的技巧"><a href="#解题的技巧" class="headerlink" title="解题的技巧"></a>解题的技巧</h2><pre><code>if a &gt; b , 交换两个值。
+　　c = b-a;
+　　c = （int）(c*(（根号5）+1)/2）
+　　if(c == b) 先手必输
+　　else 先手必赢  </code></pre><h1 id="尼姆博弈-（Nimm-Game）"><a href="#尼姆博弈-（Nimm-Game）" class="headerlink" title="尼姆博弈 （Nimm Game）"></a>尼姆博弈 （Nimm Game）</h1><blockquote>
+<p>尼姆博弈指的是这样一个博弈游戏： 有任意堆物品，每堆物品的个数是任意的，双方轮流从中取物品，每一次只能从一堆物品中取部分或全部物品，最少取一件， 取到最后一件物品的人获胜。  </p>
+</blockquote>
+<h2 id="解题的技巧-1"><a href="#解题的技巧-1" class="headerlink" title="解题的技巧"></a>解题的技巧</h2><h3 id="SG函数"><a href="#SG函数" class="headerlink" title="SG函数"></a>SG函数</h3><ol>
+<li>可选步数为1~m的连续整数，直接取模即可，SG(x) = x % (m+1);</li>
+<li>可选步数为任意步，SG(x) = x;</li>
+<li>可选步数为一系列不连续的数，用模板计算;</li>
+</ol>
+<h4 id="打表形式"><a href="#打表形式" class="headerlink" title="打表形式"></a>打表形式</h4><pre><code>//f[N]:可改变当前状态的方式，N为方式的种类，f[N]要在getSG之前先预处理
+//SG[]:0~n的SG函数值
+//S[]:为x后继状态的集合
+int f[N],SG[MAXN],S[MAXN];
+void  getSG(int n){
+    int i,j;
+    memset(SG,0,sizeof(SG));
+    //因为SG[0]始终等于0，所以i从1开始
+    for(i = 1; i &lt;= n; i++){
+        //每一次都要将上一状态 的 后继集合 重置
+        memset(S,0,sizeof(S));
+        for(j = 0; f[j] &lt;= i &amp;&amp; j &lt;= N; j++)
+            S[SG[i-f[j]]] = 1;  //将后继状态的SG函数值进行标记
+        for(j = 0;; j++) if(!S[j]){   //查询当前后继状态SG值中最小的非零值
+            SG[i] = j;
+            break;
+        }
+    }
+}</code></pre><h4 id="dfs形式"><a href="#dfs形式" class="headerlink" title="dfs形式"></a>dfs形式</h4><pre><code>// s数组是定义特殊取法规则的数组，注意要按照从小到大排序；
+//n表示集合大小 SG函数要初始化为-1，每个集合只需初始化一遍
+int s[MAXN],sg[MAXN],n;
+bool vis[MAXN];
+int SG_dfs(int x)
+{
+    if (sh[x]!=-1)
+        return sg[x];
+    memset(vis,0,sizeof(vis));
+    for (int i=0; i&lt;n; i++)
+    {
+        if (x&gt;=s[i])
+        {
+            SG_dfs(x-s[i]);
+            vis[sg[x-s[i]]]=1;
+        }
+    }
+    int i=0;
+    while (1)
+    {
+        if (!vis[i])
+            return sg[x]=i;
+        i++;
+    }
+}</code></pre>]]></content>
+      <categories>
+        <category>板子</category>
+      </categories>
+      <tags>
+        <tag>板子 数论</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>组合数问题</title>
     <url>/2020/03/30/Problem/P2822_%E7%BB%84%E5%90%88%E6%95%B0%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a><a href="https://www.luogu.com.cn/problem/P2822" target="_blank" rel="noopener">题目</a></h1><h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><blockquote>
@@ -1803,7 +1875,20 @@ for (int i =1; i &lt;=20; i++) {
   for (int j =1; j &lt;=20; j++) {
     c[i][j]=(c[i-1][j]+c[i-1][j-1])%mod;
   }
-}</code></pre><h1 id="乘法逆元"><a href="#乘法逆元" class="headerlink" title="乘法逆元"></a><a href="https://www.cnblogs.com/zjp-shadow/p/7773566.html" target="_blank" rel="noopener">乘法逆元</a></h1>]]></content>
+}</code></pre><h1 id="乘法逆元"><a href="#乘法逆元" class="headerlink" title="乘法逆元"></a><a href="https://www.cnblogs.com/zjp-shadow/p/7773566.html" target="_blank" rel="noopener">乘法逆元</a></h1><blockquote>
+<p>每个数a均有唯一的与之对应的乘法逆元x，使得ax≡1(mod n) ， 一个数有逆元的充分必要条件是gcd(a,n)=1，此时逆元唯一存在 。      </p>
+</blockquote>
+<p>正整数 a, n，如果有 ax ≡ 1(mod n)，则称 x 的最小正整数解为 a 模 n的逆元。</p>
+<pre><code>k=ypow(b,mod-2); //mod要减2
+
+public static long ypow(long a,long b) { //逆元
+    if(b==0)return 1;
+    if((b&amp;1)&gt;0)return a*ypow(a,b-1)%mod;
+    long num=ypow(a,b/2);return num*num%mod;
+}</code></pre><h1 id="指数取模"><a href="#指数取模" class="headerlink" title="指数取模"></a>指数取模</h1><blockquote>
+<p>当一个数很大的时候</p>
+</blockquote>
+<h1 id="卡特兰数"><a href="#卡特兰数" class="headerlink" title="卡特兰数"></a><a href="https://www.luogu.com.cn/problem/P1044" target="_blank" rel="noopener">卡特兰数</a></h1>]]></content>
       <categories>
         <category>板子</category>
       </categories>
@@ -2199,7 +2284,7 @@ return (ans+M)%M; //正解
 <li>当x不是最小正数解时，写成 x = (x % b + b) % b;循环至为正；</li>
 </ol>
 <h1 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h1><blockquote>
-<p>————未学待补————</p>
+<p>如果p是一个质数，而整数a不是p的倍数，则有a^（p-1）≡1（mod p）。 </p>
 </blockquote>
 <hr>
 <h1 id="二次剩余CipollaCipolla"><a href="#二次剩余CipollaCipolla" class="headerlink" title="二次剩余CipollaCipolla"></a>二次剩余CipollaCipolla</h1><p><a href="https://www.cnblogs.com/bztMinamoto/p/10664973.html" target="_blank" rel="noopener">学习资料1</a><br><a href="https://www.luogu.org/blog/oieremtkotori/2-0v0" target="_blank" rel="noopener">学习资料2</a></p>
@@ -2248,7 +2333,20 @@ return (ans+M)%M; //正解
             }
         }
     }
-}</code></pre>]]></content>
+}</code></pre><h1 id="逆元"><a href="#逆元" class="headerlink" title="逆元"></a>逆元</h1><blockquote>
+<p>每个数a均有唯一的与之对应的乘法逆元x，使得ax≡1(mod n) ， 一个数有逆元的充分必要条件是gcd(a,n)=1，此时逆元唯一存在 。      </p>
+</blockquote>
+<ol>
+<li>正整数 a, n，如果有 ax ≡ 1(mod n)，则称 x 的最小正整数解为 a 模 n的逆元。  </li>
+<li>可以应用于除数取模，换成除数的逆元。</li>
+<li>求b关于p的乘法逆元k，将a乘上k再模p，即(a*k) mod p。其结果与(a/b) mod p等价。</li>
+</ol>
+<pre><code>k=ypow(b,mod-2); //mod要减2
+public static long ypow(long a,long b) { //逆元
+    if(b==0)return 1;
+    if((b&amp;1)&gt;0)return a*ypow(a,b-1)%mod;
+    long num=ypow(a,b/2);return num*num%mod;
+}</code></pre><h1 id="同余方程"><a href="#同余方程" class="headerlink" title="同余方程"></a>同余方程</h1><h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a><a href="https://www.luogu.com.cn/blog/ShadderLeave/5days-equiv-from-beginner-to-killer" target="_blank" rel="noopener">资料</a></h2>]]></content>
       <categories>
         <category>数论</category>
       </categories>

@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Qou的道场">
 <meta property="og:description" content="快读快输板子public class 快读快输 {     public static void main(String[] args) throws IOException {         Input in = new Input();&#x2F;&#x2F;输入         StringBuilder sb = new StringBuilder();&#x2F;&#x2F;输出         int n=in.nextI">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-04-30T02:37:30.957Z">
+<meta property="og:updated_time" content="2020-10-01T06:01:35.316Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -535,7 +535,20 @@ for (int i =1; i &lt;=20; i++) {
   for (int j =1; j &lt;=20; j++) {
     c[i][j]=(c[i-1][j]+c[i-1][j-1])%mod;
   }
-}</code></pre><h1 id="乘法逆元"><a href="#乘法逆元" class="headerlink" title="乘法逆元"></a><a href="https://www.cnblogs.com/zjp-shadow/p/7773566.html" target="_blank" rel="noopener">乘法逆元</a></h1>
+}</code></pre><h1 id="乘法逆元"><a href="#乘法逆元" class="headerlink" title="乘法逆元"></a><a href="https://www.cnblogs.com/zjp-shadow/p/7773566.html" target="_blank" rel="noopener">乘法逆元</a></h1><blockquote>
+<p>每个数a均有唯一的与之对应的乘法逆元x，使得ax≡1(mod n) ， 一个数有逆元的充分必要条件是gcd(a,n)=1，此时逆元唯一存在 。      </p>
+</blockquote>
+<p>正整数 a, n，如果有 ax ≡ 1(mod n)，则称 x 的最小正整数解为 a 模 n的逆元。</p>
+<pre><code>k=ypow(b,mod-2); //mod要减2
+
+public static long ypow(long a,long b) { //逆元
+    if(b==0)return 1;
+    if((b&amp;1)&gt;0)return a*ypow(a,b-1)%mod;
+    long num=ypow(a,b/2);return num*num%mod;
+}</code></pre><h1 id="指数取模"><a href="#指数取模" class="headerlink" title="指数取模"></a>指数取模</h1><blockquote>
+<p>当一个数很大的时候</p>
+</blockquote>
+<h1 id="卡特兰数"><a href="#卡特兰数" class="headerlink" title="卡特兰数"></a><a href="https://www.luogu.com.cn/problem/P1044" target="_blank" rel="noopener">卡特兰数</a></h1>
       
     </div>
     
@@ -665,7 +678,7 @@ for (int i =1; i &lt;=20; i++) {
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -687,7 +700,7 @@ for (int i =1; i &lt;=20; i++) {
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -770,7 +783,7 @@ for (int i =1; i &lt;=20; i++) {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快读快输板子"><span class="nav-number">1.</span> <span class="nav-text">快读快输板子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第二种"><span class="nav-number">1.1.</span> <span class="nav-text">第二种</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三种"><span class="nav-number">1.2.</span> <span class="nav-text">第三种</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#树状数组简单工具板子"><span class="nav-number">2.</span> <span class="nav-text">树状数组简单工具板子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LCA简单板子"><span class="nav-number">3.</span> <span class="nav-text">LCA简单板子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dfs版"><span class="nav-number">3.1.</span> <span class="nav-text">dfs版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFS版"><span class="nav-number">3.2.</span> <span class="nav-text">BFS版</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快速幂"><span class="nav-number">4.</span> <span class="nav-text">快速幂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串字典序排序"><span class="nav-number">5.</span> <span class="nav-text">字符串字典序排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉筛"><span class="nav-number">6.</span> <span class="nav-text">欧拉筛</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#预处理组合数"><span class="nav-number">7.</span> <span class="nav-text">预处理组合数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#乘法逆元"><span class="nav-number">8.</span> <span class="nav-text">乘法逆元</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#快读快输板子"><span class="nav-number">1.</span> <span class="nav-text">快读快输板子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#第二种"><span class="nav-number">1.1.</span> <span class="nav-text">第二种</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#第三种"><span class="nav-number">1.2.</span> <span class="nav-text">第三种</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#树状数组简单工具板子"><span class="nav-number">2.</span> <span class="nav-text">树状数组简单工具板子</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#LCA简单板子"><span class="nav-number">3.</span> <span class="nav-text">LCA简单板子</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#dfs版"><span class="nav-number">3.1.</span> <span class="nav-text">dfs版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BFS版"><span class="nav-number">3.2.</span> <span class="nav-text">BFS版</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#快速幂"><span class="nav-number">4.</span> <span class="nav-text">快速幂</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#字符串字典序排序"><span class="nav-number">5.</span> <span class="nav-text">字符串字典序排序</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉筛"><span class="nav-number">6.</span> <span class="nav-text">欧拉筛</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#预处理组合数"><span class="nav-number">7.</span> <span class="nav-text">预处理组合数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#乘法逆元"><span class="nav-number">8.</span> <span class="nav-text">乘法逆元</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指数取模"><span class="nav-number">9.</span> <span class="nav-text">指数取模</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#卡特兰数"><span class="nav-number">10.</span> <span class="nav-text">卡特兰数</span></a></li></ol></div>
             
 
           </div>

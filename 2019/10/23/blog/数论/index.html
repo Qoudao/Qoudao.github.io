@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Qou的道场">
 <meta property="og:description" content="中国剩余定理相关题面 标程int intchina(int r) { int Mi,x,y,d,ans=0;M=1; for(int i=1;i&amp;lt;=r;i++) M*=m[i]; for(int i=1;i&amp;lt;=r;i++){     M[i]=M&#x2F;m[i];     exgcd(Mi,m[i],d,x,y);     ans=(ans+Mi*x*a[i])%M; } return (a">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-11-10T09:19:34.769Z">
+<meta property="og:updated_time" content="2020-10-01T06:33:53.702Z">
 <meta name="twitter:card" content="summary">
 
 
@@ -385,7 +385,7 @@ return (ans+M)%M; //正解
 <li>当x不是最小正数解时，写成 x = (x % b + b) % b;循环至为正；</li>
 </ol>
 <h1 id="费马小定理"><a href="#费马小定理" class="headerlink" title="费马小定理"></a>费马小定理</h1><blockquote>
-<p>————未学待补————</p>
+<p>如果p是一个质数，而整数a不是p的倍数，则有a^（p-1）≡1（mod p）。 </p>
 </blockquote>
 <hr>
 <h1 id="二次剩余CipollaCipolla"><a href="#二次剩余CipollaCipolla" class="headerlink" title="二次剩余CipollaCipolla"></a>二次剩余CipollaCipolla</h1><p><a href="https://www.cnblogs.com/bztMinamoto/p/10664973.html" target="_blank" rel="noopener">学习资料1</a><br><a href="https://www.luogu.org/blog/oieremtkotori/2-0v0" target="_blank" rel="noopener">学习资料2</a></p>
@@ -434,7 +434,20 @@ return (ans+M)%M; //正解
             }
         }
     }
-}</code></pre>
+}</code></pre><h1 id="逆元"><a href="#逆元" class="headerlink" title="逆元"></a>逆元</h1><blockquote>
+<p>每个数a均有唯一的与之对应的乘法逆元x，使得ax≡1(mod n) ， 一个数有逆元的充分必要条件是gcd(a,n)=1，此时逆元唯一存在 。      </p>
+</blockquote>
+<ol>
+<li>正整数 a, n，如果有 ax ≡ 1(mod n)，则称 x 的最小正整数解为 a 模 n的逆元。  </li>
+<li>可以应用于除数取模，换成除数的逆元。</li>
+<li>求b关于p的乘法逆元k，将a乘上k再模p，即(a*k) mod p。其结果与(a/b) mod p等价。</li>
+</ol>
+<pre><code>k=ypow(b,mod-2); //mod要减2
+public static long ypow(long a,long b) { //逆元
+    if(b==0)return 1;
+    if((b&amp;1)&gt;0)return a*ypow(a,b-1)%mod;
+    long num=ypow(a,b/2);return num*num%mod;
+}</code></pre><h1 id="同余方程"><a href="#同余方程" class="headerlink" title="同余方程"></a>同余方程</h1><h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a><a href="https://www.luogu.com.cn/blog/ShadderLeave/5days-equiv-from-beginner-to-killer" target="_blank" rel="noopener">资料</a></h2>
       
     </div>
     
@@ -564,7 +577,7 @@ return (ans+M)%M; //正解
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -586,7 +599,7 @@ return (ans+M)%M; //正解
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">30</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -669,7 +682,7 @@ return (ans+M)%M; //正解
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#中国剩余定理"><span class="nav-number">1.</span> <span class="nav-text">中国剩余定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程"><span class="nav-number">1.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展欧几里得"><span class="nav-number">2.</span> <span class="nav-text">扩展欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程-1"><span class="nav-number">2.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#费马小定理"><span class="nav-number">3.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二次剩余CipollaCipolla"><span class="nav-number">4.</span> <span class="nav-text">二次剩余CipollaCipolla</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉函数"><span class="nav-number">5.</span> <span class="nav-text">欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">5.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#积性函数"><span class="nav-number">5.2.</span> <span class="nav-text">积性函数</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#中国剩余定理"><span class="nav-number">1.</span> <span class="nav-text">中国剩余定理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程"><span class="nav-number">1.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展欧几里得"><span class="nav-number">2.</span> <span class="nav-text">扩展欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#标程-1"><span class="nav-number">2.1.</span> <span class="nav-text">标程</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#费马小定理"><span class="nav-number">3.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#二次剩余CipollaCipolla"><span class="nav-number">4.</span> <span class="nav-text">二次剩余CipollaCipolla</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉函数"><span class="nav-number">5.</span> <span class="nav-text">欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#定义"><span class="nav-number">5.1.</span> <span class="nav-text">定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#积性函数"><span class="nav-number">5.2.</span> <span class="nav-text">积性函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#逆元"><span class="nav-number">6.</span> <span class="nav-text">逆元</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#同余方程"><span class="nav-number">7.</span> <span class="nav-text">同余方程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#资料"><span class="nav-number">7.1.</span> <span class="nav-text">资料</span></a></li></ol></li></ol></div>
             
 
           </div>
